@@ -21,7 +21,6 @@ class PlayState extends HelixState
 		for (word in words) {
 			var w = new Word(word.arabic, word.english);
 			this.allWords.push(w);
-			trace(w.english);
 		}
 	}
 
@@ -40,5 +39,21 @@ class Word
 	{
 		this.arabic = arabic;
 		this.english = english;
+	}
+}
+
+class Card extends FlxGroup
+{
+	private static inline var PADDING:Int = 8;
+	
+	public function new(imageFile:String, arabic:String, english:String, x:Int, y:Int)
+	{
+		var image = new HelixSprite(imageFile).move(x, y);
+		this.add(image);
+
+		var arabicText = new HelixText(x + PADDING, y + PADDING, arabic);
+		this.add(arabicText);
+		var englishText = new HelixText(x + PADDING, y + image.height - PADDING, english);
+		this.add(englishText);
 	}
 }
