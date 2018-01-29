@@ -1,0 +1,22 @@
+[
+	{ "arabic": "ألف", "english": "thousand" },
+	{ "arabic": "بَصير", "english": "seeing" },
+	{ "arabic": "قلب", "english": "heart" },
+	{ "arabic": "كتاب", "english": "book" },
+	{ "arabic": "شياطين", "english": "devils" },
+	{ "arabic": "يعلم", "english": "teaches" },
+	{ "arabic": "سحر", "english": "magic" },
+	{ "arabic": "احد", "english": "one" },
+	{ "arabic": "مرء", "english": "man" },
+	{ "arabic": "السماوات", "english": "heavens" },
+	{ "arabic": "هود", "english": "earth" },
+	{ "arabic": "نصارى", "english": "way" },
+	{ "arabic": "قوم", "english": "prayer" },
+	{ "arabic": "صبغة", "english": "charity" },
+	{ "arabic": "عابدون", "english": "paradise" },
+	{ "arabic": "أرض", "english": "jews" },
+	{ "arabic": "سبيل", "english": "christians" },
+	{ "arabic": "صلاة", "english": "community" },
+	{ "arabic": "زكاة", "english": "colour" },
+	{ "arabic": "الجنة", "english": "worshippers" }
+]

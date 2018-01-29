@@ -1,3 +1,1 @@
-# Arabic Vocabulary
-
-Teach Arabic vocabulary with a simple quiz-structured game.
+This branch holds the web prototype of the game.
