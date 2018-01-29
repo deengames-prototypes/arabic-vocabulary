@@ -15,8 +15,11 @@ class PlayState extends HelixState
 	override public function create():Void
 	{
 		super.create();
-		var wordData = Json.parse(Assets.getText("assets/data/json.txt"));
-		trace(wordData);
+		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/json.txt"));
+		for (word in words) {
+			//trace("Word=" + word);
+			trace('Arabic=${word.arabic}, English=${word.english}');
+		}
 	}
 
 	override public function update(elapsed:Float):Void
