@@ -12,18 +12,33 @@ import openfl.Assets;
 
 class PlayState extends HelixState
 {
+	private var allWords = new Array<Word>();
+
 	override public function create():Void
 	{
 		super.create();
-		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/json.txt"));
+		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
 		for (word in words) {
-			//trace("Word=" + word);
-			trace('Arabic=${word.arabic}, English=${word.english}');
+			var w = new Word(word.arabic, word.english);
+			this.allWords.push(w);
 		}
+		trace(this.allWords);
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+	}
+}
+
+class Word
+{
+	public var arabic(default, default):String;
+	public var english(default, default):String;
+
+	public function new(arabic:String, english:String)
+	{
+		this.arabic = arabic;
+		this.english = english;
 	}
 }
