@@ -48,8 +48,6 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/images-go-here.txt");
 	types.push("TEXT");
-	urls.push("assets/images/jannah.png");
-	types.push("IMAGE");
 	urls.push("assets/images/jews.png");
 	types.push("IMAGE");
 	urls.push("assets/images/magic.png");
@@ -57,6 +55,8 @@ ApplicationMain.create = function() {
 	urls.push("assets/images/man.png");
 	types.push("IMAGE");
 	urls.push("assets/images/one.png");
+	types.push("IMAGE");
+	urls.push("assets/images/paradise.png");
 	types.push("IMAGE");
 	urls.push("assets/images/prayer.png");
 	types.push("IMAGE");
@@ -2437,7 +2437,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this23.h[id] = value11;
 	}
-	id = "assets/images/jannah.png";
+	id = "assets/images/jews.png";
 	var _this24 = this.path;
 	if(__map_reserved[id] != null) {
 		_this24.setReserved(id,id);
@@ -2451,7 +2451,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this25.h[id] = value12;
 	}
-	id = "assets/images/jews.png";
+	id = "assets/images/magic.png";
 	var _this26 = this.path;
 	if(__map_reserved[id] != null) {
 		_this26.setReserved(id,id);
@@ -2465,7 +2465,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this27.h[id] = value13;
 	}
-	id = "assets/images/magic.png";
+	id = "assets/images/man.png";
 	var _this28 = this.path;
 	if(__map_reserved[id] != null) {
 		_this28.setReserved(id,id);
@@ -2479,7 +2479,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this29.h[id] = value14;
 	}
-	id = "assets/images/man.png";
+	id = "assets/images/one.png";
 	var _this30 = this.path;
 	if(__map_reserved[id] != null) {
 		_this30.setReserved(id,id);
@@ -2493,7 +2493,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this31.h[id] = value15;
 	}
-	id = "assets/images/one.png";
+	id = "assets/images/paradise.png";
 	var _this32 = this.path;
 	if(__map_reserved[id] != null) {
 		_this32.setReserved(id,id);
