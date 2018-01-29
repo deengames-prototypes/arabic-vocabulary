@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
+import flixel.math.FlxRandom;
 import flixel.ui.FlxButton;
 import haxe.Json;
 import helix.core.HelixState;
@@ -15,20 +16,20 @@ import openfl.Assets;
 class PlayState extends HelixState
 {
 	private var allWords = new Array<Word>();
+	private var random = new FlxRandom();
 	
 	override public function create():Void
 	{
 		super.create();
 		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
-		var lastWord:Word = null;
 
 		for (word in words) {
 			var w = new Word(word.arabic, word.english);
-			lastWord = w;
 			this.allWords.push(w);
 		}
 
-		this.add(new Card('assets/images/${lastWord.english}.png', lastWord.arabic, lastWord.english, 100, 50));
+		var card = random.getObject(this.allWords);
+		this.add(new Card('assets/images/${card.english}.png', card.arabic, card.english, 100, 50));
 	}
 
 	override public function update(elapsed:Float):Void
