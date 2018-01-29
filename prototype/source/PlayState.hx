@@ -1,7 +1,7 @@
 package;
 
 import flixel.FlxG;
-import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
 import flixel.ui.FlxButton;
@@ -28,8 +28,12 @@ class PlayState extends HelixState
 			this.allWords.push(w);
 		}
 
-		var card = random.getObject(this.allWords);
-		this.add(new Card('assets/images/${card.english}.png', card.arabic, card.english, 100, 50));
+		var word = random.getObject(this.allWords);
+		var card = new Card('assets/images/${word.english}.png', word.arabic, word.english);
+		this.add(card);
+
+		card.x = 100;
+		card.y = 50;
 	}
 
 	override public function update(elapsed:Float):Void
@@ -50,28 +54,27 @@ class Word
 	}
 }
 
-class Card extends FlxGroup
+class Card extends FlxSpriteGroup
 {
 	private static inline var PADDING:Int = 8;
 	private static inline var DEFAULT_FONT_SIZE:Int = 32;
 
-	public function new(imageFile:String, arabic:String, english:String, x:Int, y:Int)
+	public function new(imageFile:String, arabic:String, english:String)
 	{
 		super();
 		
 		var cardBase = new HelixSprite("assets/images/card-base.png");
-		cardBase.move(x, y);
 		this.add(cardBase);
 
-		var arabicText = new HelixText(x + PADDING, y + PADDING, arabic, DEFAULT_FONT_SIZE);
+		var arabicText = new HelixText(PADDING, PADDING, arabic, DEFAULT_FONT_SIZE);
 		arabicText.x += (cardBase.width - arabicText.width)  / 2;
 		this.add(arabicText);
 
 		var image = new HelixSprite(imageFile);
-		image.move(x + (cardBase.width - image.width) / 2, y + (cardBase.height - image.height) / 2);
+		image.move((cardBase.width - image.width) / 2, (cardBase.height - image.height) / 2);
 		this.add(image);
 
-		var englishText = new HelixText(Std.int(x + PADDING), Std.int(y + cardBase.height - PADDING), english, DEFAULT_FONT_SIZE);
+		var englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), english, DEFAULT_FONT_SIZE);
 		englishText.x += (cardBase.width - englishText.width)  / 2;
 		englishText.y -= englishText.height;
 		this.add(englishText);
