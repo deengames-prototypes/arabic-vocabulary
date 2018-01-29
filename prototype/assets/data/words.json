@@ -8,7 +8,7 @@
 	{ "arabic": "سحر", "english": "magic" },
 	{ "arabic": "احد", "english": "one" },
 	{ "arabic": "مرء", "english": "man" },
-	{ "arabic": "السماوات", "english": "heavens" },
+	{ "arabic": "السماوات", "english": "skies" },
 	{ "arabic": "هود", "english": "earth" },
 	{ "arabic": "نصارى", "english": "way" },
 	{ "arabic": "قوم", "english": "prayer" },
@@ -17,6 +17,5 @@
 	{ "arabic": "أرض", "english": "jews" },
 	{ "arabic": "سبيل", "english": "christians" },
 	{ "arabic": "صلاة", "english": "community" },
-	{ "arabic": "زكاة", "english": "colour" },
-	{ "arabic": "الجنة", "english": "worshippers" }
+	{ "arabic": "زكاة", "english": "colour" }
 ]

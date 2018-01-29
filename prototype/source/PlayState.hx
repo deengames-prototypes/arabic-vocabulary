@@ -21,8 +21,8 @@ class PlayState extends HelixState
 		for (word in words) {
 			var w = new Word(word.arabic, word.english);
 			this.allWords.push(w);
+			trace(w.english);
 		}
-		trace(this.allWords);
 	}
 
 	override public function update(elapsed:Float):Void
