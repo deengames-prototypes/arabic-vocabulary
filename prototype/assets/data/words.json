@@ -9,13 +9,13 @@
 	{ "arabic": "احد", "english": "one" },
 	{ "arabic": "مرء", "english": "man" },
 	{ "arabic": "السماوات", "english": "skies" },
-	{ "arabic": "هود", "english": "earth" },
-	{ "arabic": "نصارى", "english": "way" },
-	{ "arabic": "قوم", "english": "prayer" },
-	{ "arabic": "صبغة", "english": "charity" },
-	{ "arabic": "عابدون", "english": "paradise" },
-	{ "arabic": "أرض", "english": "jews" },
-	{ "arabic": "سبيل", "english": "christians" },
-	{ "arabic": "صلاة", "english": "community" },
-	{ "arabic": "زكاة", "english": "colour" }
+	{ "arabic": "أرض", "english": "earth" },
+	{ "arabic": "سبيل", "english": "way" },
+	{ "arabic": "صلاة", "english": "prayer" },
+	{ "arabic": "زكاة", "english": "charity" },
+	{ "arabic": "جنة", "english": "paradise" },
+	{ "arabic": "هود", "english": "jews" },
+	{ "arabic": "نصارى", "english": "christians" },
+	{ "arabic": "قوم", "english": "community" },
+	{ "arabic": "صبغة", "english": "colour" }
 ]
