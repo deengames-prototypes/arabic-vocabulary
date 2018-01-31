@@ -24,6 +24,9 @@ class PlayState extends HelixState
 	override public function create():Void
 	{
 		super.create();
+
+		new HelixSprite("assets/images/background.png");
+		
 		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
 
 		for (word in words) {
@@ -103,21 +106,5 @@ class Card extends FlxSpriteGroup
 		// Last so it goes on top
 		this.cover = new HelixSprite("assets/images/card-cover.png");
 		this.add(cover);
-
-		this.scaleToFit();
-	}
-
-	// DEBUG/TEMP: scale down images to fit four cards on-screen
-	private function scaleToFit():Void
-	{
-		this.scaleDown(this.cardBase);
-		this.scaleDown(this.cover);
-		this.scaleDown(this.image);
-	}
-
-	private function scaleDown(image:HelixSprite):Void
-	{
-		image.setGraphicSize(CARD_WIDTH_TO_FIT, 0); // Scale proportionally				
-		image.updateHitbox();
 	}
 }
