@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
+import flixel.system.FlxSound;
 import flixel.ui.FlxButton;
 import haxe.Json;
 using haxesharp.collections.Linq;
@@ -24,9 +25,15 @@ class PlayState extends HelixState
 	private var random = new FlxRandom();
 	private var targetText:HelixText;
 	
+	private var correctSound:FlxSound;
+	private var incorrectSound:FlxSound;
+
 	override public function create():Void
 	{
 		super.create();
+
+		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
+		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
 		new HelixSprite("assets/images/background.png");
 		
@@ -64,10 +71,14 @@ class PlayState extends HelixState
 				word.arabic, word.english, function() {
 				if (word == targetWord)
 				{
+					this.correctSound.stop();
+					this.correctSound.play();
 					trace("WIN!");
 				}
 				else
 				{
+					this.incorrectSound.stop();
+					this.incorrectSound.play();
 					trace('NO! You clicked ${word.arabic}, should have clicked ${targetWord.english}!');
 				}
 			});
