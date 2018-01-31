@@ -5,6 +5,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import haxe.Json;
 using haxesharp.collections.Linq;
@@ -27,6 +28,7 @@ class PlayState extends HelixState
 	
 	private var correctSound:FlxSound;
 	private var incorrectSound:FlxSound;
+	private var cards = new Array<Card>();
 
 	override public function create():Void
 	{
@@ -81,11 +83,43 @@ class PlayState extends HelixState
 					this.incorrectSound.play();
 					trace('NO! You clicked ${word.arabic}, should have clicked ${targetWord.english}!');
 				}
+
+				this.tweenCards();
 			});
+
 			this.add(card);
 			card.x = PADDING + (i * card.width) + (i * PADDING);
 			card.y = 2 * TARGET_FONT_SIZE;
 			i += 1;
+
+			this.cards.push(card);
+		}
+	}
+
+	private function tweenCards():Void
+	{
+		var rightCard = this.cards.single((c) => c.arabicText.text == this.targetWord.arabic);
+		for (card in this.cards)
+		{
+			if (card == rightCard)
+			{
+				FlxTween.tween(card, { x: (FlxG.width - card.width) / 2,
+					y: (FlxG.height - card.height) / 2 }, 1);
+
+				card.cardBase.onClick(function() {
+					card.destroy();
+					this.cards.remove(card);
+					this.generateAndShowRound();
+				});
+			}
+			else
+			{
+				// Fade to oblivion
+				FlxTween.tween(card, { alpha: 0 }, 1, { onComplete: function(tween) { 
+					this.cards.remove(card);
+					card.destroy();
+				}});
+			}
 		}
 	}
 }
