@@ -60,7 +60,17 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', word.arabic, word.english);
+			var card = new Card('assets/images/${word.english}.png', 
+				word.arabic, word.english, function() {
+				if (word == targetWord)
+				{
+					trace("WIN!");
+				}
+				else
+				{
+					trace('NO! You clicked ${word.arabic}, should have clicked ${targetWord.english}!');
+				}
+			});
 			this.add(card);
 			card.x = PADDING + (i * card.width) + (i * PADDING);
 			card.y = 2 * TARGET_FONT_SIZE;
@@ -93,11 +103,12 @@ class Card extends FlxSpriteGroup
 	public var englishText:HelixText;
 	public var arabicText:HelixText;
 
-	public function new(imageFile:String, arabic:String, english:String)
+	public function new(imageFile:String, arabic:String, english:String, clickHandler:Void->Void)
 	{
 		super();
 
 		this.cardBase = new HelixSprite("assets/images/card-base.png");
+		this.cardBase.onClick(clickHandler);
 		this.add(cardBase);
 
 		this.arabicText = new HelixText(PADDING, PADDING, arabic, DEFAULT_FONT_SIZE);
