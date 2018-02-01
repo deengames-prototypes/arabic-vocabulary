@@ -85,6 +85,9 @@ class PlayState extends HelixState
 				if (word == targetWord)
 				{
 					this.correctSound.stop();
+					this.correctSound.onComplete = function() {
+						this.wordSounds.get('${targetWord.english}-english').play();
+					}
 					this.correctSound.play();
 					trace("WIN!");
 					this.tweenCards();
@@ -92,7 +95,12 @@ class PlayState extends HelixState
 				else
 				{
 					this.incorrectSound.stop();
-					this.incorrectSound.play();
+
+					this.incorrectSound.onComplete = function() {
+						this.wordSounds.get('${word.english}-arabic').play();
+					};
+
+					this.incorrectSound.play();					
 					trace('NO!!');
 					this.fadeCardIntoOblivion(card);
 				}
