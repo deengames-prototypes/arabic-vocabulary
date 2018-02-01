@@ -44,8 +44,6 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/colour.png");
 	types.push("IMAGE");
-	urls.push("assets/images/community.png");
-	types.push("IMAGE");
 	urls.push("assets/images/devils.png");
 	types.push("IMAGE");
 	urls.push("assets/images/earth.png");
@@ -64,6 +62,8 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/images/paradise.png");
 	types.push("IMAGE");
+	urls.push("assets/images/people.png");
+	types.push("IMAGE");
 	urls.push("assets/images/prayer.png");
 	types.push("IMAGE");
 	urls.push("assets/images/seeing.png");
@@ -78,16 +78,88 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/music/music-goes-here.txt");
 	types.push("TEXT");
-	urls.push("assets/sounds/correct.mp3");
-	types.push("MUSIC");
 	urls.push("assets/sounds/correct.ogg");
 	types.push("SOUND");
-	urls.push("assets/sounds/incorrect.mp3");
-	types.push("MUSIC");
 	urls.push("assets/sounds/incorrect.ogg");
 	types.push("SOUND");
 	urls.push("assets/sounds/sounds-go-here.txt");
 	types.push("TEXT");
+	urls.push("assets/sounds/words/book-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/book-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/charity-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/charity-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/christians-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/christians-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/colour-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/colour-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/devils-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/devils-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/earth-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/earth-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/heart-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/heart-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/jews-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/jews-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/magic-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/magic-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/man-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/man-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/one-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/one-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/paradise-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/paradise-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/people-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/people-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/prayer-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/prayer-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/seeing-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/seeing-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/skies-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/skies-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/teaches-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/teaches-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/thousand-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/thousand-english.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/way-arabic.ogg");
+	types.push("SOUND");
+	urls.push("assets/sounds/words/way-english.ogg");
+	types.push("SOUND");
 	urls.push("flixel/sounds/beep.ogg");
 	types.push("SOUND");
 	urls.push("flixel/sounds/flixel.ogg");
@@ -128,7 +200,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "56", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
+	ApplicationMain.config = { build : "7", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2424,7 +2496,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this19.h[id] = value9;
 	}
-	id = "assets/images/community.png";
+	id = "assets/images/devils.png";
 	var _this20 = this.path;
 	if(__map_reserved[id] != null) {
 		_this20.setReserved(id,id);
@@ -2438,7 +2510,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this21.h[id] = value10;
 	}
-	id = "assets/images/devils.png";
+	id = "assets/images/earth.png";
 	var _this22 = this.path;
 	if(__map_reserved[id] != null) {
 		_this22.setReserved(id,id);
@@ -2452,7 +2524,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this23.h[id] = value11;
 	}
-	id = "assets/images/earth.png";
+	id = "assets/images/heart.png";
 	var _this24 = this.path;
 	if(__map_reserved[id] != null) {
 		_this24.setReserved(id,id);
@@ -2466,7 +2538,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this25.h[id] = value12;
 	}
-	id = "assets/images/heart.png";
+	id = "assets/images/images-go-here.txt";
 	var _this26 = this.path;
 	if(__map_reserved[id] != null) {
 		_this26.setReserved(id,id);
@@ -2474,13 +2546,13 @@ var DefaultAssetLibrary = function() {
 		_this26.h[id] = id;
 	}
 	var _this27 = this.type;
-	var value13 = "IMAGE";
+	var value13 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this27.setReserved(id,value13);
 	} else {
 		_this27.h[id] = value13;
 	}
-	id = "assets/images/images-go-here.txt";
+	id = "assets/images/jews.png";
 	var _this28 = this.path;
 	if(__map_reserved[id] != null) {
 		_this28.setReserved(id,id);
@@ -2488,13 +2560,13 @@ var DefaultAssetLibrary = function() {
 		_this28.h[id] = id;
 	}
 	var _this29 = this.type;
-	var value14 = "TEXT";
+	var value14 = "IMAGE";
 	if(__map_reserved[id] != null) {
 		_this29.setReserved(id,value14);
 	} else {
 		_this29.h[id] = value14;
 	}
-	id = "assets/images/jews.png";
+	id = "assets/images/magic.png";
 	var _this30 = this.path;
 	if(__map_reserved[id] != null) {
 		_this30.setReserved(id,id);
@@ -2508,7 +2580,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this31.h[id] = value15;
 	}
-	id = "assets/images/magic.png";
+	id = "assets/images/man.png";
 	var _this32 = this.path;
 	if(__map_reserved[id] != null) {
 		_this32.setReserved(id,id);
@@ -2522,7 +2594,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this33.h[id] = value16;
 	}
-	id = "assets/images/man.png";
+	id = "assets/images/one.png";
 	var _this34 = this.path;
 	if(__map_reserved[id] != null) {
 		_this34.setReserved(id,id);
@@ -2536,7 +2608,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this35.h[id] = value17;
 	}
-	id = "assets/images/one.png";
+	id = "assets/images/paradise.png";
 	var _this36 = this.path;
 	if(__map_reserved[id] != null) {
 		_this36.setReserved(id,id);
@@ -2550,7 +2622,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this37.h[id] = value18;
 	}
-	id = "assets/images/paradise.png";
+	id = "assets/images/people.png";
 	var _this38 = this.path;
 	if(__map_reserved[id] != null) {
 		_this38.setReserved(id,id);
@@ -2662,7 +2734,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this53.h[id] = value26;
 	}
-	id = "assets/sounds/correct.mp3";
+	id = "assets/sounds/correct.ogg";
 	var _this54 = this.path;
 	if(__map_reserved[id] != null) {
 		_this54.setReserved(id,id);
@@ -2670,13 +2742,13 @@ var DefaultAssetLibrary = function() {
 		_this54.h[id] = id;
 	}
 	var _this55 = this.type;
-	var value27 = "MUSIC";
+	var value27 = "SOUND";
 	if(__map_reserved[id] != null) {
 		_this55.setReserved(id,value27);
 	} else {
 		_this55.h[id] = value27;
 	}
-	id = "assets/sounds/correct.ogg";
+	id = "assets/sounds/incorrect.ogg";
 	var _this56 = this.path;
 	if(__map_reserved[id] != null) {
 		_this56.setReserved(id,id);
@@ -2690,7 +2762,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this57.h[id] = value28;
 	}
-	id = "assets/sounds/incorrect.mp3";
+	id = "assets/sounds/sounds-go-here.txt";
 	var _this58 = this.path;
 	if(__map_reserved[id] != null) {
 		_this58.setReserved(id,id);
@@ -2698,13 +2770,13 @@ var DefaultAssetLibrary = function() {
 		_this58.h[id] = id;
 	}
 	var _this59 = this.type;
-	var value29 = "MUSIC";
+	var value29 = "TEXT";
 	if(__map_reserved[id] != null) {
 		_this59.setReserved(id,value29);
 	} else {
 		_this59.h[id] = value29;
 	}
-	id = "assets/sounds/incorrect.ogg";
+	id = "assets/sounds/words/book-arabic.ogg";
 	var _this60 = this.path;
 	if(__map_reserved[id] != null) {
 		_this60.setReserved(id,id);
@@ -2718,7 +2790,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this61.h[id] = value30;
 	}
-	id = "assets/sounds/sounds-go-here.txt";
+	id = "assets/sounds/words/book-english.ogg";
 	var _this62 = this.path;
 	if(__map_reserved[id] != null) {
 		_this62.setReserved(id,id);
@@ -2726,13 +2798,13 @@ var DefaultAssetLibrary = function() {
 		_this62.h[id] = id;
 	}
 	var _this63 = this.type;
-	var value31 = "TEXT";
+	var value31 = "SOUND";
 	if(__map_reserved[id] != null) {
 		_this63.setReserved(id,value31);
 	} else {
 		_this63.h[id] = value31;
 	}
-	id = "flixel/sounds/beep.ogg";
+	id = "assets/sounds/words/charity-arabic.ogg";
 	var _this64 = this.path;
 	if(__map_reserved[id] != null) {
 		_this64.setReserved(id,id);
@@ -2746,7 +2818,7 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this65.h[id] = value32;
 	}
-	id = "flixel/sounds/flixel.ogg";
+	id = "assets/sounds/words/charity-english.ogg";
 	var _this66 = this.path;
 	if(__map_reserved[id] != null) {
 		_this66.setReserved(id,id);
@@ -2760,37 +2832,35 @@ var DefaultAssetLibrary = function() {
 	} else {
 		_this67.h[id] = value33;
 	}
-	id = "flixel/fonts/nokiafc22.ttf";
-	var _this68 = this.className;
-	var value34 = _$_$ASSET_$_$flixel_$fonts_$nokiafc22_$ttf;
+	id = "assets/sounds/words/christians-arabic.ogg";
+	var _this68 = this.path;
 	if(__map_reserved[id] != null) {
-		_this68.setReserved(id,value34);
+		_this68.setReserved(id,id);
 	} else {
-		_this68.h[id] = value34;
+		_this68.h[id] = id;
 	}
 	var _this69 = this.type;
-	var value35 = "FONT";
+	var value34 = "SOUND";
 	if(__map_reserved[id] != null) {
-		_this69.setReserved(id,value35);
+		_this69.setReserved(id,value34);
 	} else {
-		_this69.h[id] = value35;
+		_this69.h[id] = value34;
 	}
-	id = "flixel/fonts/monsterrat.ttf";
-	var _this70 = this.className;
-	var value36 = _$_$ASSET_$_$flixel_$fonts_$monsterrat_$ttf;
+	id = "assets/sounds/words/christians-english.ogg";
+	var _this70 = this.path;
 	if(__map_reserved[id] != null) {
-		_this70.setReserved(id,value36);
+		_this70.setReserved(id,id);
 	} else {
-		_this70.h[id] = value36;
+		_this70.h[id] = id;
 	}
 	var _this71 = this.type;
-	var value37 = "FONT";
+	var value35 = "SOUND";
 	if(__map_reserved[id] != null) {
-		_this71.setReserved(id,value37);
+		_this71.setReserved(id,value35);
 	} else {
-		_this71.h[id] = value37;
+		_this71.h[id] = value35;
 	}
-	id = "flixel/images/ui/button.png";
+	id = "assets/sounds/words/colour-arabic.ogg";
 	var _this72 = this.path;
 	if(__map_reserved[id] != null) {
 		_this72.setReserved(id,id);
@@ -2798,13 +2868,13 @@ var DefaultAssetLibrary = function() {
 		_this72.h[id] = id;
 	}
 	var _this73 = this.type;
-	var value38 = "IMAGE";
+	var value36 = "SOUND";
 	if(__map_reserved[id] != null) {
-		_this73.setReserved(id,value38);
+		_this73.setReserved(id,value36);
 	} else {
-		_this73.h[id] = value38;
+		_this73.h[id] = value36;
 	}
-	id = "flixel/images/logo/default.png";
+	id = "assets/sounds/words/colour-english.ogg";
 	var _this74 = this.path;
 	if(__map_reserved[id] != null) {
 		_this74.setReserved(id,id);
@@ -2812,11 +2882,517 @@ var DefaultAssetLibrary = function() {
 		_this74.h[id] = id;
 	}
 	var _this75 = this.type;
-	var value39 = "IMAGE";
+	var value37 = "SOUND";
 	if(__map_reserved[id] != null) {
-		_this75.setReserved(id,value39);
+		_this75.setReserved(id,value37);
 	} else {
-		_this75.h[id] = value39;
+		_this75.h[id] = value37;
+	}
+	id = "assets/sounds/words/devils-arabic.ogg";
+	var _this76 = this.path;
+	if(__map_reserved[id] != null) {
+		_this76.setReserved(id,id);
+	} else {
+		_this76.h[id] = id;
+	}
+	var _this77 = this.type;
+	var value38 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this77.setReserved(id,value38);
+	} else {
+		_this77.h[id] = value38;
+	}
+	id = "assets/sounds/words/devils-english.ogg";
+	var _this78 = this.path;
+	if(__map_reserved[id] != null) {
+		_this78.setReserved(id,id);
+	} else {
+		_this78.h[id] = id;
+	}
+	var _this79 = this.type;
+	var value39 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this79.setReserved(id,value39);
+	} else {
+		_this79.h[id] = value39;
+	}
+	id = "assets/sounds/words/earth-arabic.ogg";
+	var _this80 = this.path;
+	if(__map_reserved[id] != null) {
+		_this80.setReserved(id,id);
+	} else {
+		_this80.h[id] = id;
+	}
+	var _this81 = this.type;
+	var value40 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this81.setReserved(id,value40);
+	} else {
+		_this81.h[id] = value40;
+	}
+	id = "assets/sounds/words/earth-english.ogg";
+	var _this82 = this.path;
+	if(__map_reserved[id] != null) {
+		_this82.setReserved(id,id);
+	} else {
+		_this82.h[id] = id;
+	}
+	var _this83 = this.type;
+	var value41 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this83.setReserved(id,value41);
+	} else {
+		_this83.h[id] = value41;
+	}
+	id = "assets/sounds/words/heart-arabic.ogg";
+	var _this84 = this.path;
+	if(__map_reserved[id] != null) {
+		_this84.setReserved(id,id);
+	} else {
+		_this84.h[id] = id;
+	}
+	var _this85 = this.type;
+	var value42 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this85.setReserved(id,value42);
+	} else {
+		_this85.h[id] = value42;
+	}
+	id = "assets/sounds/words/heart-english.ogg";
+	var _this86 = this.path;
+	if(__map_reserved[id] != null) {
+		_this86.setReserved(id,id);
+	} else {
+		_this86.h[id] = id;
+	}
+	var _this87 = this.type;
+	var value43 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this87.setReserved(id,value43);
+	} else {
+		_this87.h[id] = value43;
+	}
+	id = "assets/sounds/words/jews-arabic.ogg";
+	var _this88 = this.path;
+	if(__map_reserved[id] != null) {
+		_this88.setReserved(id,id);
+	} else {
+		_this88.h[id] = id;
+	}
+	var _this89 = this.type;
+	var value44 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this89.setReserved(id,value44);
+	} else {
+		_this89.h[id] = value44;
+	}
+	id = "assets/sounds/words/jews-english.ogg";
+	var _this90 = this.path;
+	if(__map_reserved[id] != null) {
+		_this90.setReserved(id,id);
+	} else {
+		_this90.h[id] = id;
+	}
+	var _this91 = this.type;
+	var value45 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this91.setReserved(id,value45);
+	} else {
+		_this91.h[id] = value45;
+	}
+	id = "assets/sounds/words/magic-arabic.ogg";
+	var _this92 = this.path;
+	if(__map_reserved[id] != null) {
+		_this92.setReserved(id,id);
+	} else {
+		_this92.h[id] = id;
+	}
+	var _this93 = this.type;
+	var value46 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this93.setReserved(id,value46);
+	} else {
+		_this93.h[id] = value46;
+	}
+	id = "assets/sounds/words/magic-english.ogg";
+	var _this94 = this.path;
+	if(__map_reserved[id] != null) {
+		_this94.setReserved(id,id);
+	} else {
+		_this94.h[id] = id;
+	}
+	var _this95 = this.type;
+	var value47 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this95.setReserved(id,value47);
+	} else {
+		_this95.h[id] = value47;
+	}
+	id = "assets/sounds/words/man-arabic.ogg";
+	var _this96 = this.path;
+	if(__map_reserved[id] != null) {
+		_this96.setReserved(id,id);
+	} else {
+		_this96.h[id] = id;
+	}
+	var _this97 = this.type;
+	var value48 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this97.setReserved(id,value48);
+	} else {
+		_this97.h[id] = value48;
+	}
+	id = "assets/sounds/words/man-english.ogg";
+	var _this98 = this.path;
+	if(__map_reserved[id] != null) {
+		_this98.setReserved(id,id);
+	} else {
+		_this98.h[id] = id;
+	}
+	var _this99 = this.type;
+	var value49 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this99.setReserved(id,value49);
+	} else {
+		_this99.h[id] = value49;
+	}
+	id = "assets/sounds/words/one-arabic.ogg";
+	var _this100 = this.path;
+	if(__map_reserved[id] != null) {
+		_this100.setReserved(id,id);
+	} else {
+		_this100.h[id] = id;
+	}
+	var _this101 = this.type;
+	var value50 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this101.setReserved(id,value50);
+	} else {
+		_this101.h[id] = value50;
+	}
+	id = "assets/sounds/words/one-english.ogg";
+	var _this102 = this.path;
+	if(__map_reserved[id] != null) {
+		_this102.setReserved(id,id);
+	} else {
+		_this102.h[id] = id;
+	}
+	var _this103 = this.type;
+	var value51 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this103.setReserved(id,value51);
+	} else {
+		_this103.h[id] = value51;
+	}
+	id = "assets/sounds/words/paradise-arabic.ogg";
+	var _this104 = this.path;
+	if(__map_reserved[id] != null) {
+		_this104.setReserved(id,id);
+	} else {
+		_this104.h[id] = id;
+	}
+	var _this105 = this.type;
+	var value52 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this105.setReserved(id,value52);
+	} else {
+		_this105.h[id] = value52;
+	}
+	id = "assets/sounds/words/paradise-english.ogg";
+	var _this106 = this.path;
+	if(__map_reserved[id] != null) {
+		_this106.setReserved(id,id);
+	} else {
+		_this106.h[id] = id;
+	}
+	var _this107 = this.type;
+	var value53 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this107.setReserved(id,value53);
+	} else {
+		_this107.h[id] = value53;
+	}
+	id = "assets/sounds/words/people-arabic.ogg";
+	var _this108 = this.path;
+	if(__map_reserved[id] != null) {
+		_this108.setReserved(id,id);
+	} else {
+		_this108.h[id] = id;
+	}
+	var _this109 = this.type;
+	var value54 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this109.setReserved(id,value54);
+	} else {
+		_this109.h[id] = value54;
+	}
+	id = "assets/sounds/words/people-english.ogg";
+	var _this110 = this.path;
+	if(__map_reserved[id] != null) {
+		_this110.setReserved(id,id);
+	} else {
+		_this110.h[id] = id;
+	}
+	var _this111 = this.type;
+	var value55 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this111.setReserved(id,value55);
+	} else {
+		_this111.h[id] = value55;
+	}
+	id = "assets/sounds/words/prayer-arabic.ogg";
+	var _this112 = this.path;
+	if(__map_reserved[id] != null) {
+		_this112.setReserved(id,id);
+	} else {
+		_this112.h[id] = id;
+	}
+	var _this113 = this.type;
+	var value56 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this113.setReserved(id,value56);
+	} else {
+		_this113.h[id] = value56;
+	}
+	id = "assets/sounds/words/prayer-english.ogg";
+	var _this114 = this.path;
+	if(__map_reserved[id] != null) {
+		_this114.setReserved(id,id);
+	} else {
+		_this114.h[id] = id;
+	}
+	var _this115 = this.type;
+	var value57 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this115.setReserved(id,value57);
+	} else {
+		_this115.h[id] = value57;
+	}
+	id = "assets/sounds/words/seeing-arabic.ogg";
+	var _this116 = this.path;
+	if(__map_reserved[id] != null) {
+		_this116.setReserved(id,id);
+	} else {
+		_this116.h[id] = id;
+	}
+	var _this117 = this.type;
+	var value58 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this117.setReserved(id,value58);
+	} else {
+		_this117.h[id] = value58;
+	}
+	id = "assets/sounds/words/seeing-english.ogg";
+	var _this118 = this.path;
+	if(__map_reserved[id] != null) {
+		_this118.setReserved(id,id);
+	} else {
+		_this118.h[id] = id;
+	}
+	var _this119 = this.type;
+	var value59 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this119.setReserved(id,value59);
+	} else {
+		_this119.h[id] = value59;
+	}
+	id = "assets/sounds/words/skies-arabic.ogg";
+	var _this120 = this.path;
+	if(__map_reserved[id] != null) {
+		_this120.setReserved(id,id);
+	} else {
+		_this120.h[id] = id;
+	}
+	var _this121 = this.type;
+	var value60 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this121.setReserved(id,value60);
+	} else {
+		_this121.h[id] = value60;
+	}
+	id = "assets/sounds/words/skies-english.ogg";
+	var _this122 = this.path;
+	if(__map_reserved[id] != null) {
+		_this122.setReserved(id,id);
+	} else {
+		_this122.h[id] = id;
+	}
+	var _this123 = this.type;
+	var value61 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this123.setReserved(id,value61);
+	} else {
+		_this123.h[id] = value61;
+	}
+	id = "assets/sounds/words/teaches-arabic.ogg";
+	var _this124 = this.path;
+	if(__map_reserved[id] != null) {
+		_this124.setReserved(id,id);
+	} else {
+		_this124.h[id] = id;
+	}
+	var _this125 = this.type;
+	var value62 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this125.setReserved(id,value62);
+	} else {
+		_this125.h[id] = value62;
+	}
+	id = "assets/sounds/words/teaches-english.ogg";
+	var _this126 = this.path;
+	if(__map_reserved[id] != null) {
+		_this126.setReserved(id,id);
+	} else {
+		_this126.h[id] = id;
+	}
+	var _this127 = this.type;
+	var value63 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this127.setReserved(id,value63);
+	} else {
+		_this127.h[id] = value63;
+	}
+	id = "assets/sounds/words/thousand-arabic.ogg";
+	var _this128 = this.path;
+	if(__map_reserved[id] != null) {
+		_this128.setReserved(id,id);
+	} else {
+		_this128.h[id] = id;
+	}
+	var _this129 = this.type;
+	var value64 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this129.setReserved(id,value64);
+	} else {
+		_this129.h[id] = value64;
+	}
+	id = "assets/sounds/words/thousand-english.ogg";
+	var _this130 = this.path;
+	if(__map_reserved[id] != null) {
+		_this130.setReserved(id,id);
+	} else {
+		_this130.h[id] = id;
+	}
+	var _this131 = this.type;
+	var value65 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this131.setReserved(id,value65);
+	} else {
+		_this131.h[id] = value65;
+	}
+	id = "assets/sounds/words/way-arabic.ogg";
+	var _this132 = this.path;
+	if(__map_reserved[id] != null) {
+		_this132.setReserved(id,id);
+	} else {
+		_this132.h[id] = id;
+	}
+	var _this133 = this.type;
+	var value66 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this133.setReserved(id,value66);
+	} else {
+		_this133.h[id] = value66;
+	}
+	id = "assets/sounds/words/way-english.ogg";
+	var _this134 = this.path;
+	if(__map_reserved[id] != null) {
+		_this134.setReserved(id,id);
+	} else {
+		_this134.h[id] = id;
+	}
+	var _this135 = this.type;
+	var value67 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this135.setReserved(id,value67);
+	} else {
+		_this135.h[id] = value67;
+	}
+	id = "flixel/sounds/beep.ogg";
+	var _this136 = this.path;
+	if(__map_reserved[id] != null) {
+		_this136.setReserved(id,id);
+	} else {
+		_this136.h[id] = id;
+	}
+	var _this137 = this.type;
+	var value68 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this137.setReserved(id,value68);
+	} else {
+		_this137.h[id] = value68;
+	}
+	id = "flixel/sounds/flixel.ogg";
+	var _this138 = this.path;
+	if(__map_reserved[id] != null) {
+		_this138.setReserved(id,id);
+	} else {
+		_this138.h[id] = id;
+	}
+	var _this139 = this.type;
+	var value69 = "SOUND";
+	if(__map_reserved[id] != null) {
+		_this139.setReserved(id,value69);
+	} else {
+		_this139.h[id] = value69;
+	}
+	id = "flixel/fonts/nokiafc22.ttf";
+	var _this140 = this.className;
+	var value70 = _$_$ASSET_$_$flixel_$fonts_$nokiafc22_$ttf;
+	if(__map_reserved[id] != null) {
+		_this140.setReserved(id,value70);
+	} else {
+		_this140.h[id] = value70;
+	}
+	var _this141 = this.type;
+	var value71 = "FONT";
+	if(__map_reserved[id] != null) {
+		_this141.setReserved(id,value71);
+	} else {
+		_this141.h[id] = value71;
+	}
+	id = "flixel/fonts/monsterrat.ttf";
+	var _this142 = this.className;
+	var value72 = _$_$ASSET_$_$flixel_$fonts_$monsterrat_$ttf;
+	if(__map_reserved[id] != null) {
+		_this142.setReserved(id,value72);
+	} else {
+		_this142.h[id] = value72;
+	}
+	var _this143 = this.type;
+	var value73 = "FONT";
+	if(__map_reserved[id] != null) {
+		_this143.setReserved(id,value73);
+	} else {
+		_this143.h[id] = value73;
+	}
+	id = "flixel/images/ui/button.png";
+	var _this144 = this.path;
+	if(__map_reserved[id] != null) {
+		_this144.setReserved(id,id);
+	} else {
+		_this144.h[id] = id;
+	}
+	var _this145 = this.type;
+	var value74 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this145.setReserved(id,value74);
+	} else {
+		_this145.h[id] = value74;
+	}
+	id = "flixel/images/logo/default.png";
+	var _this146 = this.path;
+	if(__map_reserved[id] != null) {
+		_this146.setReserved(id,id);
+	} else {
+		_this146.h[id] = id;
+	}
+	var _this147 = this.type;
+	var value75 = "IMAGE";
+	if(__map_reserved[id] != null) {
+		_this147.setReserved(id,value75);
+	} else {
+		_this147.h[id] = value75;
 	}
 	var assetsPrefix = null;
 	if(ApplicationMain.config != null && Object.prototype.hasOwnProperty.call(ApplicationMain.config,"assetsPrefix")) {
@@ -2827,13 +3403,13 @@ var DefaultAssetLibrary = function() {
 		while(k.hasNext()) {
 			var k1 = k.next();
 			var this1 = this.path;
-			var _this76 = this.path;
-			var value40 = assetsPrefix + (__map_reserved[k1] != null ? _this76.getReserved(k1) : _this76.h[k1]);
-			var _this77 = this1;
+			var _this148 = this.path;
+			var value76 = assetsPrefix + (__map_reserved[k1] != null ? _this148.getReserved(k1) : _this148.h[k1]);
+			var _this149 = this1;
 			if(__map_reserved[k1] != null) {
-				_this77.setReserved(k1,value40);
+				_this149.setReserved(k1,value76);
 			} else {
-				_this77.h[k1] = value40;
+				_this149.h[k1] = value76;
 			}
 		}
 	}
@@ -4135,6 +4711,7 @@ helix_core_HelixState.prototype = $extend(flixel_FlxState.prototype,{
 });
 var PlayState = function() {
 	this.cards = [];
+	this.wordSounds = new haxe_ds_StringMap();
 	this.random = new flixel_math_FlxRandom();
 	this.allWords = [];
 	helix_core_HelixState.call(this);
@@ -4149,8 +4726,10 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 	,targetText: null
 	,correctSound: null
 	,incorrectSound: null
+	,wordSounds: null
 	,cards: null
 	,create: function() {
+		var _gthis = this;
 		helix_core_HelixState.prototype.create.call(this);
 		this.correctSound = flixel_FlxG.sound.load("assets/sounds/correct.ogg");
 		this.incorrectSound = flixel_FlxG.sound.load("assets/sounds/incorrect.ogg");
@@ -4162,9 +4741,30 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 			++_g;
 			var w = new Word(word.arabic,word.english);
 			this.allWords.push(w);
+			var this1 = this.wordSounds;
+			var key = "" + Std.string(word.english) + "-english";
+			var value = flixel_FlxG.sound.load("assets/sounds/words/" + Std.string(word.english) + "-english.ogg");
+			var _this = this1;
+			if(__map_reserved[key] != null) {
+				_this.setReserved(key,value);
+			} else {
+				_this.h[key] = value;
+			}
+			var this2 = this.wordSounds;
+			var key1 = "" + Std.string(word.english) + "-arabic";
+			var value1 = flixel_FlxG.sound.load("assets/sounds/words/" + Std.string(word.english) + "-arabic.ogg");
+			var _this1 = this2;
+			if(__map_reserved[key1] != null) {
+				_this1.setReserved(key1,value1);
+			} else {
+				_this1.h[key1] = value1;
+			}
 		}
 		this.generateAndShowRound();
 		this.targetText = new helix_core_HelixText(400,16,this.targetWord.arabic,64);
+		this.targetText.onClick(function() {
+			_gthis.playCurrentWord();
+		});
 	}
 	,update: function(elapsed) {
 		helix_core_HelixState.prototype.update.call(this,elapsed);
@@ -4178,31 +4778,50 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 		if(this.targetText != null) {
 			this.targetText.set_text(this.targetWord.arabic);
 		}
+		this.playCurrentWord();
 		var _g = 0;
 		while(_g < words.length) {
 			var word = [words[_g]];
 			++_g;
-			var card = new Card("assets/images/" + word[0].english + ".png",word[0].arabic,word[0].english,(function(word1) {
+			var card = [new Card("assets/images/" + word[0].english + ".png",word[0].arabic,word[0].english)];
+			var tmp = (function(card1,word1) {
 				return function() {
 					if(word1[0] == _gthis.targetWord) {
 						var _this = _gthis.correctSound;
 						_this.cleanup(_this.autoDestroy,true);
+						_gthis.correctSound.onComplete = (function() {
+							return function() {
+								var key = "" + _gthis.targetWord.english + "-english";
+								var _this1 = _gthis.wordSounds;
+								(__map_reserved[key] != null ? _this1.getReserved(key) : _this1.h[key]).play();
+							};
+						})();
 						_gthis.correctSound.play();
-						haxe_Log.trace("WIN!",{ fileName : "PlayState.hx", lineNumber : 78, className : "PlayState", methodName : "generateAndShowRound"});
+						haxe_Log.trace("WIN!",{ fileName : "PlayState.hx", lineNumber : 92, className : "PlayState", methodName : "generateAndShowRound"});
+						_gthis.tweenCards();
 					} else {
-						var _this1 = _gthis.incorrectSound;
-						_this1.cleanup(_this1.autoDestroy,true);
+						var _this2 = _gthis.incorrectSound;
+						_this2.cleanup(_this2.autoDestroy,true);
+						_gthis.incorrectSound.onComplete = (function(word2) {
+							return function() {
+								var key1 = "" + word2[0].english + "-arabic";
+								var _this3 = _gthis.wordSounds;
+								(__map_reserved[key1] != null ? _this3.getReserved(key1) : _this3.h[key1]).play();
+							};
+						})(word1);
 						_gthis.incorrectSound.play();
-						haxe_Log.trace("NO! You clicked " + word1[0].arabic + ", should have clicked " + _gthis.targetWord.english + "!",{ fileName : "PlayState.hx", lineNumber : 84, className : "PlayState", methodName : "generateAndShowRound"});
+						haxe_Log.trace("NO!!",{ fileName : "PlayState.hx", lineNumber : 104, className : "PlayState", methodName : "generateAndShowRound"});
+						_gthis.fadeCardIntoOblivion(card1[0]);
 					}
-					_gthis.tweenCards();
 				};
-			})(word));
-			this.add(card);
-			card.set_x(16 + i * card.get_width() + i * 16);
-			card.set_y(128);
+			})(card,word);
+			card[0].onClick(tmp);
+			this.add(card[0]);
+			var tmp1 = 16 + i * card[0].get_width() + i * 16;
+			card[0].set_x(tmp1);
+			card[0].set_y(128);
 			++i;
-			this.cards.push(card);
+			this.cards.push(card[0]);
 		}
 	}
 	,tweenCards: function() {
@@ -4225,16 +4844,24 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 					};
 				})(card));
 			} else {
-				var card2 = card[0];
-				var tmp = (function(card3) {
-					return function(tween) {
-						HxOverrides.remove(_gthis.cards,card3[0]);
-						card3[0].destroy();
-					};
-				})(card);
-				flixel_tweens_FlxTween.tween(card2,{ alpha : 0},1,{ onComplete : tmp});
+				this.fadeCardIntoOblivion(card[0]);
 			}
 		}
+	}
+	,fadeCardIntoOblivion: function(card) {
+		var _gthis = this;
+		flixel_tweens_FlxTween.tween(card,{ alpha : 0},1,{ onComplete : function(tween) {
+			HxOverrides.remove(_gthis.cards,card);
+			card.destroy();
+		}});
+	}
+	,playCurrentWord: function() {
+		var key = "" + this.targetWord.english + "-arabic";
+		var _this = this.wordSounds;
+		var sound = __map_reserved[key] != null ? _this.getReserved(key) : _this.h[key];
+		haxe_Log.trace("Playing " + this.targetWord.english + "-arabic",{ fileName : "PlayState.hx", lineNumber : 152, className : "PlayState", methodName : "playCurrentWord"});
+		sound.cleanup(sound.autoDestroy,true);
+		sound.play();
 	}
 	,__class__: PlayState
 });
@@ -7238,10 +7865,9 @@ flixel_group_FlxTypedSpriteGroup.prototype = $extend(flixel_FlxSprite.prototype,
 	,__class__: flixel_group_FlxTypedSpriteGroup
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_maxSize:"set_maxSize",get_maxSize:"get_maxSize",get_length:"get_length",get_members:"get_members"})
 });
-var Card = function(imageFile,arabic,english,clickHandler) {
+var Card = function(imageFile,arabic,english) {
 	flixel_group_FlxTypedSpriteGroup.call(this);
 	this.cardBase = new helix_core_HelixSprite("assets/images/card-base.png");
-	helix_core_HelixSpriteFluentApi.onClick(this.cardBase,clickHandler);
 	this.add(this.cardBase);
 	this.arabicText = new helix_core_HelixText(8,8,arabic,32);
 	var _g = this.arabicText;
@@ -7270,6 +7896,9 @@ Card.prototype = $extend(flixel_group_FlxTypedSpriteGroup.prototype,{
 	,image: null
 	,englishText: null
 	,arabicText: null
+	,onClick: function(callback) {
+		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,callback);
+	}
 	,__class__: Card
 });
 var Reflect = function() { };
@@ -82470,7 +83099,6 @@ AssetPaths.card_cover__png = "assets/images/card-cover.png";
 AssetPaths.charity__png = "assets/images/charity.png";
 AssetPaths.christians__png = "assets/images/christians.png";
 AssetPaths.colour__png = "assets/images/colour.png";
-AssetPaths.community__png = "assets/images/community.png";
 AssetPaths.devils__png = "assets/images/devils.png";
 AssetPaths.earth__png = "assets/images/earth.png";
 AssetPaths.heart__png = "assets/images/heart.png";
@@ -82480,6 +83108,7 @@ AssetPaths.magic__png = "assets/images/magic.png";
 AssetPaths.man__png = "assets/images/man.png";
 AssetPaths.one__png = "assets/images/one.png";
 AssetPaths.paradise__png = "assets/images/paradise.png";
+AssetPaths.people__png = "assets/images/people.png";
 AssetPaths.prayer__png = "assets/images/prayer.png";
 AssetPaths.seeing__png = "assets/images/seeing.png";
 AssetPaths.skies__png = "assets/images/skies.png";
@@ -82487,11 +83116,47 @@ AssetPaths.teaches__png = "assets/images/teaches.png";
 AssetPaths.thousand__png = "assets/images/thousand.png";
 AssetPaths.way__png = "assets/images/way.png";
 AssetPaths.music_goes_here__txt = "assets/music/music-goes-here.txt";
-AssetPaths.correct__mp3 = "assets/sounds/correct.mp3";
 AssetPaths.correct__ogg = "assets/sounds/correct.ogg";
-AssetPaths.incorrect__mp3 = "assets/sounds/incorrect.mp3";
 AssetPaths.incorrect__ogg = "assets/sounds/incorrect.ogg";
 AssetPaths.sounds_go_here__txt = "assets/sounds/sounds-go-here.txt";
+AssetPaths.book_arabic__ogg = "assets/sounds/words/book-arabic.ogg";
+AssetPaths.book_english__ogg = "assets/sounds/words/book-english.ogg";
+AssetPaths.charity_arabic__ogg = "assets/sounds/words/charity-arabic.ogg";
+AssetPaths.charity_english__ogg = "assets/sounds/words/charity-english.ogg";
+AssetPaths.christians_arabic__ogg = "assets/sounds/words/christians-arabic.ogg";
+AssetPaths.christians_english__ogg = "assets/sounds/words/christians-english.ogg";
+AssetPaths.colour_arabic__ogg = "assets/sounds/words/colour-arabic.ogg";
+AssetPaths.colour_english__ogg = "assets/sounds/words/colour-english.ogg";
+AssetPaths.devils_arabic__ogg = "assets/sounds/words/devils-arabic.ogg";
+AssetPaths.devils_english__ogg = "assets/sounds/words/devils-english.ogg";
+AssetPaths.earth_arabic__ogg = "assets/sounds/words/earth-arabic.ogg";
+AssetPaths.earth_english__ogg = "assets/sounds/words/earth-english.ogg";
+AssetPaths.heart_arabic__ogg = "assets/sounds/words/heart-arabic.ogg";
+AssetPaths.heart_english__ogg = "assets/sounds/words/heart-english.ogg";
+AssetPaths.jews_arabic__ogg = "assets/sounds/words/jews-arabic.ogg";
+AssetPaths.jews_english__ogg = "assets/sounds/words/jews-english.ogg";
+AssetPaths.magic_arabic__ogg = "assets/sounds/words/magic-arabic.ogg";
+AssetPaths.magic_english__ogg = "assets/sounds/words/magic-english.ogg";
+AssetPaths.man_arabic__ogg = "assets/sounds/words/man-arabic.ogg";
+AssetPaths.man_english__ogg = "assets/sounds/words/man-english.ogg";
+AssetPaths.one_arabic__ogg = "assets/sounds/words/one-arabic.ogg";
+AssetPaths.one_english__ogg = "assets/sounds/words/one-english.ogg";
+AssetPaths.paradise_arabic__ogg = "assets/sounds/words/paradise-arabic.ogg";
+AssetPaths.paradise_english__ogg = "assets/sounds/words/paradise-english.ogg";
+AssetPaths.people_arabic__ogg = "assets/sounds/words/people-arabic.ogg";
+AssetPaths.people_english__ogg = "assets/sounds/words/people-english.ogg";
+AssetPaths.prayer_arabic__ogg = "assets/sounds/words/prayer-arabic.ogg";
+AssetPaths.prayer_english__ogg = "assets/sounds/words/prayer-english.ogg";
+AssetPaths.seeing_arabic__ogg = "assets/sounds/words/seeing-arabic.ogg";
+AssetPaths.seeing_english__ogg = "assets/sounds/words/seeing-english.ogg";
+AssetPaths.skies_arabic__ogg = "assets/sounds/words/skies-arabic.ogg";
+AssetPaths.skies_english__ogg = "assets/sounds/words/skies-english.ogg";
+AssetPaths.teaches_arabic__ogg = "assets/sounds/words/teaches-arabic.ogg";
+AssetPaths.teaches_english__ogg = "assets/sounds/words/teaches-english.ogg";
+AssetPaths.thousand_arabic__ogg = "assets/sounds/words/thousand-arabic.ogg";
+AssetPaths.thousand_english__ogg = "assets/sounds/words/thousand-english.ogg";
+AssetPaths.way_arabic__ogg = "assets/sounds/words/way-arabic.ogg";
+AssetPaths.way_english__ogg = "assets/sounds/words/way-english.ogg";
 openfl_text_Font.__registeredFonts = [];
 PlayState.TARGET_FONT_SIZE = 64;
 PlayState.PADDING = 16;
