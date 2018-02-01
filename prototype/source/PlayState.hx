@@ -28,6 +28,9 @@ class PlayState extends HelixState
 	
 	private var correctSound:FlxSound;
 	private var incorrectSound:FlxSound;
+	
+	private var wordSounds = new Map<String, FlxSound>();
+
 	private var cards = new Array<Card>();
 
 	override public function create():Void
@@ -44,10 +47,15 @@ class PlayState extends HelixState
 		for (word in words) {
 			var w = new Word(word.arabic, word.english);
 			this.allWords.push(w);
+
+			wordSounds.set('${word.english}-english', FlxG.sound.load('assets/sounds/words/${word.english}-english.ogg'));
+			wordSounds.set('${word.english}-arabic', FlxG.sound.load('assets/sounds/words/${word.english}-arabic.ogg'));
 		}
 
 		this.generateAndShowRound();
-		this.targetText = new HelixText(400, PADDING, this.targetWord.arabic, TARGET_FONT_SIZE);				
+
+		this.targetText = new HelixText(400, PADDING, this.targetWord.arabic, TARGET_FONT_SIZE);
+		this.targetText.onClick(function() { this.playCurrentWord(); });
 	}
 
 	override public function update(elapsed:Float):Void
@@ -62,10 +70,13 @@ class PlayState extends HelixState
 		var i:Int = 0;
 
 		this.targetWord = words[0];
+
 		if (this.targetText != null)
 		{
-			this.targetText.text = targetWord.arabic;
+			this.targetText.text = targetWord.arabic;				
 		}
+
+		this.playCurrentWord();
 
 		for (word in words)
 		{
@@ -82,7 +93,7 @@ class PlayState extends HelixState
 				{
 					this.incorrectSound.stop();
 					this.incorrectSound.play();
-					trace('NO! You clicked ${word.arabic}, should have clicked ${targetWord.english}!');
+					trace('NO!!');
 					this.fadeCardIntoOblivion(card);
 				}
 			});
@@ -125,6 +136,14 @@ class PlayState extends HelixState
 			this.cards.remove(card);
 			card.destroy();
 		}});
+	}
+
+	private function playCurrentWord():Void
+	{
+		var sound = this.wordSounds.get('${this.targetWord.english}-arabic');
+		trace('Playing ${this.targetWord.english}-arabic');
+		sound.stop();
+		sound.play();
 	}
 }
 
