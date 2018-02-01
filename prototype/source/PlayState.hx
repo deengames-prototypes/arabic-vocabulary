@@ -69,22 +69,22 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', 
-				word.arabic, word.english, function() {
+			var card = new Card('assets/images/${word.english}.png', word.arabic, word.english);
+			card.onClick(function() {
 				if (word == targetWord)
 				{
 					this.correctSound.stop();
 					this.correctSound.play();
 					trace("WIN!");
+					this.tweenCards();
 				}
 				else
 				{
 					this.incorrectSound.stop();
 					this.incorrectSound.play();
 					trace('NO! You clicked ${word.arabic}, should have clicked ${targetWord.english}!');
+					this.fadeCardIntoOblivion(card);
 				}
-
-				this.tweenCards();
 			});
 
 			this.add(card);
@@ -114,13 +114,17 @@ class PlayState extends HelixState
 			}
 			else
 			{
-				// Fade to oblivion
-				FlxTween.tween(card, { alpha: 0 }, 1, { onComplete: function(tween) { 
-					this.cards.remove(card);
-					card.destroy();
-				}});
+				this.fadeCardIntoOblivion(card);
 			}
 		}
+	}
+
+	private function fadeCardIntoOblivion(card:Card):Void
+	{
+		FlxTween.tween(card, { alpha: 0 }, 1, { onComplete: function(tween) { 
+			this.cards.remove(card);
+			card.destroy();
+		}});
 	}
 }
 
@@ -148,12 +152,11 @@ class Card extends FlxSpriteGroup
 	public var englishText:HelixText;
 	public var arabicText:HelixText;
 
-	public function new(imageFile:String, arabic:String, english:String, clickHandler:Void->Void)
+	public function new(imageFile:String, arabic:String, english:String)
 	{
 		super();
 
-		this.cardBase = new HelixSprite("assets/images/card-base.png");
-		this.cardBase.onClick(clickHandler);
+		this.cardBase = new HelixSprite("assets/images/card-base.png");		
 		this.add(cardBase);
 
 		this.arabicText = new HelixText(PADDING, PADDING, arabic, DEFAULT_FONT_SIZE);
@@ -174,5 +177,10 @@ class Card extends FlxSpriteGroup
 		this.cover = new HelixSprite("assets/images/card-cover.png");
 		cover.alpha = 0;		
 		this.add(cover);
+	}
+
+	public function onClick(callback:Void->Void):Void
+	{
+		this.cardBase.onClick(callback);
 	}
 }
