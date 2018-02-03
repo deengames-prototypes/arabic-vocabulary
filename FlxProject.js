@@ -200,7 +200,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "11", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
+	ApplicationMain.config = { build : "14", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4774,7 +4774,7 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 		var numWords = helix_data_Config.get("wordsPerRound") | 0;
 		var words = haxesharp_collections_Linq.take(haxesharp_collections_Linq.shuffle(this.allWords),numWords);
 		var i = 0;
-		this.targetWord = words[0];
+		this.targetWord = this.random.getObject_Word(words);
 		if(this.targetText != null) {
 			this.targetText.set_text(this.targetWord.arabic);
 		}
@@ -12220,7 +12220,52 @@ flixel_math_FlxRandom.rangeBound = function(Value) {
 	return (lowerBound > 2147483646 ? 2147483646 : lowerBound) | 0;
 };
 flixel_math_FlxRandom.prototype = {
-	getObject_flixel_group_FlxTypedGroup_T: function(Objects,WeightsArray,StartIndex,EndIndex) {
+	getObject_Word: function(Objects,WeightsArray,StartIndex,EndIndex) {
+		if(StartIndex == null) {
+			StartIndex = 0;
+		}
+		var selected = null;
+		if(Objects.length != 0) {
+			if(WeightsArray == null) {
+				var _g = [];
+				var _g2 = 0;
+				var _g1 = Objects.length;
+				while(_g2 < _g1) {
+					var i = _g2++;
+					_g.push(1);
+				}
+				WeightsArray = _g;
+			}
+			if(EndIndex == null) {
+				EndIndex = Objects.length - 1;
+			}
+			var Max = Objects.length - 1;
+			var lowerBound = StartIndex < 0 ? 0 : StartIndex;
+			StartIndex = (Max != null && lowerBound > Max ? Max : lowerBound) | 0;
+			var Max1 = Objects.length - 1;
+			var lowerBound1 = EndIndex < 0 ? 0 : EndIndex;
+			EndIndex = (Max1 != null && lowerBound1 > Max1 ? Max1 : lowerBound1) | 0;
+			if(EndIndex < StartIndex) {
+				StartIndex += EndIndex;
+				EndIndex = StartIndex - EndIndex;
+				StartIndex -= EndIndex;
+			}
+			if(EndIndex > WeightsArray.length - 1) {
+				EndIndex = WeightsArray.length - 1;
+			}
+			var _g3 = [];
+			var _g21 = StartIndex;
+			var _g11 = EndIndex + 1;
+			while(_g21 < _g11) {
+				var i1 = _g21++;
+				_g3.push(WeightsArray[i1]);
+			}
+			flixel_math_FlxRandom._arrayFloatHelper = _g3;
+			selected = Objects[StartIndex + this.weightedPick(flixel_math_FlxRandom._arrayFloatHelper)];
+		}
+		return selected;
+	}
+	,getObject_flixel_group_FlxTypedGroup_T: function(Objects,WeightsArray,StartIndex,EndIndex) {
 		if(StartIndex == null) {
 			StartIndex = 0;
 		}
