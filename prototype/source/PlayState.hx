@@ -84,9 +84,14 @@ class PlayState extends HelixState
 			card.onClick(function() {
 				if (word == targetWord)
 				{
+					// Correct => Arabic => English
 					this.correctSound.stop();
 					this.correctSound.onComplete = function() {
-						this.wordSounds.get('${targetWord.english}-english').play();
+						var wordSound = this.wordSounds.get('${targetWord.english}-arabic');
+						wordSound.onComplete = function() {
+							this.wordSounds.get('${targetWord.english}-english').play();
+						}
+						wordSound.play();
 					}
 					this.correctSound.play();
 					trace("WIN!");
