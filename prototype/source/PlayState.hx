@@ -89,9 +89,15 @@ class PlayState extends HelixState
 					this.correctSound.onComplete = function() {
 						var wordSound = this.wordSounds.get('${targetWord.english}-arabic');
 						wordSound.onComplete = function() {
-							this.wordSounds.get('${targetWord.english}-english').play();
+							// If the player clicks fast, it'll be the next round and we play
+							// the wrong word by msitake.
+							if (word == targetWord) {
+								this.wordSounds.get('${targetWord.english}-english').play();
+							}
 						}
-						wordSound.play();
+						if (word == targetWord) {
+							wordSound.play();
+						}
 					}
 					this.correctSound.play();
 					trace("WIN!");
