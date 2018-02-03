@@ -200,7 +200,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "7", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
+	ApplicationMain.config = { build : "11", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4791,26 +4791,34 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 						_this.cleanup(_this.autoDestroy,true);
 						_gthis.correctSound.onComplete = (function() {
 							return function() {
-								var key = "" + _gthis.targetWord.english + "-english";
+								var key = "" + _gthis.targetWord.english + "-arabic";
 								var _this1 = _gthis.wordSounds;
-								(__map_reserved[key] != null ? _this1.getReserved(key) : _this1.h[key]).play();
+								var wordSound = __map_reserved[key] != null ? _this1.getReserved(key) : _this1.h[key];
+								wordSound.onComplete = (function() {
+									return function() {
+										var key1 = "" + _gthis.targetWord.english + "-english";
+										var _this2 = _gthis.wordSounds;
+										(__map_reserved[key1] != null ? _this2.getReserved(key1) : _this2.h[key1]).play();
+									};
+								})();
+								wordSound.play();
 							};
 						})();
 						_gthis.correctSound.play();
-						haxe_Log.trace("WIN!",{ fileName : "PlayState.hx", lineNumber : 92, className : "PlayState", methodName : "generateAndShowRound"});
+						haxe_Log.trace("WIN!",{ fileName : "PlayState.hx", lineNumber : 97, className : "PlayState", methodName : "generateAndShowRound"});
 						_gthis.tweenCards();
 					} else {
-						var _this2 = _gthis.incorrectSound;
-						_this2.cleanup(_this2.autoDestroy,true);
+						var _this3 = _gthis.incorrectSound;
+						_this3.cleanup(_this3.autoDestroy,true);
 						_gthis.incorrectSound.onComplete = (function(word2) {
 							return function() {
-								var key1 = "" + word2[0].english + "-arabic";
-								var _this3 = _gthis.wordSounds;
-								(__map_reserved[key1] != null ? _this3.getReserved(key1) : _this3.h[key1]).play();
+								var key2 = "" + word2[0].english + "-arabic";
+								var _this4 = _gthis.wordSounds;
+								(__map_reserved[key2] != null ? _this4.getReserved(key2) : _this4.h[key2]).play();
 							};
 						})(word1);
 						_gthis.incorrectSound.play();
-						haxe_Log.trace("NO!!",{ fileName : "PlayState.hx", lineNumber : 104, className : "PlayState", methodName : "generateAndShowRound"});
+						haxe_Log.trace("NO!!",{ fileName : "PlayState.hx", lineNumber : 109, className : "PlayState", methodName : "generateAndShowRound"});
 						_gthis.fadeCardIntoOblivion(card1[0]);
 					}
 				};
@@ -4859,7 +4867,7 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 		var key = "" + this.targetWord.english + "-arabic";
 		var _this = this.wordSounds;
 		var sound = __map_reserved[key] != null ? _this.getReserved(key) : _this.h[key];
-		haxe_Log.trace("Playing " + this.targetWord.english + "-arabic",{ fileName : "PlayState.hx", lineNumber : 152, className : "PlayState", methodName : "playCurrentWord"});
+		haxe_Log.trace("Playing " + this.targetWord.english + "-arabic",{ fileName : "PlayState.hx", lineNumber : 157, className : "PlayState", methodName : "playCurrentWord"});
 		sound.cleanup(sound.autoDestroy,true);
 		sound.play();
 	}
