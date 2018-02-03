@@ -69,7 +69,7 @@ class PlayState extends HelixState
 		var words = this.allWords.shuffle().take(numWords);
 		var i:Int = 0;
 
-		this.targetWord = words[0];
+		this.targetWord = random.getObject(words);
 
 		if (this.targetText != null)
 		{
