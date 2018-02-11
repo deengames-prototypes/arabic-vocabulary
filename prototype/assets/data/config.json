@@ -1,3 +1,8 @@
 {
+    // Features
+    "wrongWordsAppearMoreOften": true,
+
+    "startingWordFrequency": 5,
+    "wordFrequencyModifier": 1,
     "wordsPerRound": 4
 }

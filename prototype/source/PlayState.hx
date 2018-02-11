@@ -20,8 +20,13 @@ class PlayState extends HelixState
 {
 	private static inline var TARGET_FONT_SIZE = 64;
 	private static inline var PADDING:Int = 16;
+	private static var STARTING_WORD_FREQUENCY:Int = 0;
+	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
 
+	// Must be the same order
 	private var allWords = new Array<Word>();
+	private var wordFrequencies = new Array<Float>();
+
 	private var targetWord:Word;
 	private var random = new FlxRandom();
 	private var targetText:HelixText;
@@ -37,6 +42,9 @@ class PlayState extends HelixState
 	{
 		super.create();
 
+		STARTING_WORD_FREQUENCY = Config.get("startingWordFrequency");
+		WORD_FREQUENCY_MODIFIER = Config.get("wordFrequencyModifier");
+
 		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
@@ -46,7 +54,9 @@ class PlayState extends HelixState
 
 		for (word in words) {
 			var w = new Word(word.arabic, word.english);
+
 			this.allWords.push(w);
+			this.wordFrequencies.push(STARTING_WORD_FREQUENCY);
 
 			wordSounds.set('${word.english}-english', FlxG.sound.load('assets/sounds/words/${word.english}-english.ogg'));
 			wordSounds.set('${word.english}-arabic', FlxG.sound.load('assets/sounds/words/${word.english}-arabic.ogg'));
@@ -65,8 +75,19 @@ class PlayState extends HelixState
 
 	private function generateAndShowRound():Void
 	{
+		trace(wordFrequencies);
 		var numWords:Int = Std.int(Config.get("wordsPerRound"));
-		var words = this.allWords.shuffle().take(numWords);
+		
+		// pick random words based on weight
+		var words = new Array<Word>();
+		while (words.length < numWords)
+		{
+			var nextWord = random.getObject(this.allWords, this.wordFrequencies);
+			if (words.indexOf(nextWord) == -1) {
+				words.push(nextWord);
+			}
+		}
+
 		var i:Int = 0;
 
 		this.targetWord = random.getObject(words);
@@ -82,11 +103,18 @@ class PlayState extends HelixState
 		{
 			var card = new Card('assets/images/${word.english}.png', word.arabic, word.english);
 			card.onClick(function() {
+				var index = this.allWords.indexOf(targetWord);				
 				if (word == targetWord)
 				{
 					// Correct => Arabic => English
 					this.correctSound.stop();
 					this.correctSound.onComplete = function() {
+						// Correct: appear less frequently. The FIRST TIME.
+						this.wordFrequencies[index] -= WORD_FREQUENCY_MODIFIER;
+						if (this.wordFrequencies[index] < 0) {
+							this.wordFrequencies[index] = 0;
+						}
+
 						var wordSound = this.wordSounds.get('${targetWord.english}-arabic');
 						wordSound.onComplete = function() {
 							// If the player clicks fast, it'll be the next round and we play
@@ -100,11 +128,17 @@ class PlayState extends HelixState
 						}
 					}
 					this.correctSound.play();
-					trace("WIN!");
 					this.tweenCards();
 				}
 				else
 				{
+					// Incorrect: target word appears more frequently
+					this.wordFrequencies[index] += WORD_FREQUENCY_MODIFIER;
+					
+					// Word you picked wrongly also appears more frequently
+					var wrongWordIndex = this.allWords.indexOf(word);
+					this.wordFrequencies[wrongWordIndex] += WORD_FREQUENCY_MODIFIER;
+					
 					this.incorrectSound.stop();
 
 					this.incorrectSound.onComplete = function() {
@@ -112,7 +146,6 @@ class PlayState extends HelixState
 					};
 
 					this.incorrectSound.play();					
-					trace('NO!!');
 					this.fadeCardIntoOblivion(card);
 				}
 			});
