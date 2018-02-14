@@ -23,9 +23,11 @@ class PlayState extends HelixState
 	private static var STARTING_WORD_FREQUENCY:Int = 0;
 	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
 
-	// Must be the same order
+	// These two must be the same order
 	private var allWords = new Array<Word>();
 	private var wordFrequencies = new Array<Float>();
+
+	private var mediator:QuestionAnswerMediator;
 
 	private var targetWord:Word;
 	private var random = new FlxRandom();
@@ -48,6 +50,8 @@ class PlayState extends HelixState
 		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
+		this.mediator = new QuestionAnswerMediator(GameMode.AskInArabic);
+		
 		new HelixSprite("assets/images/background.png");
 		
 		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
@@ -57,14 +61,15 @@ class PlayState extends HelixState
 
 			this.allWords.push(w);
 			this.wordFrequencies.push(STARTING_WORD_FREQUENCY);
-
+			
+			// Initialize audio sounds
 			wordSounds.set('${word.english}-english', FlxG.sound.load('assets/sounds/words/${word.english}-english.ogg'));
 			wordSounds.set('${word.english}-arabic', FlxG.sound.load('assets/sounds/words/${word.english}-arabic.ogg'));
 		}
 
 		this.generateAndShowRound();
 
-		this.targetText = new HelixText(400, PADDING, this.targetWord.arabic, TARGET_FONT_SIZE);
+		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
 	}
 
@@ -75,7 +80,6 @@ class PlayState extends HelixState
 
 	private function generateAndShowRound():Void
 	{
-		trace(wordFrequencies);
 		var numWords:Int = Std.int(Config.get("wordsPerRound"));
 		
 		// pick random words based on weight
@@ -94,14 +98,15 @@ class PlayState extends HelixState
 
 		if (this.targetText != null)
 		{
-			this.targetText.text = targetWord.arabic;				
+			this.targetText.text = this.mediator.getQuestion(targetWord);
 		}
 
 		this.playCurrentWord();
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', word.arabic, word.english);
+			var card = new Card('assets/images/${word.english}.png', word);
+
 			card.onClick(function() {
 				var index = this.allWords.indexOf(targetWord);				
 				if (word == targetWord)
@@ -111,16 +116,16 @@ class PlayState extends HelixState
 					this.correctSound.onComplete = function() {
 						// Correct: appear less frequently. The FIRST TIME.
 						this.wordFrequencies[index] -= WORD_FREQUENCY_MODIFIER;
-						if (this.wordFrequencies[index] < 0) {
-							this.wordFrequencies[index] = 0;
+						if (this.wordFrequencies[index] < 1) {
+							this.wordFrequencies[index] = 1;
 						}
 
-						var wordSound = this.wordSounds.get('${targetWord.english}-arabic');
+						var wordSound = this.wordSounds.get('${targetWord.english}-${this.mediator.questionLanguage}');
 						wordSound.onComplete = function() {
 							// If the player clicks fast, it'll be the next round and we play
 							// the wrong word by msitake.
 							if (word == targetWord) {
-								this.wordSounds.get('${targetWord.english}-english').play();
+								this.wordSounds.get('${targetWord.english}-${this.mediator.answerLanguage}').play();
 							}
 						}
 						if (word == targetWord) {
@@ -142,7 +147,7 @@ class PlayState extends HelixState
 					this.incorrectSound.stop();
 
 					this.incorrectSound.onComplete = function() {
-						this.wordSounds.get('${word.english}-arabic').play();
+						this.wordSounds.get('${word.english}-${this.mediator.questionLanguage}').play();
 					};
 
 					this.incorrectSound.play();					
@@ -161,7 +166,7 @@ class PlayState extends HelixState
 
 	private function tweenCards():Void
 	{
-		var rightCard = this.cards.single((c) => c.arabicText.text == this.targetWord.arabic);
+		var rightCard = this.cards.single((c) => c.word == this.targetWord);
 		for (card in this.cards)
 		{
 			if (card == rightCard)
@@ -192,8 +197,7 @@ class PlayState extends HelixState
 
 	private function playCurrentWord():Void
 	{
-		var sound = this.wordSounds.get('${this.targetWord.english}-arabic');
-		trace('Playing ${this.targetWord.english}-arabic');
+		var sound = this.wordSounds.get('${this.targetWord.english}-${this.mediator.questionLanguage}');
 		sound.stop();
 		sound.play();
 	}
@@ -211,26 +215,67 @@ class Word
 	}
 }
 
+// Class that takes a game mode and returns a question/answer.
+// I.e. chooses between Arabic and English for you.
+class QuestionAnswerMediator
+{
+	public var mode(default, null):GameMode;
+	public var questionLanguage(get, null):String;
+	public var answerLanguage(get, null):String;
+
+	public function new(mode:GameMode)
+	{
+		this.mode =  mode;
+	}
+
+	public function getQuestion(word:Word):String
+	{
+		return word.arabic;
+	}
+
+	public function getAnswer(word:Word):String
+	{
+		return word.english;
+	}
+	
+	public function get_questionLanguage():String
+	{
+		return this.mode == GameMode.AskInArabic ? "arabic" : "english";
+	}
+
+	public function get_answerLanguage():String
+	{
+		return this.mode == GameMode.AskInArabic ? "english" : "arabic";
+	}
+}
+
+enum GameMode
+{
+	AskInArabic;
+}
+
 class Card extends FlxSpriteGroup
 {
 	private static inline var CARD_WIDTH_TO_FIT:Float = 200;
 	private static inline var PADDING:Int = 8;
-	public static inline var DEFAULT_FONT_SIZE:Int = 32;
+	private static inline var DEFAULT_FONT_SIZE:Int = 32;
 	
 	public var cardBase:HelixSprite;
 	public var cover:HelixSprite;
 	public var image:HelixSprite;
 	public var englishText:HelixText;
 	public var arabicText:HelixText;
+	public var word:Word;
 
-	public function new(imageFile:String, arabic:String, english:String)
+	public function new(imageFile:String, word:Word)
 	{
 		super();
 
+		this.word = word;
 		this.cardBase = new HelixSprite("assets/images/card-base.png");		
 		this.add(cardBase);
 
-		this.arabicText = new HelixText(PADDING, PADDING, arabic, DEFAULT_FONT_SIZE);
+		this.arabicText = new HelixText(PADDING, PADDING, word.arabic, DEFAULT_FONT_SIZE);
 		arabicText.x += (cardBase.width - arabicText.width)  / 2;
 		this.arabicText.alpha = 0;
 		this.add(arabicText);		
@@ -239,7 +284,7 @@ class Card extends FlxSpriteGroup
 		image.move((cardBase.width - image.width) / 2, (cardBase.height - image.height) / 2);
 		this.add(image);
 
-		this.englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), english, DEFAULT_FONT_SIZE);
+		this.englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), word.english, DEFAULT_FONT_SIZE);
 		englishText.x += (cardBase.width - englishText.width)  / 2;
 		englishText.y -= englishText.height;
 		this.add(englishText);
