@@ -50,7 +50,7 @@ class PlayState extends HelixState
 		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
-		this.mediator = new QuestionAnswerMediator(GameMode.AskInArabic);
+		this.mediator = new QuestionAnswerMediator(GameMode.AskInEnglish);
 		
 		new HelixSprite("assets/images/background.png");
 		
@@ -105,7 +105,7 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', word);
+			var card = new Card('assets/images/${word.english}.png', word, this.mediator.mode);
 
 			card.onClick(function() {
 				var index = this.allWords.indexOf(targetWord);				
@@ -230,12 +230,12 @@ class QuestionAnswerMediator
 
 	public function getQuestion(word:Word):String
 	{
-		return word.arabic;
+		return this.mode == GameMode.AskInArabic ? word.arabic : word.english;
 	}
 
 	public function getAnswer(word:Word):String
 	{
-		return word.english;
+		return this.mode == GameMode.AskInArabic ? word.english : word.arabic;
 	}
 	
 	public function get_questionLanguage():String
@@ -252,6 +252,7 @@ class QuestionAnswerMediator
 enum GameMode
 {
 	AskInArabic;
+	AskInEnglish;
 }
 
 class Card extends FlxSpriteGroup
@@ -267,7 +268,7 @@ class Card extends FlxSpriteGroup
 	public var arabicText:HelixText;
 	public var word:Word;
 
-	public function new(imageFile:String, word:Word)
+	public function new(imageFile:String, word:Word, mode:GameMode)
 	{
 		super();
 
@@ -277,7 +278,7 @@ class Card extends FlxSpriteGroup
 
 		this.arabicText = new HelixText(PADDING, PADDING, word.arabic, DEFAULT_FONT_SIZE);
 		arabicText.x += (cardBase.width - arabicText.width)  / 2;
-		this.arabicText.alpha = 0;
+		this.arabicText.alpha = mode == GameMode.AskInArabic ? 0 : 1;
 		this.add(arabicText);		
 
 		this.image = new HelixSprite(imageFile);
@@ -287,12 +288,8 @@ class Card extends FlxSpriteGroup
 		this.englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), word.english, DEFAULT_FONT_SIZE);
 		englishText.x += (cardBase.width - englishText.width)  / 2;
 		englishText.y -= englishText.height;
+		this.englishText.alpha = mode == GameMode.AskInArabic ? 1 : 0;
 		this.add(englishText);
-
-		// Last so it goes on top
-		this.cover = new HelixSprite("assets/images/card-cover.png");
-		cover.alpha = 0;		
-		this.add(cover);
 	}
 
 	public function onClick(callback:Void->Void):Void
