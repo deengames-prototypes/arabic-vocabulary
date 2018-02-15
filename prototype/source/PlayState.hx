@@ -267,6 +267,7 @@ class Card extends FlxSpriteGroup
 	public var englishText:HelixText;
 	public var arabicText:HelixText;
 	public var word:Word;
+	private var clickable:Bool = true;
 
 	public function new(imageFile:String, word:Word, mode:GameMode)
 	{
@@ -294,6 +295,11 @@ class Card extends FlxSpriteGroup
 
 	public function onClick(callback:Void->Void):Void
 	{
-		this.cardBase.onClick(callback);
+		this.cardBase.onClick(function() {
+			if (this.clickable) {
+				this.clickable = false;
+				callback();
+			}
+		});
 	}
 }
