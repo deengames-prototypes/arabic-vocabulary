@@ -200,7 +200,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "16", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
+	ApplicationMain.config = { build : "35", company : "Deen Games", file : "FlxProject", fps : 60, name : "FlxProject", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "FlxProject", vsync : true, width : 960, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4713,6 +4713,7 @@ var PlayState = function() {
 	this.cards = [];
 	this.wordSounds = new haxe_ds_StringMap();
 	this.random = new flixel_math_FlxRandom();
+	this.wordFrequencies = [];
 	this.allWords = [];
 	helix_core_HelixState.call(this);
 };
@@ -4721,6 +4722,8 @@ PlayState.__name__ = ["PlayState"];
 PlayState.__super__ = helix_core_HelixState;
 PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 	allWords: null
+	,wordFrequencies: null
+	,mediator: null
 	,targetWord: null
 	,random: null
 	,targetText: null
@@ -4731,8 +4734,11 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 	,create: function() {
 		var _gthis = this;
 		helix_core_HelixState.prototype.create.call(this);
+		PlayState.STARTING_WORD_FREQUENCY = helix_data_Config.get("startingWordFrequency");
+		PlayState.WORD_FREQUENCY_MODIFIER = helix_data_Config.get("wordFrequencyModifier");
 		this.correctSound = flixel_FlxG.sound.load("assets/sounds/correct.ogg");
 		this.incorrectSound = flixel_FlxG.sound.load("assets/sounds/incorrect.ogg");
+		this.mediator = new QuestionAnswerMediator(GameMode.AskInEnglish);
 		new helix_core_HelixSprite("assets/images/background.png");
 		var words = JSON.parse(openfl_Assets.getText("assets/data/words.json"));
 		var _g = 0;
@@ -4741,6 +4747,7 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 			++_g;
 			var w = new Word(word.arabic,word.english);
 			this.allWords.push(w);
+			this.wordFrequencies.push(PlayState.STARTING_WORD_FREQUENCY);
 			var this1 = this.wordSounds;
 			var key = "" + Std.string(word.english) + "-english";
 			var value = flixel_FlxG.sound.load("assets/sounds/words/" + Std.string(word.english) + "-english.ogg");
@@ -4761,7 +4768,7 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 			}
 		}
 		this.generateAndShowRound();
-		this.targetText = new helix_core_HelixText(400,16,this.targetWord.arabic,64);
+		this.targetText = new helix_core_HelixText(400,16,this.mediator.getQuestion(this.targetWord),64);
 		this.targetText.onClick(function() {
 			_gthis.playCurrentWord();
 		});
@@ -4772,33 +4779,46 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 	,generateAndShowRound: function() {
 		var _gthis = this;
 		var numWords = helix_data_Config.get("wordsPerRound") | 0;
-		var words = haxesharp_collections_Linq.take(haxesharp_collections_Linq.shuffle(this.allWords),numWords);
+		var words = [];
+		while(words.length < numWords) {
+			var nextWord = this.random.getObject_Word(this.allWords,this.wordFrequencies);
+			if(words.indexOf(nextWord) == -1) {
+				words.push(nextWord);
+			}
+		}
 		var i = 0;
 		this.targetWord = this.random.getObject_Word(words);
 		if(this.targetText != null) {
-			this.targetText.set_text(this.targetWord.arabic);
+			this.targetText.set_text(this.mediator.getQuestion(this.targetWord));
 		}
 		this.playCurrentWord();
 		var _g = 0;
 		while(_g < words.length) {
 			var word = [words[_g]];
 			++_g;
-			var card = [new Card("assets/images/" + word[0].english + ".png",word[0].arabic,word[0].english)];
+			var card = [new Card("assets/images/" + word[0].english + ".png",word[0],this.mediator.mode)];
 			var tmp = (function(card1,word1) {
 				return function() {
+					var index = _gthis.allWords.indexOf(_gthis.targetWord);
 					if(word1[0] == _gthis.targetWord) {
 						var _this = _gthis.correctSound;
 						_this.cleanup(_this.autoDestroy,true);
 						_gthis.correctSound.onComplete = (function(word2) {
 							return function() {
-								var key = "" + _gthis.targetWord.english + "-arabic";
-								var _this1 = _gthis.wordSounds;
+								_gthis.wordFrequencies[index] -= PlayState.WORD_FREQUENCY_MODIFIER;
+								if(_gthis.wordFrequencies[index] < 1) {
+									_gthis.wordFrequencies[index] = 1;
+								}
+								var this1 = _gthis.wordSounds;
+								var key = "" + _gthis.targetWord.english + "-" + _gthis.mediator.get_questionLanguage();
+								var _this1 = this1;
 								var wordSound = __map_reserved[key] != null ? _this1.getReserved(key) : _this1.h[key];
 								wordSound.onComplete = (function(word3) {
 									return function() {
 										if(word3[0] == _gthis.targetWord) {
-											var key1 = "" + _gthis.targetWord.english + "-english";
-											var _this2 = _gthis.wordSounds;
+											var this2 = _gthis.wordSounds;
+											var key1 = "" + _gthis.targetWord.english + "-" + _gthis.mediator.get_answerLanguage();
+											var _this2 = this2;
 											(__map_reserved[key1] != null ? _this2.getReserved(key1) : _this2.h[key1]).play();
 										}
 									};
@@ -4809,20 +4829,22 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 							};
 						})(word1);
 						_gthis.correctSound.play();
-						haxe_Log.trace("WIN!",{ fileName : "PlayState.hx", lineNumber : 103, className : "PlayState", methodName : "generateAndShowRound"});
 						_gthis.tweenCards();
 					} else {
+						_gthis.wordFrequencies[index] += PlayState.WORD_FREQUENCY_MODIFIER;
+						var wrongWordIndex = _gthis.allWords.indexOf(word1[0]);
+						_gthis.wordFrequencies[wrongWordIndex] += PlayState.WORD_FREQUENCY_MODIFIER;
 						var _this3 = _gthis.incorrectSound;
 						_this3.cleanup(_this3.autoDestroy,true);
 						_gthis.incorrectSound.onComplete = (function(word4) {
 							return function() {
-								var key2 = "" + word4[0].english + "-arabic";
-								var _this4 = _gthis.wordSounds;
+								var this3 = _gthis.wordSounds;
+								var key2 = "" + word4[0].english + "-" + _gthis.mediator.get_questionLanguage();
+								var _this4 = this3;
 								(__map_reserved[key2] != null ? _this4.getReserved(key2) : _this4.h[key2]).play();
 							};
 						})(word1);
 						_gthis.incorrectSound.play();
-						haxe_Log.trace("NO!!",{ fileName : "PlayState.hx", lineNumber : 115, className : "PlayState", methodName : "generateAndShowRound"});
 						_gthis.fadeCardIntoOblivion(card1[0]);
 					}
 				};
@@ -4839,7 +4861,7 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 	,tweenCards: function() {
 		var _gthis = this;
 		var rightCard = haxesharp_collections_Linq.single(this.cards,function(c) {
-			return c.arabicText.text == _gthis.targetWord.arabic;
+			return c.word == _gthis.targetWord;
 		});
 		var _g = 0;
 		var _g1 = this.cards;
@@ -4868,10 +4890,10 @@ PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 		}});
 	}
 	,playCurrentWord: function() {
-		var key = "" + this.targetWord.english + "-arabic";
-		var _this = this.wordSounds;
+		var this1 = this.wordSounds;
+		var key = "" + this.targetWord.english + "-" + this.mediator.get_questionLanguage();
+		var _this = this1;
 		var sound = __map_reserved[key] != null ? _this.getReserved(key) : _this.h[key];
-		haxe_Log.trace("Playing " + this.targetWord.english + "-arabic",{ fileName : "PlayState.hx", lineNumber : 163, className : "PlayState", methodName : "playCurrentWord"});
 		sound.cleanup(sound.autoDestroy,true);
 		sound.play();
 	}
@@ -4888,6 +4910,53 @@ Word.prototype = {
 	,english: null
 	,__class__: Word
 };
+var QuestionAnswerMediator = function(mode) {
+	this.mode = mode;
+};
+$hxClasses["QuestionAnswerMediator"] = QuestionAnswerMediator;
+QuestionAnswerMediator.__name__ = ["QuestionAnswerMediator"];
+QuestionAnswerMediator.prototype = {
+	mode: null
+	,questionLanguage: null
+	,answerLanguage: null
+	,getQuestion: function(word) {
+		if(this.mode == GameMode.AskInArabic) {
+			return word.arabic;
+		} else {
+			return word.english;
+		}
+	}
+	,getAnswer: function(word) {
+		if(this.mode == GameMode.AskInArabic) {
+			return word.english;
+		} else {
+			return word.arabic;
+		}
+	}
+	,get_questionLanguage: function() {
+		if(this.mode == GameMode.AskInArabic) {
+			return "arabic";
+		} else {
+			return "english";
+		}
+	}
+	,get_answerLanguage: function() {
+		if(this.mode == GameMode.AskInArabic) {
+			return "english";
+		} else {
+			return "arabic";
+		}
+	}
+	,__class__: QuestionAnswerMediator
+	,__properties__: {get_answerLanguage:"get_answerLanguage",get_questionLanguage:"get_questionLanguage"}
+};
+var GameMode = $hxClasses["GameMode"] = { __ename__ : ["GameMode"], __constructs__ : ["AskInArabic","AskInEnglish"] };
+GameMode.AskInArabic = ["AskInArabic",0];
+GameMode.AskInArabic.toString = $estr;
+GameMode.AskInArabic.__enum__ = GameMode;
+GameMode.AskInEnglish = ["AskInEnglish",1];
+GameMode.AskInEnglish.toString = $estr;
+GameMode.AskInEnglish.__enum__ = GameMode;
 var flixel_util_IFlxPooled = function() { };
 $hxClasses["flixel.util.IFlxPooled"] = flixel_util_IFlxPooled;
 flixel_util_IFlxPooled.__name__ = ["flixel","util","IFlxPooled"];
@@ -7877,27 +7946,27 @@ flixel_group_FlxTypedSpriteGroup.prototype = $extend(flixel_FlxSprite.prototype,
 	,__class__: flixel_group_FlxTypedSpriteGroup
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{set_maxSize:"set_maxSize",get_maxSize:"get_maxSize",get_length:"get_length",get_members:"get_members"})
 });
-var Card = function(imageFile,arabic,english) {
+var Card = function(imageFile,word,mode) {
+	this.clickable = true;
 	flixel_group_FlxTypedSpriteGroup.call(this);
+	this.word = word;
 	this.cardBase = new helix_core_HelixSprite("assets/images/card-base.png");
 	this.add(this.cardBase);
-	this.arabicText = new helix_core_HelixText(8,8,arabic,32);
+	this.arabicText = new helix_core_HelixText(8,8,word.arabic,32);
 	var _g = this.arabicText;
 	_g.set_x(_g.x + (this.cardBase.get_width() - this.arabicText.get_width()) / 2);
-	this.arabicText.set_alpha(0);
+	this.arabicText.set_alpha(mode == GameMode.AskInArabic ? 0 : 1);
 	this.add(this.arabicText);
 	this.image = new helix_core_HelixSprite(imageFile);
 	helix_core_HelixSpriteFluentApi.move(this.image,(this.cardBase.get_width() - this.image.get_width()) / 2,(this.cardBase.get_height() - this.image.get_height()) / 2);
 	this.add(this.image);
-	this.englishText = new helix_core_HelixText(8,this.cardBase.get_height() - 8 | 0,english,32);
+	this.englishText = new helix_core_HelixText(8,this.cardBase.get_height() - 8 | 0,word.english,32);
 	var _g1 = this.englishText;
 	_g1.set_x(_g1.x + (this.cardBase.get_width() - this.englishText.get_width()) / 2);
 	var _g2 = this.englishText;
 	_g2.set_y(_g2.y - this.englishText.get_height());
+	this.englishText.set_alpha(mode == GameMode.AskInArabic ? 1 : 0);
 	this.add(this.englishText);
-	this.cover = new helix_core_HelixSprite("assets/images/card-cover.png");
-	this.cover.set_alpha(0);
-	this.add(this.cover);
 };
 $hxClasses["Card"] = Card;
 Card.__name__ = ["Card"];
@@ -7908,8 +7977,16 @@ Card.prototype = $extend(flixel_group_FlxTypedSpriteGroup.prototype,{
 	,image: null
 	,englishText: null
 	,arabicText: null
+	,word: null
+	,clickable: null
 	,onClick: function(callback) {
-		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,callback);
+		var _gthis = this;
+		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,function() {
+			if(_gthis.clickable) {
+				_gthis.clickable = false;
+				callback();
+			}
+		});
 	}
 	,__class__: Card
 });
@@ -83217,6 +83294,8 @@ AssetPaths.way_english__ogg = "assets/sounds/words/way-english.ogg";
 openfl_text_Font.__registeredFonts = [];
 PlayState.TARGET_FONT_SIZE = 64;
 PlayState.PADDING = 16;
+PlayState.STARTING_WORD_FREQUENCY = 0;
+PlayState.WORD_FREQUENCY_MODIFIER = 0;
 flixel_math_FlxRect._pool = new flixel_util_FlxPool_$flixel_$math_$FlxRect(flixel_math_FlxRect);
 flixel_FlxObject.defaultPixelPerfectPosition = false;
 flixel_FlxObject.SEPARATE_BIAS = 4;
