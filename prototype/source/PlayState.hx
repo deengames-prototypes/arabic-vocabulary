@@ -28,6 +28,7 @@ class PlayState extends HelixState
 	private var wordFrequencies = new Array<Float>();
 
 	private var mediator:QuestionAnswerMediator;
+	private var gameMode:GameMode;
 
 	private var targetWord:Word;
 	private var random = new FlxRandom();
@@ -40,6 +41,12 @@ class PlayState extends HelixState
 
 	private var cards = new Array<Card>();
 
+	public function new(mode:GameMode)
+	{
+		super();
+		this.gameMode = mode;
+	}
+
 	override public function create():Void
 	{
 		super.create();
@@ -50,8 +57,7 @@ class PlayState extends HelixState
 		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
-		this.mediator = new QuestionAnswerMediator(GameMode.AskInEnglish);
-		
+		this.mediator = new QuestionAnswerMediator(this.gameMode);
 		new HelixSprite("assets/images/background.png");
 		
 		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
@@ -71,6 +77,12 @@ class PlayState extends HelixState
 
 		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
+
+		var backButton = new HelixSprite("assets/images/back-button.png");
+		backButton.move(FlxG.width - backButton.width - PADDING, FlxG.height - backButton.height - PADDING);
+		backButton.onClick(function() {
+			FlxG.switchState(new SelectModeState());
+		});
 	}
 
 	override public function update(elapsed:Float):Void
@@ -105,7 +117,7 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', word, this.mediator.mode);
+			var card = new Card('assets/images/${word.english}.png', word, this.gameMode);
 
 			card.onClick(function() {
 				var index = this.allWords.indexOf(targetWord);				
@@ -247,12 +259,6 @@ class QuestionAnswerMediator
 	{
 		return this.mode == GameMode.AskInArabic ? "english" : "arabic";
 	}
-}
-
-enum GameMode
-{
-	AskInArabic;
-	AskInEnglish;
 }
 
 class Card extends FlxSpriteGroup
