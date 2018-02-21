@@ -17,5 +17,8 @@
 	{ "arabic": "هُودٌ", "english": "jews" },
 	{ "arabic": "نَصارَى", "english": "christians" },
 	{ "arabic": "قَومٌ", "english": "people" },
-	{ "arabic": "صِبغَةٌ", "english": "colour" }
+	{ "arabic": "صِبغَةٌ", "english": "colour" },
+	{ "arabic": "صَدرٌ", "english": "chest" },
+	{ "arabic": "أُمٌّ", "english": "mother" },
+	{ "arabic": "وَلَد", "english": "child" }  
 ]
