@@ -100,7 +100,6 @@ class PlayState extends HelixState
 						}
 					}
 					this.correctSound.play();
-					trace("WIN!");
 					this.tweenCards();
 				}
 				else
@@ -112,7 +111,6 @@ class PlayState extends HelixState
 					};
 
 					this.incorrectSound.play();					
-					trace('NO!!');
 					this.fadeCardIntoOblivion(card);
 				}
 			});
