@@ -20,5 +20,9 @@
 	{ "arabic": "صِبغَةٌ", "english": "colour" },
 	{ "arabic": "صَدرٌ", "english": "chest" },
 	{ "arabic": "أُمٌّ", "english": "mother" },
-	{ "arabic": "وَلَد", "english": "child" }  
+	{ "arabic": "وَلَد", "english": "child" },
+	{ "arabic": "عَينٌ", "english": "eyes" },
+	{ "arabic": "وَجهٌ", "english": "face" },
+	{ "arabic": "أبٌّ", "english": "father" },
+	{ "arabic": "أفوَاه", "english": "mouths" }
 ]
