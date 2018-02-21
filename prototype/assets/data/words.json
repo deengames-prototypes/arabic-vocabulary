@@ -24,5 +24,8 @@
 	{ "arabic": "عَينٌ", "english": "eyes" },
 	{ "arabic": "وَجهٌ", "english": "face" },
 	{ "arabic": "أبٌّ", "english": "father" },
-	{ "arabic": "أفوَاه", "english": "mouths" }
+	{ "arabic": "أفوَاه", "english": "mouths" },
+	{ "arabic": "رِجلٌ", "english": "leg" },
+	{ "arabic": "يَهزَنُ", "english": "grief" },
+	{ "arabic": "يَدهٌ", "english": "hand" }
 ]
