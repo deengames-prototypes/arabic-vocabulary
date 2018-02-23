@@ -17,5 +17,21 @@
 	{ "arabic": "هُودٌ", "english": "jews" },
 	{ "arabic": "نَصارَى", "english": "christians" },
 	{ "arabic": "قَومٌ", "english": "people" },
-	{ "arabic": "صِبغَةٌ", "english": "colour" }
+	{ "arabic": "صِبغَةٌ", "english": "colour" },
+	{ "arabic": "صَدرٌ", "english": "chest" },
+	{ "arabic": "أُمٌّ", "english": "mother" },
+	{ "arabic": "وَلَد", "english": "child" },
+	{ "arabic": "عَينٌ", "english": "eyes" },
+	{ "arabic": "وَجهٌ", "english": "face" },
+	{ "arabic": "أبٌّ", "english": "father" },
+	{ "arabic": "أفوَاه", "english": "mouths" },
+	{ "arabic": "رِجلٌ", "english": "leg" },
+	{ "arabic": "يَهزَنُ", "english": "grief" },
+	{ "arabic": "يَدهٌ", "english": "hand" },
+	{ "arabic": "لِسَانٌ", "english": "tongue" },
+	{ "arabic": "سَمِعَ", "english": "hear" },
+	{ "arabic": "فَتحٌ", "english": "open" },
+	{ "arabic": "قُوَّة", "english": "strength" },
+	{ "arabic": "عَد", "english": "count" },
+	{ "arabic": "كَرِهَ", "english": "dislike" }
 ]
