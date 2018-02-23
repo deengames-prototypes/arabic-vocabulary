@@ -34,5 +34,6 @@
 	{ "arabic": "قُوَّة", "english": "strength" },
 	{ "arabic": "عَد", "english": "count" },
 	{ "arabic": "كَرِهَ", "english": "dislike" },
-	{ "arabic": "حَفِذَ", "english": "guard" }
+	{ "arabic": "حَفِذَ", "english": "guard" },
+	{ "arabic": "ضَرَّ", "english": "hurt" }
 ]
