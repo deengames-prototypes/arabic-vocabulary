@@ -32,5 +32,6 @@
 	{ "arabic": "سَمِعَ", "english": "hear" },
 	{ "arabic": "فَتحٌ", "english": "open" },
 	{ "arabic": "قُوَّة", "english": "strength" },
-	{ "arabic": "عَد", "english": "count" }
+	{ "arabic": "عَد", "english": "count" },
+	{ "arabic": "كَرِهَ", "english": "dislike" }
 ]
