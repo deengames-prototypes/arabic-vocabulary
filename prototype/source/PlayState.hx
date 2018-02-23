@@ -117,7 +117,7 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/${word.english}.png', word, this.gameMode);
+			var card = new Card('assets/images/words/${word.english}.png', word, this.gameMode);
 
 			card.onClick(function() {
 				var index = this.allWords.indexOf(targetWord);				
