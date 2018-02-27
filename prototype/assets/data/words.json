@@ -42,5 +42,6 @@
 	{ "arabic": "رَجَعَ", "english": "return" },
 	{ "arabic": "ظَنَّ", "english": "think" },
 	{ "arabic": "مَسَّ", "english": "touch" },
-	{ "arabic": "بَسُرَ", "english": "watch" }
+	{ "arabic": "بَسُرَ", "english": "watch" },
+	{ "arabic": "شَهِدَ", "english": "witness" }
 ]
