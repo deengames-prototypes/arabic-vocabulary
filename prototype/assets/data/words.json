@@ -43,5 +43,6 @@
 	{ "arabic": "ظَنَّ", "english": "think" },
 	{ "arabic": "مَسَّ", "english": "touch" },
 	{ "arabic": "بَسُرَ", "english": "watch" },
-	{ "arabic": "شَهِدَ", "english": "witness" }
+	{ "arabic": "شَهِدَ", "english": "witness" },
+	{ "arabic": "عَمِلَ", "english": "work" }
 ]
