@@ -40,5 +40,6 @@
 	{ "arabic": "خَسِرَ", "english": "lose" },
 	{ "arabic": "يَوَدُّ", "english": "love" },
 	{ "arabic": "رَجَعَ", "english": "return" },
-	{ "arabic": "ظَنَّ", "english": "think" }
+	{ "arabic": "ظَنَّ", "english": "think" },
+	{ "arabic": "مَسَّ", "english": "touch" }
 ]
