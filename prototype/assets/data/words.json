@@ -39,5 +39,6 @@
 	{ "arabic": "عَلِمَ", "english": "know" },
 	{ "arabic": "خَسِرَ", "english": "lose" },
 	{ "arabic": "يَوَدُّ", "english": "love" },
-	{ "arabic": "رَجَعَ", "english": "return" }
+	{ "arabic": "رَجَعَ", "english": "return" },
+	{ "arabic": "ظَنَّ", "english": "think" }
 ]
