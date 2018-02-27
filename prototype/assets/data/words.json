@@ -38,5 +38,6 @@
 	{ "arabic": "ضَرَّ", "english": "hurt" },
 	{ "arabic": "عَلِمَ", "english": "know" },
 	{ "arabic": "خَسِرَ", "english": "lose" },
-	{ "arabic": "يَوَدُّ", "english": "love" }
+	{ "arabic": "يَوَدُّ", "english": "love" },
+	{ "arabic": "رَجَعَ", "english": "return" }
 ]
