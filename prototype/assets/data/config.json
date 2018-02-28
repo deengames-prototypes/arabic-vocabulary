@@ -4,5 +4,9 @@
 
     "startingWordFrequency": 5,
     "wordFrequencyModifier": 1,
-    "wordsPerRound": 4
+    "wordsPerRound": 4,
+    
+    // Level data
+    "levelTypes": ["ask Arabic", "ask English", "mixed"],
+    "wordsPerBucket": 10
 }

@@ -15,6 +15,7 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
 import openfl.Assets;
+import WordParser;
 
 class PlayState extends HelixState
 {
@@ -60,12 +61,10 @@ class PlayState extends HelixState
 		this.mediator = new QuestionAnswerMediator(this.gameMode);
 		new HelixSprite("assets/images/background.png");
 		
-		var words:Array<Dynamic> = Json.parse(Assets.getText("assets/data/words.json"));
+		this.allWords = WordParser.getAllWords();
 
-		for (word in words) {
-			var w = new Word(word.arabic, word.english);
-
-			this.allWords.push(w);
+		for (word in allWords)
+		{
 			this.wordFrequencies.push(STARTING_WORD_FREQUENCY);
 			
 			// Initialize audio sounds
@@ -212,18 +211,6 @@ class PlayState extends HelixState
 		var sound = this.wordSounds.get('${this.targetWord.english}-${this.mediator.questionLanguage}');
 		sound.stop();
 		sound.play();
-	}
-}
-
-class Word
-{
-	public var arabic(default, default):String;
-	public var english(default, default):String;
-
-	public function new(arabic:String, english:String)
-	{
-		this.arabic = arabic;
-		this.english = english;
 	}
 }
 
