@@ -7,6 +7,11 @@
     "wordsPerRound": 4,
     
     // Level data
-    "levelTypes": ["ask Arabic", "ask English", "mixed"],
-    "wordsPerBucket": 10
+    "levelTypes": ["ask Arabic", "ask English", "mixed"], // TODO: match enum
+    
+    // Total of these two values is the number of words per level.
+    // The number of levels is equal to the total number of words divided by the number of new words.
+    // eg. with 40 words total and 6 new per level, we get 7 levels.
+    "newWordsPerLevel": 6,
+    "repeatWordsPerLevel": 4
 }

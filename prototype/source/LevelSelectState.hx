@@ -15,7 +15,9 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
 import openfl.Assets;
+
 import WordsParser;
+using haxesharp.collections.Linq;
 
 class LevelSelectState extends HelixState
 {   
@@ -26,15 +28,6 @@ class LevelSelectState extends HelixState
 		super.create();
 
         this.levels = new LevelMaker().createLevels();
-        
-        trace('LEVELS: ${this.levels.length}');
-        for (level in this.levels) {
-            var english = "[";
-            for (word in level.words) {
-                english += word.english + ", ";
-            }            
-            trace('    ${level.levelType}: ${english}]');
-        }
 	}
 
 	override public function update(elapsed:Float):Void
@@ -48,8 +41,6 @@ class LevelMaker
     private var LEVEL_TYPES:Array<String>; // ask Arabic, ask English, both
 
     private var words:Array<Word>;
-    private var wordsPerBucket:Int;
-    private var numBuckets:Int;
 
     public function new() { }
 
@@ -58,55 +49,49 @@ class LevelMaker
         this.LEVEL_TYPES = Config.get("levelTypes");
         
 		this.words = WordsParser.getAllWords();
-        this.numBuckets = this.countWordBuckets();        
-        var numLevels = numBuckets; // Pair of two buckets per level
-        var numLevelsPerType = Std.int(numBuckets / LEVEL_TYPES.length); // Round down.
+        var newWordsPerLevel = Config.get("newWordsPerLevel");
+        var repeatWordsPerLevel = Config.get("repeatWordsPerLevel");
+        var wordsPerLevel = newWordsPerLevel + repeatWordsPerLevel;
+        var numLevels = Std.int(Math.ceil(this.words.length / newWordsPerLevel));
 
         var levels = new Array<Level>();
-        var numBucketsPerLevel = 2;
-        var nextBucket:Int = 0;
 
-        for (type in LEVEL_TYPES)
+        for (i in 0 ... numLevels)
         {
-            for (i in 0 ... numLevelsPerType)
+            var start = i * newWordsPerLevel;
+            var stop = (i + 1) * newWordsPerLevel;
+            
+            var levelWords = this.words.slice(start, stop);
+            var oldWords = new Array<Word>();
+
+            if (i == 0)
             {
-                var levelWords = new Array<Word>();
-                for (j in 0 ... numBucketsPerLevel)
+                // First level. Just pick the words with index > start sequentially.
+                oldWords = this.words.slice(stop, stop + repeatWordsPerLevel);
+            }
+            else
+            {
+                // If it's the last level, maybe we didn't get enough words. Take more.
+                if (levelWords.length < stop - start)
                 {
-                    levelWords = levelWords.concat(this.getBucket(nextBucket));
-                    nextBucket += 1;
+                    var delta = (stop - start - levelWords.length);
+                    repeatWordsPerLevel += delta;
                 }
 
-                var level = new Level(levelWords, type);
-                levels.push(level);
+                // Not the first level
+                // Randomly pick from words with index < start
+                oldWords = this.words.slice(0, start).shuffle().take(repeatWordsPerLevel);
             }
+
+            levelWords = levelWords.concat(oldWords);
+            // map [0..10] to [0..3]
+            var index = Std.int(i * this.LEVEL_TYPES.length / numLevels);
+            var levelType = this.LEVEL_TYPES[index];
+            levels.push(new Level(levelWords, levelType));
         }
 
         return levels;
-    }
-    
-    private function countWordBuckets():Int
-    {
-        this.wordsPerBucket = Config.get("wordsPerBucket");
-        return Math.round(this.words.length / wordsPerBucket);
-    }
-
-    private function getBucket(n:Int):Array<Word>
-    {
-        n = n % this.numBuckets;
-        var start = (n * wordsPerBucket) % this.words.length;
-        var stop = ((n + 1) * wordsPerBucket) % this.words.length;
-
-        if (start < stop)
-        {
-            return this.words.slice(start, stop);
-        }
-        else
-        {
-            // Wrap
-            return this.words.slice(start, this.words.length).concat(this.words.slice(0, stop));
-        }
-    }
+    }    
 }
 
 class Level
