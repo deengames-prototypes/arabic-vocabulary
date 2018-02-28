@@ -1,23 +1,12 @@
 package;
 
-import flixel.FlxG;
-import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxMath;
-import flixel.math.FlxRandom;
-import flixel.system.FlxSound;
-import flixel.tweens.FlxTween;
-import flixel.ui.FlxButton;
-import haxe.Json;
-using haxesharp.collections.Linq;
 import helix.core.HelixState;
-import helix.core.HelixSprite;
-using helix.core.HelixSpriteFluentApi;
-import helix.core.HelixText;
 import helix.data.Config;
-import openfl.Assets;
-
-import WordsParser;
 using haxesharp.collections.Linq;
+import flixel.util.FlxSave;
+
+import GameMode;
+import WordsParser;
 
 class LevelSelectState extends HelixState
 {   
@@ -27,7 +16,7 @@ class LevelSelectState extends HelixState
 	{
 		super.create();
 
-        this.levels = new LevelMaker().createLevels();
+        this.levels = new LevelMaker().getLevels();
 	}
 
 	override public function update(elapsed:Float):Void
@@ -38,16 +27,31 @@ class LevelSelectState extends HelixState
 
 class LevelMaker
 {
-    private var LEVEL_TYPES:Array<String>; // ask Arabic, ask English, both
+    private var LEVEL_TYPES:Array<GameMode> = [GameMode.AskInArabic, GameMode.AskInEnglish, GameMode.Mixed];
+    private var SAVE_SLOT:String = "DebugSave";
 
     private var words:Array<Word>;
 
     public function new() { }
 
-    public function createLevels():Array<Level>
+    public function getLevels():Array<Level>
     {
-        this.LEVEL_TYPES = Config.get("levelTypes");
-        
+        // Load if existing
+        var save = new FlxSave();
+        save.bind(SAVE_SLOT);
+        if (save.data.levels == null)
+        {
+            // If no saved levels exist, generate new ones and save them.
+            save.data.levels = this.createLevels();
+            save.flush();
+            trace("Created new levels.");
+        } else { trace("Loaded existing levels."); }
+
+        return save.data.levels;
+    }
+
+    private function createLevels():Array<Level>
+    {
 		this.words = WordsParser.getAllWords();
         var newWordsPerLevel = Config.get("newWordsPerLevel");
         var repeatWordsPerLevel = Config.get("repeatWordsPerLevel");
@@ -97,9 +101,9 @@ class LevelMaker
 class Level
 {
     public var words(default, null):Array<Word>;
-    public var levelType(default, null):String; // TODO: enum
+    public var levelType(default, null):GameMode; // TODO: enum
 
-    public function new(words:Array<Word>, levelType:String)
+    public function new(words:Array<Word>, levelType:GameMode)
     {
         this.words = words;
         this.levelType = levelType;

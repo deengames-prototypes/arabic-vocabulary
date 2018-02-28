@@ -4,4 +4,5 @@ enum GameMode
 {
 	AskInArabic;
 	AskInEnglish;
+	Mixed;
 }
