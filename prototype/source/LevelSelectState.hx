@@ -10,47 +10,48 @@ import WordsParser;
 
 class LevelSelectState extends HelixState
 {   
+    private var SAVE_SLOT:String = "DebugSave";
     private var levels:Array<Level>;
 
 	override public function create():Void
 	{
 		super.create();
 
-        this.levels = new LevelMaker().getLevels();
+        this.levels = new LevelMaker().createLevels();
+        var levelReached = this.getMaxLevelReached();
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 	}
+
+    private function getMaxLevelReached():Int
+    {
+        var save = new FlxSave();
+        save.bind(SAVE_SLOT);
+        if (save.data.maxLevelReached == null)
+        {
+            trace("New: old was " + save.data.maxLevelReached);
+            save.data.maxLevelReached = 1;
+            save.flush();
+        }
+
+        trace('returning ${save.data.maxLevelReached}');
+        return save.data.maxLevelReached;
+    }
+
 }
 
 class LevelMaker
 {
     private var LEVEL_TYPES:Array<GameMode> = [GameMode.AskInArabic, GameMode.AskInEnglish, GameMode.Mixed];
-    private var SAVE_SLOT:String = "DebugSave";
 
     private var words:Array<Word>;
 
     public function new() { }
 
-    public function getLevels():Array<Level>
-    {
-        // Load if existing
-        var save = new FlxSave();
-        save.bind(SAVE_SLOT);
-        if (save.data.levels == null)
-        {
-            // If no saved levels exist, generate new ones and save them.
-            save.data.levels = this.createLevels();
-            save.flush();
-            trace("Created new levels.");
-        } else { trace("Loaded existing levels."); }
-
-        return save.data.levels;
-    }
-
-    private function createLevels():Array<Level>
+    public function createLevels():Array<Level>
     {
 		this.words = WordsParser.getAllWords();
         var newWordsPerLevel = Config.get("newWordsPerLevel");
