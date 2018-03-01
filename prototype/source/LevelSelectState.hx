@@ -1,16 +1,23 @@
 package;
 
+import helix.core.HelixSprite;
+using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixState;
+import helix.core.HelixText;
 import helix.data.Config;
+
 using haxesharp.collections.Linq;
 import flixel.util.FlxSave;
 
 import GameMode;
 import WordsParser;
+import Map;
 
 class LevelSelectState extends HelixState
 {   
-    private var SAVE_SLOT:String = "DebugSave";
+    private static inline var SAVE_SLOT:String = "DebugSave";
+    private static inline var PADDING:Int = 16;
+
     private var levels:Array<Level>;
 
 	override public function create():Void
@@ -19,6 +26,7 @@ class LevelSelectState extends HelixState
 
         this.levels = new LevelMaker().createLevels();
         var levelReached = this.getMaxLevelReached();
+        this.createButtons(this.levels, levelReached);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -33,7 +41,7 @@ class LevelSelectState extends HelixState
         if (save.data.maxLevelReached == null)
         {
             trace("New: old was " + save.data.maxLevelReached);
-            save.data.maxLevelReached = 1;
+            save.data.maxLevelReached = 0;
             save.flush();
         }
 
@@ -41,6 +49,47 @@ class LevelSelectState extends HelixState
         return save.data.maxLevelReached;
     }
 
+    private function createButtons(levels:Array<Level>, maxLevelReached:Int):Void
+    {
+        for (levelNum in 0 ... levels.length)
+        {
+            var level = levels[levelNum];
+            var isEnabled = maxLevelReached >= levelNum;
+
+            var button = new LevelButton(levelNum, level.levelType, isEnabled);
+            button.move(
+                PADDING + (levelNum % 3) * (PADDING + button.width),
+                PADDING + Std.int(levelNum / 3) * (PADDING + button.height));
+        }
+    }
+}
+
+class LevelButton extends HelixSprite
+{
+    private static inline var FONT_SIZE:Int = 32;
+
+    private static var LEVEL_MODE_IMAGES:Map<GameMode, String> = [
+        GameMode.AskInArabic => "words-button-1",
+        GameMode.AskInEnglish => "words-button-2",
+        GameMode.Mixed => "words-button-3",
+    ];
+
+    private var text:HelixText;
+
+    public function new(levelNum:Int, levelType:GameMode, isEnabled:Bool)
+    {
+        var suffix = isEnabled ? "" : "-disabled";
+        super('assets/images/${LEVEL_MODE_IMAGES[levelType]}${suffix}.png');
+        this.text = new HelixText(0, 0, '${levelNum + 1}', FONT_SIZE);
+    }
+
+    public function move(x, y):Void
+    {
+        this.x = x; 
+        this.y = y;
+        this.text.x = Std.int(this.x + (this.width / 2));
+        this.text.y = Std.int(this.y + (this.height / 2));
+    }
 }
 
 class LevelMaker
