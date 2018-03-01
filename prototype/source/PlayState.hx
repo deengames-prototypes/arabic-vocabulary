@@ -12,6 +12,7 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
 import WordsParser;
+import LevelSelectState; // Level
 
 class PlayState extends HelixState
 {
@@ -26,6 +27,7 @@ class PlayState extends HelixState
 
 	private var mediator:QuestionAnswerMediator;
 	private var gameMode:GameMode;
+	private var levelNumber:Int = 0;
 
 	private var targetWord:Word;
 	private var random = new FlxRandom();
@@ -38,11 +40,12 @@ class PlayState extends HelixState
 
 	private var cards = new Array<Card>();
 
-	public function new(mode:GameMode, levelWords:Array<Word>)
+	public function new(level:Level)
 	{
 		super();
-		this.gameMode = mode;
-		this.levelWords = levelWords;
+		this.gameMode = level.levelType;
+		this.levelWords = level.words;
+		this.levelNumber = level.number;
 	}
 
 	override public function create():Void

@@ -80,7 +80,7 @@ class LevelButton extends HelixSprite
         super('assets/images/${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png');
         this.text = new HelixText(0, 0, '${levelNum + 1}', FONT_SIZE);
         this.onClick(function() {
-            FlxG.switchState(new PlayState(level.levelType, level.words));
+            FlxG.switchState(new PlayState(level));
         });
     }
 
@@ -142,7 +142,7 @@ class LevelMaker
             // map [0..10] to [0..3]
             var index = Std.int(i * this.LEVEL_TYPES.length / numLevels);
             var levelType = this.LEVEL_TYPES[index];
-            levels.push(new Level(levelWords, levelType));
+            levels.push(new Level(levelWords, levelType, i));
         }
 
         return levels;
@@ -152,11 +152,13 @@ class LevelMaker
 class Level
 {
     public var words(default, null):Array<Word>;
-    public var levelType(default, null):GameMode; // TODO: enum
+    public var levelType(default, null):GameMode; 
+    public var number(default, null):Int; // 0-based index
 
-    public function new(words:Array<Word>, levelType:GameMode)
+    public function new(words:Array<Word>, levelType:GameMode, number:Int)
     {
         this.words = words;
         this.levelType = levelType;
+        this.number = number;
     }
 }
