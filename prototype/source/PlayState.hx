@@ -2,20 +2,16 @@ package;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
-import flixel.ui.FlxButton;
-import haxe.Json;
 using haxesharp.collections.Linq;
 import helix.core.HelixState;
 import helix.core.HelixSprite;
 using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
-import openfl.Assets;
-import WordParser;
+import WordsParser;
 
 class PlayState extends HelixState
 {
@@ -25,7 +21,7 @@ class PlayState extends HelixState
 	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
 
 	// These two must be the same order
-	private var allWords = new Array<Word>();
+	private var levelWords = new Array<Word>();
 	private var wordFrequencies = new Array<Float>();
 
 	private var mediator:QuestionAnswerMediator;
@@ -42,10 +38,11 @@ class PlayState extends HelixState
 
 	private var cards = new Array<Card>();
 
-	public function new(mode:GameMode)
+	public function new(mode:GameMode, levelWords:Array<Word>)
 	{
 		super();
 		this.gameMode = mode;
+		this.levelWords = levelWords;
 	}
 
 	override public function create():Void
@@ -61,9 +58,7 @@ class PlayState extends HelixState
 		this.mediator = new QuestionAnswerMediator(this.gameMode);
 		new HelixSprite("assets/images/background.png");
 		
-		this.allWords = WordParser.getAllWords();
-
-		for (word in allWords)
+		for (word in levelWords)
 		{
 			this.wordFrequencies.push(STARTING_WORD_FREQUENCY);
 			
@@ -80,7 +75,7 @@ class PlayState extends HelixState
 		var backButton = new HelixSprite("assets/images/back-button.png");
 		backButton.move(FlxG.width - backButton.width - PADDING, FlxG.height - backButton.height - PADDING);
 		backButton.onClick(function() {
-			FlxG.switchState(new SelectModeState());
+			FlxG.switchState(new LevelSelectState());
 		});
 	}
 
@@ -97,7 +92,7 @@ class PlayState extends HelixState
 		var words = new Array<Word>();
 		while (words.length < numWords)
 		{
-			var nextWord = random.getObject(this.allWords, this.wordFrequencies);
+			var nextWord = random.getObject(this.levelWords, this.wordFrequencies);
 			if (words.indexOf(nextWord) == -1) {
 				words.push(nextWord);
 			}
@@ -119,7 +114,7 @@ class PlayState extends HelixState
 			var card = new Card('assets/images/words/${word.english}.png', word, this.gameMode);
 
 			card.onClick(function() {
-				var index = this.allWords.indexOf(targetWord);				
+				var index = this.levelWords.indexOf(targetWord);				
 				if (word == targetWord)
 				{
 					// Correct => Arabic => English
@@ -152,7 +147,7 @@ class PlayState extends HelixState
 					this.wordFrequencies[index] += WORD_FREQUENCY_MODIFIER;
 					
 					// Word you picked wrongly also appears more frequently
-					var wrongWordIndex = this.allWords.indexOf(word);
+					var wrongWordIndex = this.levelWords.indexOf(word);
 					this.wordFrequencies[wrongWordIndex] += WORD_FREQUENCY_MODIFIER;
 					
 					this.incorrectSound.stop();

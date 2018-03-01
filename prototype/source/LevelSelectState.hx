@@ -5,8 +5,8 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixState;
 import helix.core.HelixText;
 import helix.data.Config;
-
 using haxesharp.collections.Linq;
+import flixel.FlxG;
 import flixel.util.FlxSave;
 
 import GameMode;
@@ -40,12 +40,10 @@ class LevelSelectState extends HelixState
         save.bind(SAVE_SLOT);
         if (save.data.maxLevelReached == null)
         {
-            trace("New: old was " + save.data.maxLevelReached);
             save.data.maxLevelReached = 0;
             save.flush();
         }
 
-        trace('returning ${save.data.maxLevelReached}');
         return save.data.maxLevelReached;
     }
 
@@ -56,7 +54,7 @@ class LevelSelectState extends HelixState
             var level = levels[levelNum];
             var isEnabled = maxLevelReached >= levelNum;
 
-            var button = new LevelButton(levelNum, level.levelType, isEnabled);
+            var button = new LevelButton(levelNum, level, isEnabled);
             button.move(
                 PADDING + (levelNum % 3) * (PADDING + button.width),
                 PADDING + Std.int(levelNum / 3) * (PADDING + button.height));
@@ -76,11 +74,14 @@ class LevelButton extends HelixSprite
 
     private var text:HelixText;
 
-    public function new(levelNum:Int, levelType:GameMode, isEnabled:Bool)
+    public function new(levelNum:Int, level:Level, isEnabled:Bool)
     {
         var suffix = isEnabled ? "" : "-disabled";
-        super('assets/images/${LEVEL_MODE_IMAGES[levelType]}${suffix}.png');
+        super('assets/images/${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png');
         this.text = new HelixText(0, 0, '${levelNum + 1}', FONT_SIZE);
+        this.onClick(function() {
+            FlxG.switchState(new PlayState(level.levelType, level.words));
+        });
     }
 
     public function move(x, y):Void
