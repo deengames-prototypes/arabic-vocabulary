@@ -11,8 +11,10 @@ import helix.core.HelixSprite;
 using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
-import WordsParser;
+
+import LevelPersister;
 import LevelSelectState; // Level
+import WordsParser;
 
 class PlayState extends HelixState
 {
@@ -32,6 +34,7 @@ class PlayState extends HelixState
 	private var targetWord:Word;
 	private var random = new FlxRandom();
 	private var targetText:HelixText;
+	private var wordsSelectedCorrectly = new Array<Word>();
 	
 	private var correctSound:FlxSound;
 	private var incorrectSound:FlxSound;
@@ -123,7 +126,12 @@ class PlayState extends HelixState
 					// Correct => Arabic => English
 					this.correctSound.stop();
 					this.correctSound.onComplete = function() {
-						// Correct: appear less frequently. The FIRST TIME.
+						
+						// Correct: appear less frequently. Only for the first time the
+						// user click the card (when presented with several options), not
+						// on the second click (to clear the right answer).
+						//
+						// The second click handler is defined in tweenCards.
 						this.wordFrequencies[index] -= WORD_FREQUENCY_MODIFIER;
 						if (this.wordFrequencies[index] < 1) {
 							this.wordFrequencies[index] = 1;
@@ -132,17 +140,19 @@ class PlayState extends HelixState
 						var wordSound = this.wordSounds.get('${targetWord.english}-${this.mediator.questionLanguage}');
 						wordSound.onComplete = function() {
 							// If the player clicks fast, it'll be the next round and we play
-							// the wrong word by msitake.
+							// the wrong word by mistake.
 							if (word == targetWord) {
-								this.wordSounds.get('${targetWord.english}-${this.mediator.answerLanguage}').play();
+								var sound = this.wordSounds.get('${targetWord.english}-${this.mediator.answerLanguage}');
+								sound.play();
 							}
 						}
 						if (word == targetWord) {
 							wordSound.play();
 						}
 					}
+
 					this.correctSound.play();
-					this.tweenCards();
+					this.tweenCards();					
 				}
 				else
 				{
@@ -175,10 +185,9 @@ class PlayState extends HelixState
 
 	private function tweenCards():Void
 	{
-		var rightCard = this.cards.single((c) => c.word == this.targetWord);
 		for (card in this.cards)
 		{
-			if (card == rightCard)
+			if (card.word == this.targetWord)
 			{
 				FlxTween.tween(card, { x: (FlxG.width - card.width) / 2,
 					y: (FlxG.height - card.height) / 2 }, 1);
@@ -186,7 +195,26 @@ class PlayState extends HelixState
 				card.cardBase.onClick(function() {
 					card.destroy();
 					this.cards.remove(card);
-					this.generateAndShowRound();
+
+					if (!this.wordsSelectedCorrectly.contains(this.targetWord))
+					{
+						this.wordsSelectedCorrectly.push(this.targetWord);
+
+						// Debug
+						trace('Correct:${this.wordsSelectedCorrectly.map(function(w) { return w.english; } )}');
+
+						if (this.wordsSelectedCorrectly.length == this.levelWords.length)
+						{
+							this.targetText.text = "YOU WIN!";
+							LevelPersister.setMaxLevelReached(this.levelNumber + 1);
+						} else {
+							this.fadeCardIntoOblivion(card);
+							this.generateAndShowRound();
+						}
+					} else {
+						this.fadeCardIntoOblivion(card);
+						this.generateAndShowRound();
+					}
 				});
 			}
 			else

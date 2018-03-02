@@ -7,15 +7,14 @@ import helix.core.HelixText;
 import helix.data.Config;
 using haxesharp.collections.Linq;
 import flixel.FlxG;
-import flixel.util.FlxSave;
 
 import GameMode;
-import WordsParser;
+import LevelPersister;
 import Map;
+import WordsParser;
 
 class LevelSelectState extends HelixState
 {   
-    private static inline var SAVE_SLOT:String = "DebugSave";
     private static inline var PADDING:Int = 16;
 
     private var levels:Array<Level>;
@@ -25,7 +24,7 @@ class LevelSelectState extends HelixState
 		super.create();
 
         this.levels = new LevelMaker().createLevels();
-        var levelReached = this.getMaxLevelReached();
+        var levelReached = LevelPersister.getMaxLevelReached();
         this.createButtons(this.levels, levelReached);
 	}
 
@@ -33,19 +32,6 @@ class LevelSelectState extends HelixState
 	{
 		super.update(elapsed);
 	}
-
-    private function getMaxLevelReached():Int
-    {
-        var save = new FlxSave();
-        save.bind(SAVE_SLOT);
-        if (save.data.maxLevelReached == null)
-        {
-            save.data.maxLevelReached = 0;
-            save.flush();
-        }
-
-        return save.data.maxLevelReached;
-    }
 
     private function createButtons(levels:Array<Level>, maxLevelReached:Int):Void
     {
