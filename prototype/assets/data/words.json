@@ -46,5 +46,6 @@
 	{ "arabic": "شَهِدَ", "english": "witness" },
 	{ "arabic": "عَمِلَ", "english": "work" },
 	{ "arabic": "عَصَا", "english": "stick" },
-	{ "arabic": "نَارٌ", "english": "fire" }	
+	{ "arabic": "نَارٌ", "english": "fire" },
+	{ "arabic": "قَالَ", "english": "he-said" }
 ]
