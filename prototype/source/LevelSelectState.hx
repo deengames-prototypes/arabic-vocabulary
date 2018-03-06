@@ -68,9 +68,11 @@ class LevelButton extends HelixSprite
         var suffix = isEnabled ? "" : "-disabled";
         super('assets/images/${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png');
         this.text = new HelixText(0, 0, '${levelNum + 1}', FONT_SIZE);
-        this.onClick(function() {
-            FlxG.switchState(new PlayState(level));
-        });
+        if (isEnabled) {
+            this.onClick(function() {
+                FlxG.switchState(new PlayState(level));
+            });
+        }
     }
 
     public function move(x, y):Void
