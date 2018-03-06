@@ -52,5 +52,6 @@
 	{ "arabic": "اللَيل", "english": "night" },
 	{ "arabic": "النَهَار", "english": "daytime" },
 	{ "arabic": "اَنزَلنَا", "english": "send-down" },
-	{ "arabic": "ماء", "english": "water" }
+	{ "arabic": "ماء", "english": "water" },
+	{ "arabic": "يَومٌ", "english": "day" }
 ]
