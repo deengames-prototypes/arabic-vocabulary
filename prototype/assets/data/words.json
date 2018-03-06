@@ -49,5 +49,6 @@
 	{ "arabic": "نَارٌ", "english": "fire" },
 	{ "arabic": "قَالَ", "english": "he-said" },
 	{ "arabic": "جِبَالٌ", "english": "mountains" },
-	{ "arabic": "اللَيل", "english": "night" }
+	{ "arabic": "اللَيل", "english": "night" },
+	{ "arabic": "النَهَار", "english": "daytime" }
 ]
