@@ -16,6 +16,7 @@ import WordsParser;
 class LevelSelectState extends HelixState
 {   
     private static inline var PADDING:Int = 16;
+    private static inline var NUM_COLUMNS:Int = 3;
 
     private var levels:Array<Level>;
 
@@ -35,6 +36,8 @@ class LevelSelectState extends HelixState
 
     private function createButtons(levels:Array<Level>, maxLevelReached:Int):Void
     {
+        var levelsPerRow = Std.int(Math.ceil(levels.length / NUM_COLUMNS)); // three types of levels
+
         for (levelNum in 0 ... levels.length)
         {
             var level = levels[levelNum];
@@ -42,8 +45,8 @@ class LevelSelectState extends HelixState
 
             var button = new LevelButton(levelNum, level, isEnabled);
             button.move(
-                PADDING + (levelNum % 3) * (PADDING + button.width),
-                PADDING + Std.int(levelNum / 3) * (PADDING + button.height));
+                PADDING + (levelNum % levelsPerRow) * (PADDING + button.width),
+                PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
         }
     }
 }
