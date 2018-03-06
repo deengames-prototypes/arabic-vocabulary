@@ -53,9 +53,11 @@
 	{ "arabic": "النَهَار", "english": "daytime" },
 	{ "arabic": "اَنزَلنَا", "english": "send-down" },
 	{ "arabic": "ماء", "english": "water" },
-	{ "arabic": "شَمسٌ", "english": "day" },
+	{ "arabic": "شَمسٌ", "english": "sun" },
+	{ "arabic": "يَومٌ", "english": "day" },
 	{ "arabic": "جَهَنَّم", "english": "hellfire" },
 	{ "arabic": "أعنَابٌ", "english": "grapes" },
 	{ "arabic": "جَزَاء", "english": "reward" },
-	{ "arabic": "إنسَانٌ", "english": "humans" }
+	{ "arabic": "إنسَانٌ", "english": "humans" },
+	{ "arabic": "القَمَرُ", "english": "moon" }
 ]
