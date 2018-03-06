@@ -51,5 +51,6 @@
 	{ "arabic": "جِبَالٌ", "english": "mountains" },
 	{ "arabic": "اللَيل", "english": "night" },
 	{ "arabic": "النَهَار", "english": "daytime" },
-	{ "arabic": "اَنزَلنَا", "english": "send-down" }
+	{ "arabic": "اَنزَلنَا", "english": "send-down" },
+	{ "arabic": "ماء", "english": "water" }
 ]
