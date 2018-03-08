@@ -1,3 +1,3 @@
-# Arabic Vocabulary
+# Qur'an Gems
 
-Teach Arabic vocabulary with a simple quiz-structured game.
+Monsters took the only mushaf in the masjid, plunging it into darkness. Find and recover the word gems to rebuild the mushaf and bring power back to the masjid.
