@@ -2,9 +2,11 @@ package;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
+import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
+
 using haxesharp.collections.Linq;
 import helix.core.HelixState;
 import helix.core.HelixSprite;
@@ -20,6 +22,9 @@ class PlayState extends HelixState
 {
 	private static inline var TARGET_FONT_SIZE = 64;
 	private static inline var PADDING:Int = 16;
+	private static inline var NUM_GEMS_TO_WIN:Int = 10;
+	private static inline var NUM_GEMS_IN_IMAGE:Int = 10;
+
 	private static var STARTING_WORD_FREQUENCY:Int = 0;
 	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
 
@@ -42,6 +47,7 @@ class PlayState extends HelixState
 	private var wordSounds = new Map<String, FlxSound>();
 
 	private var cards = new Array<Card>();
+	private var gems = new Array<HelixSprite>();
 
 	public function new(level:Level)
 	{
@@ -79,10 +85,17 @@ class PlayState extends HelixState
 		this.targetText.onClick(function() { this.playCurrentWord(); });
 
 		var backButton = new HelixSprite("assets/images/back-button.png");
-		backButton.move(FlxG.width - backButton.width - PADDING, FlxG.height - backButton.height - PADDING);
+		backButton.move(FlxG.width - backButton.width - PADDING, PADDING);
 		backButton.onClick(function() {
 			FlxG.switchState(new LevelSelectState());
 		});
+
+		for (i in 0 ... NUM_GEMS_TO_WIN) {
+			var gem = new HelixSprite('assets/images/gems/gem-placeholder.png');
+			gem.move(i * (gem.width + PADDING), FlxG.height - gem.height - PADDING);
+			this.gems.add(gem);
+			gem.alpha = 0.25;
+		}
 	}
 
 	override public function update(elapsed:Float):Void
