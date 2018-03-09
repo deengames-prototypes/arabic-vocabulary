@@ -211,6 +211,12 @@ class PlayState extends HelixState
 
 					if (!this.wordsSelectedCorrectly.contains(this.targetWord))
 					{
+						// Highlight gem
+						var index = this.wordsSelectedCorrectly.length;
+						var gem = this.gems[index];
+						gem.alpha = 1;
+						gem.loadGraphic('assets/images/gems/gem-${index + 1}.png');
+
 						this.wordsSelectedCorrectly.push(this.targetWord);
 
 						// Debug
