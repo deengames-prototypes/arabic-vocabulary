@@ -49,6 +49,7 @@ class PlayState extends HelixState
 
 	private var cards = new Array<Card>();
 	private var gems = new Array<Gem>();
+	private var backButton:HelixSprite;
 
 	public function new(level:Level)
 	{
@@ -85,15 +86,17 @@ class PlayState extends HelixState
 		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
 
-		var backButton = new HelixSprite("assets/images/back-button.png");
+		this.backButton = new HelixSprite("assets/images/back-button.png");
 		backButton.move(FlxG.width - backButton.width - PADDING, PADDING);
 		backButton.onClick(function() {
 			FlxG.switchState(new LevelSelectState());
 		});
 
 		for (i in 0 ... NUM_GEMS_TO_WIN) {
-			var gem = new Gem('assets/images/gems/gem-${i + 1}.png');
-			gem.move(i * (gem.width + PADDING), FlxG.height - gem.height - PADDING);
+			var gem = new Gem(i + 1);
+			var gemY = Std.int(FlxG.height - gem.height - PADDING);
+			gem.baseY = gemY;
+			gem.move(i * (gem.width + PADDING), gemY);
 			this.gems.add(gem);
 			gem.showAsPlaceholder();
 		}
@@ -263,13 +266,16 @@ class PlayState extends HelixState
 	{
 		// First, move all gems to center screen and fade to white
 		var firstGem = this.gems[0];
-		var centerX = (FlxG.width - firstGem.width) / 2;
 		var centerY = (FlxG.height - firstGem.height) / 2;
 
 		for (gem in gems) {
-			gem.fadeToWhite();
-			FlxTween.tween(gem, { x: centerX, y: centerY }, Gem.VICTORY_GEM_FADE_TIME_SECONDS);
+			gem.dance();
 		}
+
+		FlxTween.tween(this.backButton, {
+			x: (FlxG.width - this.backButton.width) / 2,
+			y: (FlxG.height - this.backButton.height) / 3
+		}, Gem.VICTORY_GEM_FADE_TIME_SECONDS);
 	}
 }
 
@@ -356,17 +362,32 @@ class Card extends FlxSpriteGroup
 	}
 }
 
+/**
+ *  A gem with states. Like, seriously.
+ *  First state: shows as a placeholder
+ *  Second state: shows the actual gem
+ *  Third state: dancing in a wave motion
+ */
 class Gem extends HelixSprite {
 
 	public static inline var VICTORY_GEM_FADE_TIME_SECONDS = 1;
+	private static inline var OFFSET_PER_GEM:Float = 0.5; // radians?
+	private static inline var WAVE_AMPLITUDE:Int = 100;
+	private static inline var DANCE_SPEED_MULTIPLIER:Int = 2;
 
-	private var image:String;
-	private var fadingToWhite:Bool = false;
+	public var baseY(null, default):Int = 0;
+	private var num:Int = 0;
+	private var image:String = "";
+	// private var fadingToWhite:Bool = false;
 	private var totalElapsedTime:Float = 0;
+	private var dancing:Bool = false;
+	private var victoryDanceOffset:Float = 0;
 
-	public function new(image:String) {
+	public function new(num:Int) {
+		this.image = 'assets/images/gems/gem-${num}.png';
 		super(image);
-		this.image = image;
+		this.num = num;
+		this.victoryDanceOffset = num * OFFSET_PER_GEM;
 	}
 
 	public function showAsPlaceholder() {
@@ -379,26 +400,33 @@ class Gem extends HelixSprite {
 		this.alpha = 1;
 	}
 
-	public function fadeToWhite() {
-		this.fadingToWhite = true;
+	public function dance():Void
+	{
+		this.dancing = true;
 	}
 
 	override public function update(elapsedSeconds:Float):Void
 	{
 		super.update(elapsedSeconds);
+ 		this.totalElapsedTime += elapsedSeconds;
 
-		if (this.fadingToWhite) {
-			totalElapsedTime += elapsedSeconds;
-
-			// elapsedSeconds / victory time => percent we should show
-			// multiply by 255 because 100% = 255
-			var rgbOffset:Int = Std.int(this.totalElapsedTime / VICTORY_GEM_FADE_TIME_SECONDS * 255);
-			rgbOffset = Std.int(Math.min(rgbOffset, 255));
-
-			trace('time=${this.totalElapsedTime}, v=1, rgb=${rgbOffset}');
-
-			this.setColorTransform(1, 1, 1, 1,
-				rgbOffset, rgbOffset, rgbOffset, 0);
+		if (this.dancing) {
+			var offset = -Math.cos(2 * totalElapsedTime + this.victoryDanceOffset) * WAVE_AMPLITUDE;
+			this.y = this.baseY - WAVE_AMPLITUDE + offset;
 		}
+
+	// 	if (this.fadingToWhite) {
+	// 		totalElapsedTime += elapsedSeconds;
+
+	// 		// elapsedSeconds / victory time => percent we should show
+	// 		// multiply by 255 because 100% = 255
+	// 		var rgbOffset:Int = Std.int(this.totalElapsedTime / VICTORY_GEM_FADE_TIME_SECONDS * 255);
+	// 		rgbOffset = Std.int(Math.min(rgbOffset, 255));
+
+	// 		trace('time=${this.totalElapsedTime}, v=1, rgb=${rgbOffset}');
+
+	// 		this.setColorTransform(1, 1, 1, 1,
+	// 			rgbOffset, rgbOffset, rgbOffset, 0);
+	// 	}
 	}
 }
