@@ -6,6 +6,7 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 
 using haxesharp.collections.Linq;
 import helix.core.HelixState;
@@ -47,7 +48,7 @@ class PlayState extends HelixState
 	private var wordSounds = new Map<String, FlxSound>();
 
 	private var cards = new Array<Card>();
-	private var gems = new Array<HelixSprite>();
+	private var gems = new Array<Gem>();
 
 	public function new(level:Level)
 	{
@@ -91,10 +92,10 @@ class PlayState extends HelixState
 		});
 
 		for (i in 0 ... NUM_GEMS_TO_WIN) {
-			var gem = new HelixSprite('assets/images/gems/gem-placeholder.png');
+			var gem = new Gem('assets/images/gems/gem-${i + 1}.png');
 			gem.move(i * (gem.width + PADDING), FlxG.height - gem.height - PADDING);
 			this.gems.add(gem);
-			gem.alpha = 0.25;
+			gem.showAsPlaceholder();
 		}
 	}
 
@@ -214,8 +215,7 @@ class PlayState extends HelixState
 						// Highlight gem
 						var index = this.wordsSelectedCorrectly.length;
 						var gem = this.gems[index];
-						gem.alpha = 1;
-						gem.loadGraphic('assets/images/gems/gem-${index + 1}.png');
+						gem.showAsGem();
 
 						this.wordsSelectedCorrectly.push(this.targetWord);
 
@@ -226,6 +226,7 @@ class PlayState extends HelixState
 						{
 							this.targetText.text = "YOU WIN!";
 							LevelPersister.setMaxLevelReached(this.levelNumber + 1);
+							this.showLevelCompleteAnimation();
 						} else {
 							this.fadeCardIntoOblivion(card);
 							this.generateAndShowRound();
@@ -256,6 +257,19 @@ class PlayState extends HelixState
 		var sound = this.wordSounds.get('${this.targetWord.english}-${this.mediator.questionLanguage}');
 		sound.stop();
 		sound.play();
+	}
+
+	private function showLevelCompleteAnimation():Void
+	{
+		// First, move all gems to center screen and fade to white
+		var firstGem = this.gems[0];
+		var centerX = (FlxG.width - firstGem.width) / 2;
+		var centerY = (FlxG.height - firstGem.height) / 2;
+
+		for (gem in gems) {
+			gem.fadeToWhite();
+			FlxTween.tween(gem, { x: centerX, y: centerY }, Gem.VICTORY_GEM_FADE_TIME_SECONDS);
+		}
 	}
 }
 
@@ -339,5 +353,52 @@ class Card extends FlxSpriteGroup
 				callback();
 			}
 		});
+	}
+}
+
+class Gem extends HelixSprite {
+
+	public static inline var VICTORY_GEM_FADE_TIME_SECONDS = 1;
+
+	private var image:String;
+	private var fadingToWhite:Bool = false;
+	private var totalElapsedTime:Float = 0;
+
+	public function new(image:String) {
+		super(image);
+		this.image = image;
+	}
+
+	public function showAsPlaceholder() {
+		this.loadGraphic("assets/images/gems/gem-placeholder.png");
+		this.alpha = 0.5;
+	}
+
+	public function showAsGem() {
+		this.loadGraphic(image);
+		this.alpha = 1;
+	}
+
+	public function fadeToWhite() {
+		this.fadingToWhite = true;
+	}
+
+	override public function update(elapsedSeconds:Float):Void
+	{
+		super.update(elapsedSeconds);
+
+		if (this.fadingToWhite) {
+			totalElapsedTime += elapsedSeconds;
+
+			// elapsedSeconds / victory time => percent we should show
+			// multiply by 255 because 100% = 255
+			var rgbOffset:Int = Std.int(this.totalElapsedTime / VICTORY_GEM_FADE_TIME_SECONDS * 255);
+			rgbOffset = Std.int(Math.min(rgbOffset, 255));
+
+			trace('time=${this.totalElapsedTime}, v=1, rgb=${rgbOffset}');
+
+			this.setColorTransform(1, 1, 1, 1,
+				rgbOffset, rgbOffset, rgbOffset, 0);
+		}
 	}
 }
