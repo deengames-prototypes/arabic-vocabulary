@@ -15,8 +15,12 @@ import WordsParser;
 
 class LevelSelectState extends HelixState
 {   
+    private static inline var Y_PADDING = 65;
     private static inline var PADDING:Int = 16;
     private static inline var NUM_COLUMNS:Int = 3;
+    private static inline var FONT_SIZE:Int = 32;
+
+    private var gemsText:HelixText;
 
     private var levels:Array<Level>;
 
@@ -26,7 +30,14 @@ class LevelSelectState extends HelixState
 
         this.levels = new LevelMaker().createLevels();
         var levelReached = LevelPersister.getMaxLevelReached();
-        this.createButtons(this.levels, levelReached);
+        var buttons = this.createButtons(this.levels, levelReached);
+        this.addMasjidAndGauge(buttons);
+
+        var gemsPerLevel = PlayState.NUM_GEMS_TO_WIN;
+        var currentGems = levelReached * gemsPerLevel;
+        var totalGems = this.levels.length * gemsPerLevel;
+
+        this.gemsText = new HelixText(PADDING, Std.int(PADDING / 2), '${currentGems}/${totalGems} gems', FONT_SIZE);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -34,9 +45,10 @@ class LevelSelectState extends HelixState
 		super.update(elapsed);
 	}
 
-    private function createButtons(levels:Array<Level>, maxLevelReached:Int):Void
+    private function createButtons(levels:Array<Level>, maxLevelReached:Int):Array<LevelButton>
     {
         var levelsPerRow = Std.int(Math.ceil(levels.length / NUM_COLUMNS)); // three types of levels
+        var buttons = new Array<LevelButton>();
 
         for (levelNum in 0 ... levels.length)
         {
@@ -46,8 +58,26 @@ class LevelSelectState extends HelixState
             var button = new LevelButton(levelNum, level, isEnabled);
             button.move(
                 PADDING + (levelNum % levelsPerRow) * (PADDING + button.width),
-                PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
+                Y_PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
+            buttons.add(button);
         }
+
+        return buttons;
+    }
+
+    private function addMasjidAndGauge(buttons:Array<LevelButton>):Void
+    {
+        var maxX:Float = 0;
+        for (button in buttons) {
+            if (button.x + button.width > maxX) {
+                maxX = button.x + button.width;
+            }
+        }
+        
+        // Center horizontally in available space
+        var masjid = new HelixSprite("assets/images/masjid-large.png");
+        var freeSpace = FlxG.width - maxX - masjid.width - (2 * PADDING);
+        masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING);
     }
 }
 

@@ -21,10 +21,9 @@ import WordsParser;
 
 class PlayState extends HelixState
 {
+	public static inline var NUM_GEMS_TO_WIN:Int = 10;
 	private static inline var TARGET_FONT_SIZE = 64;
 	private static inline var PADDING:Int = 16;
-	private static inline var NUM_GEMS_TO_WIN:Int = 10;
-	private static inline var NUM_GEMS_IN_IMAGE:Int = 10;
 
 	private static var STARTING_WORD_FREQUENCY:Int = 0;
 	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
