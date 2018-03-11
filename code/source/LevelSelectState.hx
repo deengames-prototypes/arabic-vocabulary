@@ -1,5 +1,7 @@
 package;
 
+import Map;
+
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
 
@@ -11,7 +13,8 @@ import helix.data.Config;
 using haxesharp.collections.Linq;
 
 import model.GameMode;
-import Map;
+import model.Level;
+import model.Word;
 import utils.WordsParser;
 import utils.LevelPersister;
 import view.Gem;
@@ -224,18 +227,4 @@ class LevelMaker
 
         return levels;
     }    
-}
-
-class Level
-{
-    public var words(default, null):Array<Word>;
-    public var levelType(default, null):GameMode; 
-    public var number(default, null):Int; // 0-based index
-
-    public function new(words:Array<Word>, levelType:GameMode, number:Int)
-    {
-        this.words = words;
-        this.levelType = levelType;
-        this.number = number;
-    }
 }

@@ -17,6 +17,8 @@ import helix.data.Config;
 
 import LevelSelectState; // Level
 import model.GameMode;
+import model.Level;
+import model.Word;
 import utils.LevelPersister;
 import utils.WordsParser;
 import view.Gem;
