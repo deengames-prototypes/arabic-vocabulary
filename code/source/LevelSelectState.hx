@@ -10,10 +10,10 @@ import helix.core.HelixText;
 import helix.data.Config;
 using haxesharp.collections.Linq;
 
-import GameMode;
-import LevelPersister;
+import model.GameMode;
 import Map;
-import WordsParser;
+import utils.WordsParser;
+import utils.LevelPersister;
 import view.Gem;
 
 class LevelSelectState extends HelixState

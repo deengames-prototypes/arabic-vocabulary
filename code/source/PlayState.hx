@@ -15,9 +15,10 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
 
-import LevelPersister;
 import LevelSelectState; // Level
-import WordsParser;
+import model.GameMode;
+import utils.LevelPersister;
+import utils.WordsParser;
 import view.Gem;
 
 class PlayState extends HelixState
