@@ -17,7 +17,7 @@ import view.LevelButton;
 
 class LevelSelectState extends HelixState
 {   
-    private static inline var Y_PADDING = 65;
+    private static inline var Y_PADDING = 50;
     private static inline var PADDING:Int = 16;
     private static inline var NUM_COLUMNS:Int = 3;
     private static inline var FONT_SIZE:Int = 32;
@@ -48,7 +48,8 @@ class LevelSelectState extends HelixState
         var gemsPerLevel = PlayState.NUM_GEMS_TO_WIN;
         this.currentGems = levelReached * gemsPerLevel;
         this.totalGems = this.levels.length * gemsPerLevel;
-        this.gemsText = new HelixText(PADDING, Std.int(PADDING / 2), "", FONT_SIZE);
+        this.gemsText = new HelixText(0, Std.int(PADDING / 2), "50/100 gems", FONT_SIZE);
+        this.gemsText.x = Std.int(this.masjid.x + (this.masjid.width - this.gemsText.width) / 2);
 
         if (this.showAnimation) {
             // Pretend we have one level less in gems because the animation will
@@ -78,7 +79,7 @@ class LevelSelectState extends HelixState
             var button = new LevelButton(levelNum, level, isEnabled);
             button.move(
                 PADDING + (levelNum % levelsPerRow) * (PADDING + button.width),
-                Y_PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
+                PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
             buttons.add(button);
         }
 
@@ -97,7 +98,7 @@ class LevelSelectState extends HelixState
         // Center horizontally in available space
         this.masjid = new HelixSprite("assets/images/masjid-large.png");
         var freeSpace = FlxG.width - maxX - masjid.width - (2 * PADDING);
-        masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING);
+        masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING + PADDING);
     }
 
     private function showGemAnimation():Void
