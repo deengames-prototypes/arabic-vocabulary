@@ -119,7 +119,7 @@ class LevelSelectState extends HelixState
             // Stop here (centered under the masjid)
             var stopX = masjid.x + ((masjid.width - gem.width) / 2);
             // Move up here (centered in the masjid)
-            var absorbtionY = 3 * masjid.y + ((masjid.height - gem.height) / 4);
+            var absorbtionY = 3/4 * (masjid.height - gem.height) + masjid.y;
             
             FlxTween.linearMotion(gem, gem.x, gem.y, stopX, gem.y, GEM_SPEED, false, {
                 onComplete: function(tween:FlxTween):Void {                        
