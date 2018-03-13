@@ -8,6 +8,7 @@ import helix.core.HelixText;
 
 import model.GameMode;
 import model.Level;
+import states.PlayState;
 
 class LevelButton extends HelixSprite
 {

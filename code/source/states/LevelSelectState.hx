@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
@@ -51,6 +51,8 @@ class LevelSelectState extends HelixState
         this.gemsText = new HelixText(0, Std.int(PADDING / 2), "50/100 gems", FONT_SIZE);
         this.gemsText.x = Std.int(this.masjid.x + (this.masjid.width - this.gemsText.width) / 2);
 
+        new HelixText(PADDING, Std.int(this.gemsText.y), "Select a Level", FONT_SIZE);
+
         if (this.showAnimation) {
             // Pretend we have one level less in gems because the animation will
             // show and increment/update this value.
@@ -79,7 +81,7 @@ class LevelSelectState extends HelixState
             var button = new LevelButton(levelNum, level, isEnabled);
             button.move(
                 PADDING + (levelNum % levelsPerRow) * (PADDING + button.width),
-                PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
+                Y_PADDING + PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
             buttons.add(button);
         }
 
@@ -113,7 +115,7 @@ class LevelSelectState extends HelixState
             // Stop here (centered under the masjid)
             var stopX = masjid.x + ((masjid.width - gem.width) / 2);
             // Move up here (centered in the masjid)
-            var absorbtionY = masjid.y + ((masjid.height - gem.height) / 2);
+            var absorbtionY = 3 * masjid.y + ((masjid.height - gem.height) / 4);
 
             // Israa
             FlxTween.linearMotion(gem, gem.x, gem.y, stopX, gem.y, GEM_SPEED, false)
