@@ -41,4 +41,11 @@ class LevelButton extends HelixSprite
         this.text.x = Std.int(this.x + (this.width / 2));
         this.text.y = Std.int(this.y + (this.height / 2));
     }
+
+    override public function set_alpha(alpha:Float):Float
+    {
+        var toReturn = super.set_alpha(alpha);
+        this.text.alpha = alpha;
+        return toReturn;
+    }
 }

@@ -22,10 +22,13 @@ class LevelSelectState extends HelixState
     private static inline var NUM_COLUMNS:Int = 3;
     private static inline var FONT_SIZE:Int = 32;
     private static inline var GEM_SPEED:Int = 300;
+    private static inline var FADE_IN_TIME:Int = 1;
     
     private var showAnimation:Bool = false;
     private var gemsText:HelixText;
+    private var levelSelectText:HelixText;
     private var levels:Array<Level>;
+    private var buttons:Array<LevelButton>;
     private var masjid:HelixSprite;
 
     private var currentGems:Int = 0;
@@ -42,7 +45,7 @@ class LevelSelectState extends HelixState
 
         this.levels = new LevelMaker().createLevels();
         var levelReached = LevelPersister.getMaxLevelReached();
-        var buttons = this.createButtons(this.levels, levelReached);
+        this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
 
         var gemsPerLevel = PlayState.NUM_GEMS_TO_WIN;
@@ -51,9 +54,10 @@ class LevelSelectState extends HelixState
         this.gemsText = new HelixText(0, Std.int(PADDING / 2), "50/100 gems", FONT_SIZE);
         this.gemsText.x = Std.int(this.masjid.x + (this.masjid.width - this.gemsText.width) / 2);
 
-        new HelixText(PADDING, Std.int(this.gemsText.y), "Select a Level", FONT_SIZE);
+        this.levelSelectText = new HelixText(PADDING, Std.int(this.gemsText.y), "Select a Level", FONT_SIZE);
 
         if (this.showAnimation) {
+            this.hideUi();
             // Pretend we have one level less in gems because the animation will
             // show and increment/update this value.
             this.currentGems -= gemsPerLevel; 
@@ -111,28 +115,47 @@ class LevelSelectState extends HelixState
 
             // Off-screen bottom-left
             gem.x = -(gem.width + PADDING) * (i + 1);
-            gem.y = FlxG.height - gem.height;
+            gem.y = (FlxG.height - gem.height) / 2;
             // Stop here (centered under the masjid)
             var stopX = masjid.x + ((masjid.width - gem.width) / 2);
             // Move up here (centered in the masjid)
             var absorbtionY = 3 * masjid.y + ((masjid.height - gem.height) / 4);
+            
+            FlxTween.linearMotion(gem, gem.x, gem.y, stopX, gem.y, GEM_SPEED, false, {
+                onComplete: function(tween:FlxTween):Void {                        
+                    gem.destroy();
+                    this.currentGems += 1;
+                    this.updateGemsText();
 
-            // Israa
-            FlxTween.linearMotion(gem, gem.x, gem.y, stopX, gem.y, GEM_SPEED, false)
-                // Mi'raaj
-                .then(FlxTween.linearMotion(gem, stopX, gem.y, stopX, absorbtionY, GEM_SPEED, false,
-                {
-                    onComplete: function(tween:FlxTween):Void {                        
-                        gem.destroy();
-                        this.currentGems += 1;
-                        this.updateGemsText();
+                    if (this.currentGems == LevelPersister.getMaxLevelReached() * PlayState.NUM_GEMS_TO_WIN) {
+                        // Final gem is down
+                        this.fadeInUi();
                     }
-                }));
+                }
+            });
         }
     }
 
     private function updateGemsText():Void
     {
         this.gemsText.text = '${currentGems}/${totalGems} gems';
+    }
+
+    private function hideUi():Void
+    {
+        for (button in this.buttons) {
+            button.alpha = 0;
+        }
+        
+        this.levelSelectText.alpha = 0;
+    }
+
+    private function fadeInUi():Void
+    {
+        for (button in this.buttons) {
+            FlxTween.tween(button, { alpha: 1 }, FADE_IN_TIME);
+        }
+        
+        FlxTween.tween(this.levelSelectText, { alpha: 1 }, FADE_IN_TIME);
     }
 }
