@@ -1,5 +1,6 @@
 package view;
 
+import haxesharp.exceptions.Exception;
 import helix.core.HelixSprite;
 
 /**
@@ -24,6 +25,10 @@ class Gem extends HelixSprite {
 	private var victoryDanceOffset:Float = 0;
 
 	public function new(num:Int) {
+		if (num <= 0) {
+			throw new Exception("Gem number must be a positive integer");
+		}
+
 		this.image = 'assets/images/gems/gem-${num}.png';
 		super(image);
 		this.num = num;

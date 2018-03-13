@@ -1,12 +1,10 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 
 using haxesharp.collections.Linq;
 import helix.core.HelixState;
@@ -15,12 +13,10 @@ using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
 
-import LevelSelectState; // Level
 import model.GameMode;
 import model.Level;
 import model.Word;
 import utils.LevelPersister;
-import utils.WordsParser;
 import view.Gem;
 
 class PlayState extends HelixState
