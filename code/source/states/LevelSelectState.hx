@@ -14,6 +14,7 @@ import utils.LevelPersister;
 import utils.LevelMaker;
 import view.Gem;
 import view.LevelButton;
+import view.TutorialWindow;
 
 class LevelSelectState extends HelixState
 {   
@@ -64,7 +65,7 @@ class LevelSelectState extends HelixState
             this.showGemAnimation();
         }
 
-        this.updateGemsText();        
+        this.updateGemsText();
 	}
 
 	override public function update(elapsed:Float):Void
