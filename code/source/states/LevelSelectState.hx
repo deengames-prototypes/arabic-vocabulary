@@ -69,7 +69,10 @@ class LevelSelectState extends HelixState
 
         if (!SaveManager.getShownStoryPanel()) {
             SaveManager.showedStoryPanel();
-            new TutorialWindow(100, 100, 600, 400, "Monsters took the last mushaf from the masjid, plunging it into darkness!\nGo and recover gems from the Qur'an and recover them to bring the masjid back to light!");
+            new TutorialWindow(100, 100, 600, 400,
+                "Monsters took the last mushaf from the masjid, plunging it into darkness!
+                Go and recover gems from the Qur'an and recover them to bring the masjid back to light!",
+                "assets/images/tutorials/monster-with-gem.png");
         }
 	}
 
