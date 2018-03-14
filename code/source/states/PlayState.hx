@@ -16,7 +16,7 @@ import helix.data.Config;
 import model.GameMode;
 import model.Level;
 import model.Word;
-import utils.LevelPersister;
+import utils.SaveManager;
 import view.Gem;
 
 class PlayState extends HelixState
@@ -229,8 +229,8 @@ class PlayState extends HelixState
 							this.targetText.text = "YOU WIN!";
 
 							// Update only if we played a new level
-							if (LevelPersister.getMaxLevelReached() < this.levelNumber + 1) {
-								LevelPersister.setMaxLevelReached(this.levelNumber + 1);
+							if (SaveManager.getMaxLevelReached() < this.levelNumber + 1) {
+								SaveManager.setMaxLevelReached(this.levelNumber + 1);
 
 								this.backButton.onClick(function() {
 									FlxG.switchState(new LevelSelectState(true));

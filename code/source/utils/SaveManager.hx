@@ -2,13 +2,13 @@ package utils;
 
 import flixel.util.FlxSave;
 
-class LevelPersister
+class SaveManager
 {
     private static inline var SAVE_SLOT:String = "DebugSave";
 
     public static function getMaxLevelReached():Int
     {
-        var save = LevelPersister.getSave();
+        var save = SaveManager.getSave();
         if (save.data.maxLevelReached == null)
         {
             save.data.maxLevelReached = 0;
@@ -20,8 +20,8 @@ class LevelPersister
 
     public static function setMaxLevelReached(level:Int):Void
     {
-        var save = LevelPersister.getSave();
-        var currentMax = LevelPersister.getMaxLevelReached();
+        var save = SaveManager.getSave();
+        var currentMax = SaveManager.getMaxLevelReached();
         if (level > currentMax)
         {
             save.data.maxLevelReached = level;
@@ -29,10 +29,24 @@ class LevelPersister
         }
     }
 
+    public static function getShownStoryPanel():Bool {
+        var save = SaveManager.getSave();
+        var value:Any = save.data.shownStoryPanel;
+        return value == true;
+    }
+
+    public static function showedStoryPanel():Void
+    {
+        var save = SaveManager.getSave();
+        save.data.shownStoryPanel = true;
+        save.flush();
+    }
+
     private static function getSave():FlxSave
     {
         var save = new FlxSave();
         save.bind(SAVE_SLOT);
+        trace('data=${save.data}');
         return save;
     }
 }

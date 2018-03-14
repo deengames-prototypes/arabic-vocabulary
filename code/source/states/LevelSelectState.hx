@@ -10,7 +10,7 @@ import helix.core.HelixText;
 using haxesharp.collections.Linq;
 
 import model.Level;
-import utils.LevelPersister;
+import utils.SaveManager;
 import utils.LevelMaker;
 import view.Gem;
 import view.LevelButton;
@@ -45,7 +45,7 @@ class LevelSelectState extends HelixState
 		super.create();
 
         this.levels = new LevelMaker().createLevels();
-        var levelReached = LevelPersister.getMaxLevelReached();
+        var levelReached = SaveManager.getMaxLevelReached();
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
 
@@ -66,6 +66,11 @@ class LevelSelectState extends HelixState
         }
 
         this.updateGemsText();
+
+        if (!SaveManager.getShownStoryPanel()) {
+            SaveManager.showedStoryPanel();
+            new TutorialWindow(100, 100, 600, 400, "Monsters took the last mushaf from the masjid, plunging it into darkness!\nGo and recover gems from the Qur'an and recover them to bring the masjid back to light!");
+        }
 	}
 
 	override public function update(elapsed:Float):Void
@@ -128,7 +133,7 @@ class LevelSelectState extends HelixState
                     this.currentGems += 1;
                     this.updateGemsText();
 
-                    if (this.currentGems == LevelPersister.getMaxLevelReached() * PlayState.NUM_GEMS_TO_WIN) {
+                    if (this.currentGems == SaveManager.getMaxLevelReached() * PlayState.NUM_GEMS_TO_WIN) {
                         // Final gem is down
                         this.fadeInUi();
                     }

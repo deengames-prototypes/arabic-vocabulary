@@ -8,8 +8,8 @@ import helix.core.HelixText;
 class TutorialWindow extends FlxUI9SliceSprite {
 
     private static inline var TEXT_FIELD_OFFSET_X:Int = 30;
-    private static inline var TEXT_FIELD_OFFSET_Y:Int = 30;
-    private static inline var FONT_SIZE:Int = 32;
+    private static inline var TEXT_FIELD_OFFSET_Y:Int = 20;
+    private static inline var FONT_SIZE:Int = 24;
     
     private var textField:HelixText;
 
@@ -22,7 +22,9 @@ class TutorialWindow extends FlxUI9SliceSprite {
         
         HelixState.current.add(this);
 
-        this.textField = new HelixText(TEXT_FIELD_OFFSET_X, TEXT_FIELD_OFFSET_Y, text, FONT_SIZE);
+        var maxWidth:Int = width - 2 * TEXT_FIELD_OFFSET_X;
+        this.textField = new HelixText(TEXT_FIELD_OFFSET_X, TEXT_FIELD_OFFSET_Y, text, FONT_SIZE, maxWidth);
+        this.textField.wordWrap = true;
         // Trigger setters to move text to correct location
         this.x = x;
         this.y = y;        
