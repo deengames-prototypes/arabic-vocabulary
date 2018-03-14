@@ -2,6 +2,8 @@ package view;
 
 import flash.geom.Rectangle;
 import flixel.addons.ui.FlxUI9SliceSprite;
+import flixel.input.mouse.FlxMouseEventManager;
+
 import helix.core.HelixSprite;
 import helix.core.HelixState;
 import helix.core.HelixText;
@@ -31,6 +33,11 @@ class TutorialWindow extends FlxUI9SliceSprite {
         if (extraImage != "") {
             this.extraImage = new HelixSprite(extraImage);
         }
+
+        FlxMouseEventManager.add(this, function(me:TutorialWindow):Void {
+            // TODO: add a callback so we can chain tutorial windows?
+            this.destroy();
+        });
 
         // Trigger setters to move text to correct location
         this.x = x;
@@ -65,5 +72,17 @@ class TutorialWindow extends FlxUI9SliceSprite {
             }
         }
         return toReturn;
+    }
+
+    override public function destroy():Void {
+        if (this.textField != null) {
+            this.textField.destroy();
+        }
+
+        if (this.extraImage != null) {
+            this.extraImage.destroy();
+        }
+
+        super.destroy();
     }
 }
