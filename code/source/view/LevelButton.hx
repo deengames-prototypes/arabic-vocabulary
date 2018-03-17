@@ -22,11 +22,17 @@ class LevelButton extends HelixSprite
 
     private var text:HelixText;
 
-    public function new(levelNum:Int, level:Level, isEnabled:Bool)
+    public function new(label:String, level:Level, isEnabled:Bool, overrideImage:String = "")
     {
         var suffix = isEnabled ? "" : "-disabled";
-        super('assets/images/${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png');
-        this.text = new HelixText(0, 0, '${levelNum + 1}', FONT_SIZE);
+        var imageName = '${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png';
+
+        if (overrideImage != "") {
+            imageName = overrideImage;
+        }
+
+        super('assets/images/${imageName}');
+        this.text = new HelixText(0, 0, label, FONT_SIZE);
         if (isEnabled) {
             this.onClick(function() {
                 FlxG.switchState(new PlayState(level));
@@ -38,8 +44,8 @@ class LevelButton extends HelixSprite
     {
         this.x = x; 
         this.y = y;
-        this.text.x = Std.int(this.x + (this.width / 2));
-        this.text.y = Std.int(this.y + (this.height / 2));
+        this.text.x = Std.int(this.x + (this.width - this.text.width) / 2);
+        this.text.y = Std.int(this.y + (this.height - this.text.height) / 2);
     }
 
     override public function set_alpha(alpha:Float):Float

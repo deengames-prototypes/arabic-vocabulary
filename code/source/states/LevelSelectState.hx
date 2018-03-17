@@ -83,6 +83,10 @@ class LevelSelectState extends HelixState
         if (levelReached > this.levels.length) {
             
             var allInOneData = new Level(levelMaker.words, GameMode.Mixed, this.levels.length + 1);
+            var allInOneButton = new LevelButton('All-in-One', allInOneData, true, "ui/all-in-one-button.png");
+            var lastButton = this.buttons[this.buttons.length - 1];
+
+            allInOneButton.move(lastButton.x + lastButton.width + PADDING, lastButton.y);
 
             if (!SaveManager.getShownGameCompletionPanel()) {
                 SaveManager.showedGameCompletionPanel();
@@ -110,7 +114,7 @@ class LevelSelectState extends HelixState
             var level = levels[levelNum];
             var isEnabled = maxLevelReached >= levelNum;
 
-            var button = new LevelButton(levelNum, level, isEnabled);
+            var button = new LevelButton('${levelNum + 1}', level, isEnabled);
             button.move(
                 PADDING + (levelNum % levelsPerRow) * (PADDING + button.width),
                 Y_PADDING + PADDING + Std.int(levelNum / levelsPerRow) * (PADDING + button.height));
