@@ -10,6 +10,7 @@ import helix.core.HelixText;
 using haxesharp.collections.Linq;
 
 import model.Level;
+import model.GameMode;
 import utils.SaveManager;
 import utils.LevelMaker;
 import view.Gem;
@@ -47,7 +48,7 @@ class LevelSelectState extends HelixState
         var levelMaker = new LevelMaker();
         this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
-        levelReaced = 11;
+        levelReached = 11;
         
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
@@ -81,7 +82,7 @@ class LevelSelectState extends HelixState
 
         if (levelReached > this.levels.length) {
             
-            var allInOneData = new Level(levelMaker.allWords, GAME_MODE?, this.levels.length + 1);
+            var allInOneData = new Level(levelMaker.words, GameMode.Mixed, this.levels.length + 1);
 
             if (!SaveManager.getShownGameCompletionPanel()) {
                 SaveManager.showedGameCompletionPanel();
