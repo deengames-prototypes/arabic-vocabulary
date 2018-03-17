@@ -12,7 +12,7 @@ class LevelMaker
 {
     private var LEVEL_TYPES:Array<GameMode> = [GameMode.AskInArabic, GameMode.AskInEnglish, GameMode.Mixed];
 
-    private var words:Array<Word>;
+    public var words:Array<Word>(default, null);
 
     public function new() { }
 

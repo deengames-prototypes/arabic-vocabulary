@@ -44,8 +44,10 @@ class LevelSelectState extends HelixState
 	{
 		super.create();
 
-        this.levels = new LevelMaker().createLevels();
+        var levelMaker = new LevelMaker();
+        this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
+        levelReaced = 11;
         
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
@@ -77,13 +79,18 @@ class LevelSelectState extends HelixState
             tutorial.y = (FlxG.height - tutorial.height) / 2;
         }
 
-        if (levelReached > this.levels.length && !SaveManager.getShownGameCompletionPanel()) {
-            SaveManager.showedGameCompletionPanel();
-            var tutorial = new TutorialWindow("You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.",
-                "assets/images/ui/gems-completion.png");
+        if (levelReached > this.levels.length) {
+            
+            var allInOneData = new Level(levelMaker.allWords, GAME_MODE?, this.levels.length + 1);
 
-            tutorial.x = (FlxG.width - tutorial.width) / 2;
-            tutorial.y = (FlxG.height - tutorial.height) / 2;
+            if (!SaveManager.getShownGameCompletionPanel()) {
+                SaveManager.showedGameCompletionPanel();
+                var tutorial = new TutorialWindow("You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.",
+                    "assets/images/ui/gems-completion.png");
+
+                tutorial.x = (FlxG.width - tutorial.width) / 2;
+                tutorial.y = (FlxG.height - tutorial.height) / 2;
+            }
         }
 	}
 
