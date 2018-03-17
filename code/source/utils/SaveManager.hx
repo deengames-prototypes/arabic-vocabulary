@@ -41,6 +41,19 @@ class SaveManager
         save.data.shownStoryPanel = true;
         save.flush();
     }
+    
+    public static function getShownGameCompletionPanel():Bool {
+        var save = SaveManager.getSave();
+        var value:Any = save.data.shownGameCompletionPanel;
+        return value == true;
+    }
+
+    public static function showedGameCompletionPanel():Void
+    {
+        var save = SaveManager.getSave();
+        save.data.shownGameCompletionPanel = true;
+        save.flush();
+    }
 
     private static function getSave():FlxSave
     {
