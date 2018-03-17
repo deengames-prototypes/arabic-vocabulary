@@ -13,6 +13,6 @@
     "repeatWordsPerLevel": 4,
 
     "extraWords": [
-	    { "arabic": "إنسَانٌ", "english": "humans" }
+	    { "arabic": "إنسَانٌ", "english": "humans" },
     ]
 }
