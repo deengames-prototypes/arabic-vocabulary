@@ -94,6 +94,10 @@ class PlayState extends HelixState
 		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
 
+		var monster = new HelixSprite("assets/images/monster.png");
+		monster.move(this.targetText.x - monster.width - PADDING, this.targetText.y);
+		monster.onClick(function() { this.playCurrentWord(); });
+
 		this.backButton = new HelixSprite("assets/images/ui/back-button.png");
 		backButton.move(FlxG.width - backButton.width - PADDING, PADDING);
 		backButton.onClick(function() {
@@ -109,13 +113,14 @@ class PlayState extends HelixState
 			gem.showAsPlaceholder();
 		}
 
-		if (this.levelNumber == 0 && !SaveManager.getShownEnglishLevelTutorial()) {
-			trace("TUTORIAL!");
-			this.tutorialArrow = new HelixSprite("assets/images/ui/left-arrow.png");
-			this.tutorialArrowBaseX = this.targetText.x + this.targetText.width + PADDING + TUTORIAL_ARROW_AMPLITUDE;
-			this.tutorialArrow.y = this.targetText.y;
-			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "Pick the card that matches the Arabic word!");
+		if (this.gameMode == GameMode.AskInArabic && !SaveManager.getShownEnglishLevelTutorial()) {
+			this.showTutorialArrow();
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "Pick the card that matches the monsters' Arabic word!");
 			SaveManager.showedEnglishLevelTutorial();
+		} else if (this.gameMode == GameMode.AskInEnglish && !SaveManager.getShownEnglishLevelTutorial()) {
+			this.showTutorialArrow();
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "The monsters switched to English! Pick the card that matches the gems' English word!");
+			SaveManager.showedArabicLevelTutorial();
 		}
 	}
 
@@ -308,6 +313,12 @@ class PlayState extends HelixState
 			x: (FlxG.width - this.backButton.width) / 2,
 			y: (FlxG.height - this.backButton.height) / 3
 		}, Gem.VICTORY_GEM_FADE_TIME_SECONDS);
+	}
+
+	private function showTutorialArrow():Void {
+		this.tutorialArrow = new HelixSprite("assets/images/ui/left-arrow.png");
+		this.tutorialArrowBaseX = this.targetText.x + this.targetText.width + PADDING + TUTORIAL_ARROW_AMPLITUDE;
+		this.tutorialArrow.y = this.targetText.y;
 	}
 }
 

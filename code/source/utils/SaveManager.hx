@@ -66,6 +66,30 @@ class SaveManager
         save.flush();
     }
 
+    public static function getShownArabicLevelTutorial():Bool {
+        var save = SaveManager.getSave();
+        var value:Any = save.data.shownArabicLevelTutorial;
+        return value == true;
+    }
+
+    public static function showedArabicLevelTutorial():Void {
+        var save = SaveManager.getSave();
+        save.data.shownArabicLevelTutorial = true;
+        save.flush();
+    }
+
+        public static function getShownMixedLevelTutorial():Bool {
+        var save = SaveManager.getSave();
+        var value:Any = save.data.shownMixedLevelTutorial;
+        return value == true;
+    }
+
+    public static function showedMixedLevelTutorial():Void {
+        var save = SaveManager.getSave();
+        save.data.shownMixedLevelTutorial = true;
+        save.flush();
+    }
+
     private static function getSave():FlxSave
     {
         var save = new FlxSave();

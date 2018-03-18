@@ -50,6 +50,7 @@ class LevelSelectState extends HelixState
         var levelMaker = new LevelMaker();
         this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
+        levelReached = 11;
         
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
@@ -84,7 +85,7 @@ class LevelSelectState extends HelixState
         if (levelReached > this.levels.length) {
             
             var allInOneData = new Level(levelMaker.words, GameMode.Mixed, this.levels.length + 1);
-            var allInOneButton = new LevelButton('All-in-One', allInOneData, true, "ui/all-in-one-button.png");
+            var allInOneButton = new LevelButton('All-in-One', allInOneData, true, "all-in-one-button.png");
             var lastButton = this.buttons[this.buttons.length - 1];
 
             allInOneButton.move(lastButton.x + lastButton.width + PADDING, lastButton.y);
