@@ -115,12 +115,16 @@ class PlayState extends HelixState
 
 		if (this.gameMode == GameMode.AskInArabic && !SaveManager.getShownEnglishLevelTutorial()) {
 			this.showTutorialArrow();
-			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "Pick the card that matches the monsters' Arabic word!");
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "Pick the card that matches the monsters' Arabic word to save the gems!");
 			SaveManager.showedEnglishLevelTutorial();
 		} else if (this.gameMode == GameMode.AskInEnglish && !SaveManager.getShownEnglishLevelTutorial()) {
 			this.showTutorialArrow();
-			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "The monsters switched to English! Pick the card that matches the gems' English word!");
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "The monsters switched to English! Pick the card that matches the monsters' English word to save the gems!");
 			SaveManager.showedArabicLevelTutorial();
+		} else if (this.gameMode == GameMode.Mixed && !SaveManager.getShownMixedLevelTutorial()) {
+			this.showTutorialArrow();
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "The monsters are switching between Arabic and English! Pick the matching card to save the gems!");
+			SaveManager.showedMixedLevelTutorial();
 		}
 	}
 
