@@ -12,12 +12,14 @@ import helix.core.HelixSprite;
 using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
 import helix.data.Config;
+import helix.GameTime;
 
 import model.GameMode;
 import model.Level;
 import model.Word;
 import utils.SaveManager;
 import view.Gem;
+import view.TutorialWindow;
 
 class PlayState extends HelixState
 {
@@ -27,6 +29,9 @@ class PlayState extends HelixState
 
 	private static var STARTING_WORD_FREQUENCY:Int = 0;
 	private static var WORD_FREQUENCY_MODIFIER:Int = 0; // +n on wrong, -n on right
+
+	private static var TUTORIAL_ARROW_AMPLITUDE:Int = 25;
+	private static var TUTORIAL_ARROW_SPEED_MULTIPLIER:Int = 4;
 
 	// These two must be the same order
 	private var levelWords = new Array<Word>();
@@ -40,6 +45,8 @@ class PlayState extends HelixState
 	private var random = new FlxRandom();
 	private var targetText:HelixText;
 	private var wordsSelectedCorrectly = new Array<Word>();
+	private var tutorialArrow:HelixSprite; // tutorial arrow
+	private var tutorialArrowBaseX:Float = 0;
 	
 	private var correctSound:FlxSound;
 	private var incorrectSound:FlxSound;
@@ -99,11 +106,24 @@ class PlayState extends HelixState
 			this.gems.add(gem);
 			gem.showAsPlaceholder();
 		}
+
+		if (this.levelNumber == 0 && !SaveManager.getShownEnglishLevelTutorial()) {
+			trace("TUTORIAL!");
+			this.tutorialArrow = new HelixSprite("assets/images/ui/left-arrow.png");
+			this.tutorialArrowBaseX = this.targetText.x + this.targetText.width + PADDING + TUTORIAL_ARROW_AMPLITUDE;
+			this.tutorialArrow.y = this.targetText.y;
+			//SaveManager.showedEnglishLevelTutorial();
+		}
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		if (this.tutorialArrow != null) {
+			this.tutorialArrow.x  = this.tutorialArrowBaseX + 
+				(TUTORIAL_ARROW_AMPLITUDE * Math.cos(TUTORIAL_ARROW_SPEED_MULTIPLIER * GameTime.totalElapsedSeconds));
+		}
 	}
 
 	private function generateAndShowRound():Void

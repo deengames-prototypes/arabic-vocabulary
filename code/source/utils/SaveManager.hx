@@ -48,10 +48,21 @@ class SaveManager
         return value == true;
     }
 
-    public static function showedGameCompletionPanel():Void
-    {
+    public static function showedGameCompletionPanel():Void {
         var save = SaveManager.getSave();
         save.data.shownGameCompletionPanel = true;
+        save.flush();
+    }
+
+    public static function getShownEnglishLevelTutorial():Bool {
+        var save = SaveManager.getSave();
+        var value:Any = save.data.shownEnglishLevelTutorial;
+        return value == true;
+    }
+
+    public static function showedEnglishLevelTutorial():Void {
+        var save = SaveManager.getSave();
+        save.data.shownEnglishLevelTutorial = true;
         save.flush();
     }
 
@@ -59,6 +70,7 @@ class SaveManager
     {
         var save = new FlxSave();
         save.bind(SAVE_SLOT);
+        save.erase();
         return save;
     }
 }

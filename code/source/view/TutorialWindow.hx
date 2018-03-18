@@ -18,6 +18,7 @@ class TutorialWindow extends FlxUI9SliceSprite {
     
     private var textField:HelixText;
     private var extraImage:HelixSprite;
+    private var onDestroyCallback:Void->Void;
 
     public function new(text:String, extraImage:String = "") {       
         super(x, y, "assets/images/ui/button-9scale.png", 
@@ -72,6 +73,7 @@ class TutorialWindow extends FlxUI9SliceSprite {
     }
 
     override public function destroy():Void {
+
         if (this.textField != null) {
             this.textField.destroy();
         }
@@ -80,6 +82,14 @@ class TutorialWindow extends FlxUI9SliceSprite {
             this.extraImage.destroy();
         }
 
+        if (this.onDestroyCallback != null) {
+            this.onDestroyCallback();
+        }
+
         super.destroy();
+    }
+
+    public function onDestroy(callback:Void->Void):Void {
+        this.onDestroyCallback = callback;
     }
 }
