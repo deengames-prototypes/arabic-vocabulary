@@ -85,7 +85,7 @@ class PlayState extends HelixState
 		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
 
-		this.backButton = new HelixSprite("assets/images/back-button.png");
+		this.backButton = new HelixSprite("assets/images/ui/back-button.png");
 		backButton.move(FlxG.width - backButton.width - PADDING, PADDING);
 		backButton.onClick(function() {
 			FlxG.switchState(new LevelSelectState(false));
@@ -341,7 +341,7 @@ class Card extends FlxSpriteGroup
 		super();
 
 		this.word = word;
-		this.cardBase = new HelixSprite("assets/images/card-base.png");		
+		this.cardBase = new HelixSprite("assets/images/ui/card-base.png");		
 		this.add(cardBase);
 
 		this.arabicText = new HelixText(PADDING, PADDING, word.arabic, DEFAULT_FONT_SIZE);
