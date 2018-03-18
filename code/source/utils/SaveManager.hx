@@ -59,9 +59,6 @@ class SaveManager
     {
         var save = new FlxSave();
         save.bind(SAVE_SLOT);
-        // TODO: REMOVE
-        save.erase();
-        trace('data=${save.data}');
         return save;
     }
 }

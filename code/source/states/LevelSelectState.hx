@@ -48,7 +48,6 @@ class LevelSelectState extends HelixState
         var levelMaker = new LevelMaker();
         this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
-        levelReached = 11;
         
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
