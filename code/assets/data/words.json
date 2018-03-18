@@ -46,7 +46,6 @@
 	{ "arabic": "شَهِدَ", "english": "witness" },
 	{ "arabic": "عَمِلَ", "english": "work" },
 	{ "arabic": "عَصَا", "english": "staff" },
-	
 	{ "arabic": "نَارٌ", "english": "fire" },
 	{ "arabic": "قَالَ", "english": "he-said" },
 	{ "arabic": "جِبَالٌ", "english": "mountains" },
@@ -59,6 +58,5 @@
 	{ "arabic": "أعنَابٌ", "english": "grapes" },
 	{ "arabic": "جَزَاء", "english": "reward" },
 	{ "arabic": "القَمَرُ", "english": "moon" },
-
 	{ "arabic": "اللَيل", "english": "night" }	
 ]
