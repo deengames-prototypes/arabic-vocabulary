@@ -93,8 +93,18 @@ class PlayState extends HelixState
 
 		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
 		this.targetText.onClick(function() { this.playCurrentWord(); });
+		
+		var monsterNum = 3;
 
-		var monster = new HelixSprite("assets/images/monster.png");
+		if (this.gameMode == GameMode.AskInArabic) {
+			monsterNum = 1;
+		} else if (this.gameMode == GameMode.AskInEnglish) {
+			monsterNum = 2;
+		} else if (this.gameMode == GameMode.Mixed) {
+			monsterNum = 3;
+		}
+
+		var monster = new HelixSprite('assets/images/monster-${monsterNum}.png');
 		monster.move(this.targetText.x - monster.width - PADDING, this.targetText.y);
 		monster.onClick(function() { this.playCurrentWord(); });
 
