@@ -31,7 +31,7 @@ class LevelButton extends HelixSprite
             imageName = overrideImage;
         }
 
-        super('assets/images/${imageName}');
+        super('assets/images/ui/${imageName}');
         this.text = new HelixText(0, 0, label, FONT_SIZE);
         if (isEnabled) {
             this.onClick(function() {

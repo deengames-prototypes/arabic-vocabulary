@@ -133,7 +133,7 @@ class LevelSelectState extends HelixState
         }
         
         // Center horizontally in available space
-        this.masjid = new HelixSprite("assets/images/masjid-large.png");
+        this.masjid = new HelixSprite("assets/images/ui/masjid-large.png");
         var freeSpace = FlxG.width - maxX - masjid.width - (2 * PADDING);
         masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING + PADDING);
     }
