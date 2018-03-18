@@ -32,6 +32,8 @@ class PlayState extends HelixState
 
 	private static var TUTORIAL_ARROW_AMPLITUDE:Int = 25;
 	private static var TUTORIAL_ARROW_SPEED_MULTIPLIER:Int = 4;
+	private static inline var TUTORIAL_WINDOW_WIDTH:Int = 400;
+    private static inline var TUTORIAL_WINDOW_HEIGHT:Int = 200;
 
 	// These two must be the same order
 	private var levelWords = new Array<Word>();
@@ -112,7 +114,8 @@ class PlayState extends HelixState
 			this.tutorialArrow = new HelixSprite("assets/images/ui/left-arrow.png");
 			this.tutorialArrowBaseX = this.targetText.x + this.targetText.width + PADDING + TUTORIAL_ARROW_AMPLITUDE;
 			this.tutorialArrow.y = this.targetText.y;
-			//SaveManager.showedEnglishLevelTutorial();
+			new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT, "Pick the card that matches the Arabic word!");
+			SaveManager.showedEnglishLevelTutorial();
 		}
 	}
 

@@ -70,7 +70,7 @@ class SaveManager
     {
         var save = new FlxSave();
         save.bind(SAVE_SLOT);
-        save.erase();
+        save.erase();   /////////////////////////////////////////////////
         return save;
     }
 }

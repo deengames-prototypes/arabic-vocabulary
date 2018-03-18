@@ -1,6 +1,7 @@
 package view;
 
 import flash.geom.Rectangle;
+import flixel.FlxG;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.input.mouse.FlxMouseEventManager;
 
@@ -13,16 +14,13 @@ class TutorialWindow extends FlxUI9SliceSprite {
     private static inline var TEXT_FIELD_OFFSET_X:Int = 30;
     private static inline var TEXT_FIELD_OFFSET_Y:Int = 20;
     private static inline var FONT_SIZE:Int = 24;
-    private static inline var WINDOW_WIDTH:Int = 600;
-    private static inline var WINDOW_HEIGHT:Int = 400;
     
     private var textField:HelixText;
     private var extraImage:HelixSprite;
-    private var onDestroyCallback:Void->Void;
 
-    public function new(text:String, extraImage:String = "") {       
+    public function new(width:Int, height:Int, text:String, extraImage:String = "") {       
         super(x, y, "assets/images/ui/button-9scale.png", 
-            new Rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT),
+            new Rectangle(0, 0, width, height),
             // The image is 50x50. Border gems are (20, 15).
             // Add/subtract appropriately; the center area goes from (20, 15) to (30, 35).
             [20, 15, 30, 35]);
@@ -40,6 +38,9 @@ class TutorialWindow extends FlxUI9SliceSprite {
         FlxMouseEventManager.add(this, function(me:TutorialWindow):Void {
             this.destroy();
         });
+
+        this.x = (FlxG.width - this.width) / 2;
+        this.y = (FlxG.height - this.height) / 2;
     }
 
     override public function set_x(x:Float):Float
@@ -82,14 +83,6 @@ class TutorialWindow extends FlxUI9SliceSprite {
             this.extraImage.destroy();
         }
 
-        if (this.onDestroyCallback != null) {
-            this.onDestroyCallback();
-        }
-
         super.destroy();
-    }
-
-    public function onDestroy(callback:Void->Void):Void {
-        this.onDestroyCallback = callback;
     }
 }

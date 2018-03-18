@@ -25,6 +25,8 @@ class LevelSelectState extends HelixState
     private static inline var FONT_SIZE:Int = 32;
     private static inline var GEM_SPEED:Int = 300;
     private static inline var FADE_IN_TIME:Int = 1;
+    private static inline var TUTORIAL_WINDOW_WIDTH:Int = 600;
+    private static inline var TUTORIAL_WINDOW_HEIGHT:Int = 400;
     
     private var showAnimation:Bool = false;
     private var gemsText:HelixText;
@@ -72,8 +74,8 @@ class LevelSelectState extends HelixState
 
         if (!SaveManager.getShownStoryPanel()) {
             SaveManager.showedStoryPanel();
-            var tutorial = new TutorialWindow("Monsters took the last mushaf from the masjid, plunging it into darkness!
-                Go and recover gems from the Qur'an and recover them to bring the masjid back to light!",
+            var tutorial = new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT,
+                "Monsters took the last mushaf from the masjid, plunging it into darkness!\n\nGo and recover gems from the Qur'an and recover them to bring the masjid back to light!",
                 "assets/images/tutorials/monster-with-gem.png");
             tutorial.x = (FlxG.width - tutorial.width) / 2;
             tutorial.y = (FlxG.height - tutorial.height) / 2;
@@ -89,11 +91,9 @@ class LevelSelectState extends HelixState
 
             if (!SaveManager.getShownGameCompletionPanel()) {
                 SaveManager.showedGameCompletionPanel();
-                var tutorial = new TutorialWindow("You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.",
+                var tutorial = new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT,
+                    "You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.",
                     "assets/images/ui/gems-completion.png");
-
-                tutorial.x = (FlxG.width - tutorial.width) / 2;
-                tutorial.y = (FlxG.height - tutorial.height) / 2;
             }
         }
 	}
