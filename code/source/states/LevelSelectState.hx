@@ -16,6 +16,7 @@ import utils.LevelMaker;
 import view.Gem;
 import view.LevelButton;
 import view.TutorialWindow;
+import view.VictoryTutorialWindow;
 
 class LevelSelectState extends HelixState
 {   
@@ -92,9 +93,8 @@ class LevelSelectState extends HelixState
 
             if (!SaveManager.getShownGameCompletionPanel()) {
                 SaveManager.showedGameCompletionPanel();
-                var tutorial = new TutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT,
-                    "You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.",
-                    "assets/images/ui/gems-completion.png");
+                var tutorial = new VictoryTutorialWindow(TUTORIAL_WINDOW_WIDTH, TUTORIAL_WINDOW_HEIGHT,
+                    "You found all the gems and saved the day! The masjid is back to normal! Alhamdulillah!\n\nAs a special reward, you've unlocked the All-in-One level, which combines the challenge of all the previous levels, combined.");
             }
         }
 	}
