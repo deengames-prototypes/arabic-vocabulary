@@ -294,6 +294,7 @@ class PlayState extends HelixState
 			else
 			{
 				this.fadeCardIntoOblivion(card);
+				card.disable();
 			}
 		}
 	}
@@ -416,5 +417,9 @@ class Card extends FlxSpriteGroup
 				callback();
 			}
 		});
+	}
+
+	public function disable() {
+		this.cardBase.onClick(function() { });
 	}
 }
