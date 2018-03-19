@@ -71,6 +71,8 @@ class PlayState extends HelixState
 	{
 		super.create();
 
+		new HelixSprite("assets/images/backgrounds/cave.png");
+
 		STARTING_WORD_FREQUENCY = Config.get("startingWordFrequency");
 		WORD_FREQUENCY_MODIFIER = Config.get("wordFrequencyModifier");
 
@@ -78,7 +80,6 @@ class PlayState extends HelixState
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
 
 		this.mediator = new QuestionAnswerMediator(this.gameMode);
-		new HelixSprite("assets/images/background.png");
 		
 		for (word in levelWords)
 		{

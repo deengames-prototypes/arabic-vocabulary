@@ -48,6 +48,8 @@ class LevelSelectState extends HelixState
 	{
 		super.create();
 
+		new HelixSprite("assets/images/backgrounds/landscape.png");        
+
         var levelMaker = new LevelMaker();
         this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
@@ -136,7 +138,7 @@ class LevelSelectState extends HelixState
         // Center horizontally in available space
         this.masjid = new HelixSprite("assets/images/ui/masjid-large.png");
         var freeSpace = FlxG.width - maxX - masjid.width - (2 * PADDING);
-        masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING + PADDING);
+        masjid.move(maxX + PADDING + (freeSpace / 2), Y_PADDING + (2 * PADDING));
     }
 
     private function showGemAnimation():Void

@@ -37,7 +37,7 @@ class Gem extends HelixSprite {
 
 	public function showAsPlaceholder() {
 		this.loadGraphic("assets/images/gems/gem-placeholder.png");
-		this.alpha = 0.5;
+		this.alpha = 0.75;
 	}
 
 	public function showAsGem() {
