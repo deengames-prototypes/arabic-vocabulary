@@ -4,7 +4,7 @@ import flixel.util.FlxSave;
 
 class SaveManager
 {
-    private static inline var SAVE_SLOT:String = "DebugSave";
+    private static inline var SAVE_SLOT:String = "Save0";
 
     public static function getMaxLevelReached():Int
     {

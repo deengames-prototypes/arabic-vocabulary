@@ -2,6 +2,7 @@ package states;
 
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 
 import helix.core.HelixSprite;
 using helix.core.HelixSpriteFluentApi;
@@ -28,6 +29,7 @@ class LevelSelectState extends HelixState
     private static inline var FADE_IN_TIME:Int = 1;
     private static inline var TUTORIAL_WINDOW_WIDTH:Int = 600;
     private static inline var TUTORIAL_WINDOW_HEIGHT:Int = 400;
+    private static inline var FONT_COLOUR:FlxColor = FlxColor.BLACK;
     
     private var showAnimation:Bool = false;
     private var gemsText:HelixText;
@@ -53,7 +55,6 @@ class LevelSelectState extends HelixState
         var levelMaker = new LevelMaker();
         this.levels = levelMaker.createLevels();
         var levelReached = SaveManager.getMaxLevelReached();
-        levelReached = 11;
         
         this.buttons = this.createButtons(this.levels, levelReached);
         this.addMasjidAndGauge(buttons);
@@ -61,10 +62,11 @@ class LevelSelectState extends HelixState
         var gemsPerLevel = PlayState.NUM_GEMS_TO_WIN;
         this.currentGems = levelReached * gemsPerLevel;
         this.totalGems = this.levels.length * gemsPerLevel;
-        this.gemsText = new HelixText(0, Std.int(PADDING / 2), "50/100 gems", FONT_SIZE);
+        this.gemsText = new HelixText(0, Std.int(PADDING / 2), "50/100 gems", FONT_SIZE, FONT_COLOUR);
         this.gemsText.x = Std.int(this.masjid.x + (this.masjid.width - this.gemsText.width) / 2);
 
-        this.levelSelectText = new HelixText(PADDING, Std.int(this.gemsText.y), "Select a Level", FONT_SIZE);
+        this.levelSelectText = new HelixText(PADDING, Std.int(this.gemsText.y), "Select a Level",
+            FONT_SIZE, FONT_COLOUR);
 
         if (this.showAnimation) {
             this.hideUi();
