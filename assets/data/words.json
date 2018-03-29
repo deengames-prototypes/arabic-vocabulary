@@ -45,11 +45,10 @@
 	{ "arabic": "بَسُرَ", "english": "watch" },
 	{ "arabic": "شَهِدَ", "english": "witness" },
 	{ "arabic": "عَمِلَ", "english": "work" },
-	{ "arabic": "عَصَا", "english": "stick" },
+	{ "arabic": "عَصَا", "english": "staff" },
 	{ "arabic": "نَارٌ", "english": "fire" },
 	{ "arabic": "قَالَ", "english": "he-said" },
 	{ "arabic": "جِبَالٌ", "english": "mountains" },
-	{ "arabic": "اللَيل", "english": "night" },
 	{ "arabic": "النَهَار", "english": "daytime" },
 	{ "arabic": "اَنزَلنَا", "english": "send-down" },
 	{ "arabic": "ماء", "english": "water" },
@@ -58,6 +57,6 @@
 	{ "arabic": "جَهَنَّم", "english": "hellfire" },
 	{ "arabic": "أعنَابٌ", "english": "grapes" },
 	{ "arabic": "جَزَاء", "english": "reward" },
-	{ "arabic": "إنسَانٌ", "english": "humans" },
-	{ "arabic": "القَمَرُ", "english": "moon" }
+	{ "arabic": "القَمَرُ", "english": "moon" },
+	{ "arabic": "اللَيل", "english": "night" }	
 ]

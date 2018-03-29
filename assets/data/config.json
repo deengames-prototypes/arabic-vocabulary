@@ -10,5 +10,9 @@
     // The number of levels is equal to the total number of words divided by the number of new words.
     // eg. with 40 words total and 6 new per level, we get 7 levels.
     "newWordsPerLevel": 6,
-    "repeatWordsPerLevel": 4
+    "repeatWordsPerLevel": 4,
+
+    "extraWords": [
+	    { "arabic": "إنسَانٌ", "english": "humans" }
+    ]
 }
