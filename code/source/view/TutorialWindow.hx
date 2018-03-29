@@ -4,6 +4,7 @@ import flash.geom.Rectangle;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.input.mouse.FlxMouseEventManager;
+import flixel.util.FlxColor;
 
 import helix.core.HelixSprite;
 import helix.core.HelixState;
@@ -28,8 +29,9 @@ class TutorialWindow extends FlxUI9SliceSprite {
         HelixState.current.add(this);
 
         var maxWidth:Int = Std.int(this.width - 2 * TEXT_FIELD_OFFSET_X);
-        this.textField = new HelixText(TEXT_FIELD_OFFSET_X, TEXT_FIELD_OFFSET_Y, text, FONT_SIZE, maxWidth);
-        this.textField.wordWrap = true;
+        
+        this.textField = new HelixText(TEXT_FIELD_OFFSET_X, TEXT_FIELD_OFFSET_Y,
+            text, FONT_SIZE, FlxColor.BLACK, maxWidth);
 
         if (extraImage != "") {
             this.extraImage = new HelixSprite(extraImage);
