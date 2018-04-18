@@ -1,1 +1,0 @@
-This branch holds the web prototype of the game.

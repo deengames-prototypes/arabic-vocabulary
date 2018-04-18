@@ -568,7 +568,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "12", company : "Deen Games", file : "QuranGems", fps : 60, name : "Qur'an Gems", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "Qur'an Gems", vsync : true, width : 960, x : null, y : null}]};
+	ApplicationMain.config = { build : "1", company : "Deen Games", file : "QuranGems", fps : 60, name : "Qur'an Gems", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : false, height : 540, parameters : "{}", resizable : false, stencilBuffer : true, title : "Qur'an Gems", vsync : true, width : 960, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -97421,7 +97421,7 @@ states_PlayState.prototype = $extend(helix_core_HelixState.prototype,{
 		while(_g < words.length) {
 			var word = [words[_g]];
 			++_g;
-			var card = [new states_Card("assets/images/words/" + word[0].english + ".png",word[0],this.gameMode)];
+			var card = [new view_Card("assets/images/words/" + word[0].english + ".png",word[0],this.gameMode)];
 			var tmp = (function(card1,word1) {
 				return function() {
 					var index = _gthis.levelWords.indexOf(_gthis.targetWord);
@@ -97608,47 +97608,6 @@ states_QuestionAnswerMediator.prototype = {
 	,__class__: states_QuestionAnswerMediator
 	,__properties__: {get_answerLanguage:"get_answerLanguage",get_questionLanguage:"get_questionLanguage"}
 };
-var states_Card = function(imageFile,word,mode) {
-	this.clickable = true;
-	flixel_group_FlxTypedSpriteGroup.call(this);
-	this.word = word;
-	this.cardBase = new helix_core_HelixSprite("assets/images/ui/card-base.png");
-	this.add(this.cardBase);
-	this.arabicText = new helix_core_HelixText(8,8,word.arabic,32);
-	var _g = this.arabicText;
-	_g.set_x(_g.x + (this.cardBase.get_width() - this.arabicText.get_width()) / 2);
-	this.arabicText.set_alpha(mode == model_GameMode.AskInArabic ? 0 : 1);
-	this.add(this.arabicText);
-	this.image = new helix_core_HelixSprite(imageFile);
-	helix_core_HelixSpriteFluentApi.move(this.image,(this.cardBase.get_width() - this.image.get_width()) / 2,(this.cardBase.get_height() - this.image.get_height()) / 2);
-	this.add(this.image);
-	this.englishText = new helix_core_HelixText(8,this.cardBase.get_height() - 8 | 0,word.english,32);
-	var _g1 = this.englishText;
-	_g1.set_x(_g1.x + (this.cardBase.get_width() - this.englishText.get_width()) / 2);
-	var _g2 = this.englishText;
-	_g2.set_y(_g2.y - this.englishText.get_height());
-	this.englishText.set_alpha(mode == model_GameMode.AskInArabic ? 1 : 0);
-	this.add(this.englishText);
-};
-$hxClasses["states.Card"] = states_Card;
-states_Card.__name__ = ["states","Card"];
-states_Card.__super__ = flixel_group_FlxTypedSpriteGroup;
-states_Card.prototype = $extend(flixel_group_FlxTypedSpriteGroup.prototype,{
-	onClick: function(callback) {
-		var _gthis = this;
-		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,function() {
-			if(_gthis.clickable) {
-				_gthis.clickable = false;
-				callback();
-			}
-		});
-	}
-	,disable: function() {
-		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,function() {
-		});
-	}
-	,__class__: states_Card
-});
 var utils_LevelMaker = function() {
 	this.LEVEL_TYPES = [model_GameMode.AskInArabic,model_GameMode.AskInEnglish,model_GameMode.Mixed];
 };
@@ -97778,6 +97737,47 @@ utils_WordsParser.getAllWords = function() {
 	}
 	return toReturn;
 };
+var view_Card = function(imageFile,word,mode) {
+	this.clickable = true;
+	flixel_group_FlxTypedSpriteGroup.call(this);
+	this.word = word;
+	this.cardBase = new helix_core_HelixSprite("assets/images/ui/card-base.png");
+	this.add(this.cardBase);
+	this.arabicText = new helix_core_HelixText(8,8,word.arabic,32);
+	var _g = this.arabicText;
+	_g.set_x(_g.x + (this.cardBase.get_width() - this.arabicText.get_width()) / 2);
+	this.arabicText.set_alpha(mode == model_GameMode.AskInArabic ? 0 : 1);
+	this.add(this.arabicText);
+	this.image = new helix_core_HelixSprite(imageFile);
+	helix_core_HelixSpriteFluentApi.move(this.image,(this.cardBase.get_width() - this.image.get_width()) / 2,(this.cardBase.get_height() - this.image.get_height()) / 2);
+	this.add(this.image);
+	this.englishText = new helix_core_HelixText(8,this.cardBase.get_height() - 8 | 0,word.english,32);
+	var _g1 = this.englishText;
+	_g1.set_x(_g1.x + (this.cardBase.get_width() - this.englishText.get_width()) / 2);
+	var _g2 = this.englishText;
+	_g2.set_y(_g2.y - this.englishText.get_height());
+	this.englishText.set_alpha(mode == model_GameMode.AskInArabic ? 1 : 0);
+	this.add(this.englishText);
+};
+$hxClasses["view.Card"] = view_Card;
+view_Card.__name__ = ["view","Card"];
+view_Card.__super__ = flixel_group_FlxTypedSpriteGroup;
+view_Card.prototype = $extend(flixel_group_FlxTypedSpriteGroup.prototype,{
+	onClick: function(callback) {
+		var _gthis = this;
+		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,function() {
+			if(_gthis.clickable) {
+				_gthis.clickable = false;
+				callback();
+			}
+		});
+	}
+	,disable: function() {
+		helix_core_HelixSpriteFluentApi.onClick(this.cardBase,function() {
+		});
+	}
+	,__class__: view_Card
+});
 var view_Gem = function(num) {
 	this.victoryDanceOffset = 0;
 	this.dancing = false;
@@ -101296,10 +101296,10 @@ states_PlayState.TUTORIAL_ARROW_AMPLITUDE = 25;
 states_PlayState.TUTORIAL_ARROW_SPEED_MULTIPLIER = 4;
 states_PlayState.TUTORIAL_WINDOW_WIDTH = 400;
 states_PlayState.TUTORIAL_WINDOW_HEIGHT = 200;
-states_Card.CARD_WIDTH_TO_FIT = 200;
-states_Card.PADDING = 8;
-states_Card.DEFAULT_FONT_SIZE = 32;
 utils_SaveManager.SAVE_SLOT = "Save0";
+view_Card.CARD_WIDTH_TO_FIT = 200;
+view_Card.PADDING = 8;
+view_Card.DEFAULT_FONT_SIZE = 32;
 view_Gem.VICTORY_GEM_FADE_TIME_SECONDS = 1;
 view_Gem.OFFSET_PER_GEM = 0.5;
 view_Gem.WAVE_AMPLITUDE = 100;

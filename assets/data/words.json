@@ -4,7 +4,7 @@
 	{ "arabic": "قَلبُ", "english": "heart" },
 	{ "arabic": "كِتابٌ", "english": "book" },
 	{ "arabic": "شَياطِين", "english": "devils" },
-	{ "arabic": "يُعلَّمُ", "english": "teaches" },
+	{ "arabic": "يُعَلِّمُ", "english": "teaches" },
 	{ "arabic": "ٌسِحر", "english": "magic" },
 	{ "arabic": "ٌاحَد", "english": "one" },
 	{ "arabic": "ٌمَرء", "english": "man" },
@@ -58,5 +58,5 @@
 	{ "arabic": "أعنَابٌ", "english": "grapes" },
 	{ "arabic": "جَزَاء", "english": "reward" },
 	{ "arabic": "القَمَرُ", "english": "moon" },
-	{ "arabic": "اللَيل", "english": "night" }	
+	{ "arabic": "الليل", "english": "night" }	
 ]
