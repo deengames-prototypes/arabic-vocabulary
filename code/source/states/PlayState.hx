@@ -341,8 +341,13 @@ class PlayState extends HelixState
 			remove(this.targetText);
 			this.targetText.destroy();
 		}
-		
-		if (Config.get("arabicTextIsImages") == true && this.gameMode == GameMode.AskInArabic) {
+
+		trace('Regenerating; game mode is ${this.gameMode} and question language is ${this.mediator.questionLanguage}... question is ${this.mediator.getQuestion(this.targetWord)}');
+		if (Config.get("arabicTextIsImages") == true && 
+			// Game mode is Arabic, OR (game mode is mixed and question language is Arabic)
+			(this.gameMode == GameMode.AskInArabic || 
+				(this.gameMode == GameMode.Mixed && this.mediator.questionLanguage == "arabic")
+			)) {
 			this.targetText = new HelixSprite('assets/images/text/${this.targetWord.transliteration}.png');			
 		} else {
 			this.targetText = new HelixText(0, 0, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
