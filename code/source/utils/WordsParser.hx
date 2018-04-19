@@ -13,7 +13,7 @@ class WordsParser
 
 		for (word in words)
         {
-			var w = new Word(word.arabic, word.english);
+			var w = new Word(word.arabic, word.english, word.transliteration);
 			toReturn.push(w);
 		}
 

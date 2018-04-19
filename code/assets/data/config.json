@@ -1,6 +1,7 @@
 {
     // Features
     "wrongWordsAppearMoreOften": true,
+    "arabicTextIsImages": true,
 
     "startingWordFrequency": 5,
     "wordFrequencyModifier": 1,

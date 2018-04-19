@@ -45,7 +45,7 @@ class PlayState extends HelixState
 
 	private var targetWord:Word;
 	private var random = new FlxRandom();
-	private var targetText:HelixText;
+	private var targetText:Dynamic;
 	private var wordsSelectedCorrectly = new Array<Word>();
 	private var tutorialArrow:HelixSprite; // tutorial arrow
 	private var tutorialArrowBaseX:Float = 0;
@@ -92,8 +92,7 @@ class PlayState extends HelixState
 
 		this.generateAndShowRound();
 
-		this.targetText = new HelixText(400, PADDING, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
-		this.targetText.onClick(function() { this.playCurrentWord(); });
+		this.regenerateTargetText();
 		
 		var monsterNum = 3;
 
@@ -169,7 +168,7 @@ class PlayState extends HelixState
 
 		if (this.targetText != null)
 		{
-			this.targetText.text = this.mediator.getQuestion(targetWord);
+			this.regenerateTargetText();
 		}
 
 		this.playCurrentWord();
@@ -335,6 +334,23 @@ class PlayState extends HelixState
 		this.tutorialArrow = new HelixSprite("assets/images/ui/left-arrow.png");
 		this.tutorialArrowBaseX = this.targetText.x + this.targetText.width + PADDING + TUTORIAL_ARROW_AMPLITUDE;
 		this.tutorialArrow.y = this.targetText.y;
+	}
+
+	private function regenerateTargetText():Void {
+		if (this.targetText != null) {
+			remove(this.targetText);
+			this.targetText.destroy();
+		}
+		
+		if (Config.get("arabicTextIsImages") == true && this.gameMode == GameMode.AskInArabic) {
+			this.targetText = new HelixSprite('assets/images/text/${this.targetWord.transliteration}.png');			
+		} else {
+			this.targetText = new HelixText(0, 0, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
+		}
+
+		this.targetText.x = 400;
+		this.targetText.y = PADDING;
+		this.targetText.onClick(function() { this.playCurrentWord(); });
 	}
 }
 
