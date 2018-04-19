@@ -40,7 +40,11 @@ class PlayState extends HelixState
 	private var wordFrequencies = new Array<Float>();
 
 	private var mediator:QuestionAnswerMediator;
+
+	// gameMode Arabic, English, or Mixed
+	// If Mixed, currentRoundMode is set to Arabic or English.
 	private var gameMode:GameMode;
+	private var currentRoundMode:GameMode;
 	private var levelNumber:Int = 0;
 
 	private var targetWord:Word;
@@ -78,8 +82,6 @@ class PlayState extends HelixState
 
 		this.correctSound = FlxG.sound.load(AssetPaths.correct__ogg);
 		this.incorrectSound = FlxG.sound.load(AssetPaths.incorrect__ogg);
-
-		this.mediator = new QuestionAnswerMediator(this.gameMode);
 		
 		for (word in levelWords)
 		{
@@ -150,6 +152,17 @@ class PlayState extends HelixState
 
 	private function generateAndShowRound():Void
 	{
+		if (this.gameMode == GameMode.Mixed) {
+			if (random.bool()) {
+				this.currentRoundMode = GameMode.AskInArabic;
+			} else {
+				this.currentRoundMode = GameMode.AskInEnglish;
+			}
+		} else {
+			this.currentRoundMode = this.gameMode;
+		}
+		
+		this.mediator = new QuestionAnswerMediator(this.currentRoundMode);		
 		var numWords:Int = Std.int(Config.get("wordsPerRound"));
 		
 		// pick random words based on weight
@@ -175,7 +188,7 @@ class PlayState extends HelixState
 
 		for (word in words)
 		{
-			var card = new Card('assets/images/words/${word.english}.png', word, this.gameMode);
+			var card = new Card('assets/images/words/${word.english}.png', word, this.currentRoundMode);
 
 			card.onClick(function() {
 				var index = this.levelWords.indexOf(targetWord);				
@@ -342,12 +355,8 @@ class PlayState extends HelixState
 			this.targetText.destroy();
 		}
 
-		trace('Regenerating; game mode is ${this.gameMode} and question language is ${this.mediator.questionLanguage}... question is ${this.mediator.getQuestion(this.targetWord)}');
-		if (Config.get("arabicTextIsImages") == true && 
-			// Game mode is Arabic, OR (game mode is mixed and question language is Arabic)
-			(this.gameMode == GameMode.AskInArabic || 
-				(this.gameMode == GameMode.Mixed && this.mediator.questionLanguage == "arabic")
-			)) {
+		trace('Regenerating; game mode is ${this.currentRoundMode} and question language is ${this.mediator.questionLanguage}... question is ${this.mediator.getQuestion(this.targetWord)}');
+		if (Config.get("arabicTextIsImages") == true && this.currentRoundMode == GameMode.AskInArabic) {
 			this.targetText = new HelixSprite('assets/images/text/${this.targetWord.transliteration}.png');			
 		} else {
 			this.targetText = new HelixText(0, 0, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
