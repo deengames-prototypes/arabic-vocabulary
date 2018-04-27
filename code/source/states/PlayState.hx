@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.math.FlxRandom;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 
 using haxesharp.collections.Linq;
 import helix.core.HelixState;
@@ -355,11 +356,10 @@ class PlayState extends HelixState
 			this.targetText.destroy();
 		}
 
-		trace('Regenerating; game mode is ${this.currentRoundMode} and question language is ${this.mediator.questionLanguage}... question is ${this.mediator.getQuestion(this.targetWord)}');
 		if (Config.get("arabicTextIsImages") == true && this.currentRoundMode == GameMode.AskInArabic) {
 			this.targetText = new HelixSprite('assets/images/text/${this.targetWord.transliteration}.png');			
 		} else {
-			this.targetText = new HelixText(0, 0, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE);
+			this.targetText = new HelixText(0, 0, this.mediator.getQuestion(this.targetWord), TARGET_FONT_SIZE, FlxColor.BLACK);
 		}
 
 		this.targetText.x = 400;

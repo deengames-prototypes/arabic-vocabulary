@@ -15,6 +15,7 @@ class SaveManager
             save.flush();
         }
 
+        return 99;
         return save.data.maxLevelReached;
     }
 

@@ -1,6 +1,7 @@
 package view;
 
 import flixel.group.FlxSpriteGroup;
+import flixel.util.FlxColor;
 import helix.core.HelixSprite;
 using helix.core.HelixSpriteFluentApi;
 import helix.core.HelixText;
@@ -34,7 +35,7 @@ class Card extends FlxSpriteGroup
 			this.arabicText = new HelixSprite('assets/images/text/${word.transliteration}.png');
 			this.arabicText.setGraphicSize(this.arabicText.width / 2, 0); // scale down to 50%
 		} else {
-			this.arabicText = new HelixText(PADDING, PADDING, word.arabic, DEFAULT_FONT_SIZE);
+			this.arabicText = new HelixText(PADDING, PADDING, word.arabic, DEFAULT_FONT_SIZE, FlxColor.BLACK);
 		}
 
 		arabicText.x += (cardBase.width - arabicText.width)  / 2;
@@ -45,7 +46,7 @@ class Card extends FlxSpriteGroup
 		image.move((cardBase.width - image.width) / 2, (cardBase.height - image.height) / 2);
 		this.add(image);
 
-		this.englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), word.english, DEFAULT_FONT_SIZE);
+		this.englishText = new HelixText(Std.int(PADDING), Std.int(cardBase.height - PADDING), word.english, DEFAULT_FONT_SIZE, FlxColor.BLACK);
 		englishText.x += (cardBase.width - englishText.width)  / 2;
 		englishText.y -= englishText.height;
 		this.englishText.alpha = mode == GameMode.AskInArabic ? 1 : 0;
