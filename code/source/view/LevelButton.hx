@@ -24,8 +24,8 @@ class LevelButton extends HelixSprite
 
     public function new(label:String, level:Level, isEnabled:Bool, overrideImage:String = "")
     {
-        var suffix = isEnabled ? "" : "-disabled";
-        var imageName = '${LEVEL_MODE_IMAGES[level.levelType]}${suffix}.png';
+        var imageName = isEnabled ? '${LEVEL_MODE_IMAGES[level.levelType]}.png' : "level-locked.png";
+        trace(imageName);
 
         if (overrideImage != "") {
             imageName = overrideImage;
