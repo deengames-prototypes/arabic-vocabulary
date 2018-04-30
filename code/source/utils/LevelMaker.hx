@@ -24,7 +24,6 @@ class LevelMaker
         var wordsPerLevel = newWordsPerLevel + repeatWordsPerLevel;
         
         var numLevels = Std.int(Math.ceil(this.words.length / newWordsPerLevel));
-        trace('${this.words.length} words, ${newWordsPerLevel} per level, ${numLevels} levels');
 
         var levels = new Array<Level>();
 
