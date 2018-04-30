@@ -217,6 +217,12 @@ class PlayState extends HelixState
 								var sound = this.wordSounds.get('${targetWord.english}-${this.mediator.answerLanguage}');
 								sound.play();
 							}
+							// Fix for #4: https://github.com/deengames-prototypes/quran-gems/issues/4
+							// Seems like we use wordSound.onComplete, which is the instance of FlxSound
+							// that comes from this.wordSounds; the onComplete handler should only fire
+							// once. Perhaps issue #4 is a case where this actually matters.
+							wordSound.onComplete = null;
+
 						}
 						if (word == targetWord) {
 							wordSound.play();
@@ -276,9 +282,6 @@ class PlayState extends HelixState
 						gem.showAsGem();
 
 						this.wordsSelectedCorrectly.push(this.targetWord);
-
-						// Debug
-						trace('Correct:${this.wordsSelectedCorrectly.map(function(w) { return w.english; } )}');
 
 						if (this.wordsSelectedCorrectly.length == this.levelWords.length)
 						{
